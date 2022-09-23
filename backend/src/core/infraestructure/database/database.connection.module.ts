@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
-import {MongoConnectionModule} from "./MongoDB/connection/mongo.connection.module";
+import { MongoConnectionModule } from './MongoDB/connection/mongo.connection.module'
 
 @Module({
-    imports: [MongoConnectionModule]
+    imports: [MongoConnectionModule],
 })
 export class DatabaseConnectionModule {}

@@ -1,7 +1,7 @@
-import {Module} from "@nestjs/common";
-import {MongooseModule} from "@nestjs/mongoose";
+import { Module } from '@nestjs/common'
+import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
-    imports: [MongooseModule.forRoot('')]
+    imports: [MongooseModule.forRoot('')],
 })
 export class MongoConnectionModule {}

@@ -1,3 +1,3 @@
-import bootstrap from "./core/infraestructure/server/bootstrap";
+import bootstrap from './core/infraestructure/server/bootstrap'
 
 bootstrap()
