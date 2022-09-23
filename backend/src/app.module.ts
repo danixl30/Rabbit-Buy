@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common'
+import { RateLimitModule } from './core/infraestructure/rate-limit/rate.limit.module'
 
 @Module({
-    imports: [],
-    controllers: [],
-    providers: [],
+    imports: [RateLimitModule],
 })
 export class AppModule {}
