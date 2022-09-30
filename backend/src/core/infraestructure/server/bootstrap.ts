@@ -13,5 +13,5 @@ export default async function bootstrap() {
     configPrefix(app)
     configValidationPipe(app)
     configSwagger(app)
-    runServer(app, PORT)
+    await runServer(app, PORT)
 }
