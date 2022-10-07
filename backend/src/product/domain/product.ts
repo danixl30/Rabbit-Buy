@@ -2,6 +2,7 @@ import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { InvalidProductException } from './exceptions/invalid.product'
 import { NotExistenceException } from './exceptions/not.existence'
 import { CategoryRef } from './value-objects/category.ref'
+import { FranchiseRef } from './value-objects/franchise.ref'
 import { ProductCurrency } from './value-objects/product.currency'
 import { ProductDescription } from './value-objects/product.description'
 import { ProductExistence } from './value-objects/product.existence'
@@ -18,6 +19,7 @@ export class Product extends AgreggateRoot<ProductId> {
         private _price: ProductPrice,
         private _currency: ProductCurrency,
         private _category: CategoryRef,
+        private _franchise: FranchiseRef,
     ) {
         super(id)
     }
@@ -44,6 +46,10 @@ export class Product extends AgreggateRoot<ProductId> {
 
     get category() {
         return this._category
+    }
+
+    get franchise() {
+        return this._franchise
     }
 
     changeName(name: ProductName) {
@@ -86,7 +92,8 @@ export class Product extends AgreggateRoot<ProductId> {
             !this.existence ||
             !this.price ||
             !this.currency ||
-            !this.category
+            !this.category ||
+            !this.franchise
         )
             throw new InvalidProductException()
     }

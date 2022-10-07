@@ -12,6 +12,10 @@ import { ProductPrice } from 'src/product/domain/value-objects/product.price'
 import { ProductRepository } from '../../repositories/product.repository'
 import { CreateProductDTO } from './types/create.product.dto'
 import { CreateProductResponse } from './types/create.product.response'
+import { FranchiseRef } from 'src/product/domain/value-objects/franchise.ref'
+import { ProviderRepository } from 'src/provider/application/repositories/provider.repository'
+import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
+import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 
 export class CreateProductApplicationService
     implements ApplicationService<CreateProductDTO, CreateProductResponse>
@@ -19,9 +23,13 @@ export class CreateProductApplicationService
     constructor(
         private productRepository: ProductRepository,
         private uuid: UUIDGenerator,
+        private providerService: GetProviderApplicationService,
     ) {}
 
     async execute(data: CreateProductDTO): Promise<CreateProductResponse> {
+        const provider = await this.providerService.execute({
+            id: data.provider,
+        })
         const product = new Product(
             new ProductId(this.uuid.generate()),
             new ProductName(data.name),
@@ -30,6 +38,7 @@ export class CreateProductApplicationService
             new ProductPrice(data.price),
             new ProductCurrency(data.currency),
             new CategoryRef(new CategoryId(data.category)),
+            new FranchiseRef(new FranchiseId(provider.franchise)),
         )
         await this.productRepository.save(product)
         return {

@@ -1,5 +1,6 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { InvalidPetitionException } from './exceptions/invalid.petition'
+import { FranchiseRef } from './value-objects/franchise.ref'
 import { PetitionDate } from './value-objects/petition.date'
 import { PetitionId } from './value-objects/petition.id'
 import { PetitionQuantity } from './value-objects/petition.quantity'
@@ -19,12 +20,17 @@ export class Petition extends AgreggateRoot<PetitionId> {
         private _client: UserRef,
         private _status: Status,
         private _date: PetitionDate,
+        private _franchise: FranchiseRef,
     ) {
         super(id)
     }
 
     get productName() {
         return this._productName
+    }
+
+    get franchise() {
+        return this._franchise
     }
 
     get price() {
@@ -62,7 +68,8 @@ export class Petition extends AgreggateRoot<PetitionId> {
             !this.status ||
             !this.productName ||
             !this.price ||
-            !this.currency
+            !this.currency ||
+            !this.franchise
         )
             throw new InvalidPetitionException()
     }

@@ -6,4 +6,8 @@ export type GetProductDetailResponse = {
     currency: string
     existence: number
     category: string
+    franchise: {
+        name: string
+        id: string
+    }
 }

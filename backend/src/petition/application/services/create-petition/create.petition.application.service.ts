@@ -1,6 +1,8 @@
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { UUIDGenerator } from 'src/core/application/UUID/UUID.generator'
+import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 import { Petition } from 'src/petition/domain/petition'
+import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
 import { PetitionDate } from 'src/petition/domain/value-objects/petition.date'
 import { PetitionId } from 'src/petition/domain/value-objects/petition.id'
 import { PetitionQuantity } from 'src/petition/domain/value-objects/petition.quantity'
@@ -41,6 +43,7 @@ export class CreatePetitionApplicationService
             new UserRef(new UserId(data.userId)),
             new Status(Statuses.OPEN),
             new PetitionDate(new Date()),
+            new FranchiseRef(new FranchiseId(product.franchise.id)),
         )
         await this.petitionRepository.save(petition)
         return {
