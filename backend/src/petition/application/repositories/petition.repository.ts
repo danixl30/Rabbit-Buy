@@ -11,4 +11,5 @@ export interface PetitionRepository extends Repository<PetitionId, Petition> {
         endDate: PetitionDate,
     ): Promise<Petition[]>
     filterByClient(client: UserRef): Promise<Petition[]>
+    searchById(id: PetitionId): Promise<Petition>
 }

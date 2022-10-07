@@ -74,6 +74,10 @@ export class Product extends AgreggateRoot<ProductId> {
         )
     }
 
+    changeExistence(existence: ProductExistence) {
+        this._existence = existence
+    }
+
     validateState(): void {
         if (
             !this.id ||

@@ -2,14 +2,20 @@ import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { InvalidPetitionException } from './exceptions/invalid.petition'
 import { PetitionDate } from './value-objects/petition.date'
 import { PetitionId } from './value-objects/petition.id'
-import { ProductRef } from './value-objects/product.ref'
+import { PetitionQuantity } from './value-objects/petition.quantity'
+import { ProductCurrency } from './value-objects/product.currency'
+import { ProductName } from './value-objects/product.name'
+import { ProductPrice } from './value-objects/product.price'
 import { Status } from './value-objects/status'
 import { UserRef } from './value-objects/user.ref'
 
 export class Petition extends AgreggateRoot<PetitionId> {
     constructor(
         id: PetitionId,
-        private _product: ProductRef,
+        private _productName: ProductName,
+        private _price: ProductPrice,
+        private _quantity: PetitionQuantity,
+        private _currency: ProductCurrency,
         private _client: UserRef,
         private _status: Status,
         private _date: PetitionDate,
@@ -17,8 +23,16 @@ export class Petition extends AgreggateRoot<PetitionId> {
         super(id)
     }
 
-    get product() {
-        return this._product
+    get productName() {
+        return this._productName
+    }
+
+    get price() {
+        return this._price
+    }
+
+    get currency() {
+        return this._currency
     }
 
     get client() {
@@ -33,12 +47,23 @@ export class Petition extends AgreggateRoot<PetitionId> {
         return this._date
     }
 
+    get quantity() {
+        return this._quantity
+    }
+
     changeStatus(status: Status) {
         this._status = status
     }
 
     validateState(): void {
-        if (!this.id || !this.product || !this.client || !this.status)
+        if (
+            !this.id ||
+            !this.client ||
+            !this.status ||
+            !this.productName ||
+            !this.price ||
+            !this.currency
+        )
             throw new InvalidPetitionException()
     }
 }
