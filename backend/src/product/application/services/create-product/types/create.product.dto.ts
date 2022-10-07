@@ -5,4 +5,5 @@ export type CreateProductDTO = {
     provider: string
     currency: string
     category: string
+    existence: number
 }

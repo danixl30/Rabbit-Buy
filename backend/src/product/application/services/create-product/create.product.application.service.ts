@@ -26,7 +26,7 @@ export class CreateProductApplicationService
             new ProductId(this.uuid.generate()),
             new ProductName(data.name),
             new ProductDescription(data.description),
-            new ProductExistence(0),
+            new ProductExistence(data.existence),
             new ProductPrice(data.price),
             new ProductCurrency(data.currency),
             new CategoryRef(new CategoryId(data.category)),
