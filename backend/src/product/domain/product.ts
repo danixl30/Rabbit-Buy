@@ -3,6 +3,7 @@ import { InvalidProductException } from './exceptions/invalid.product'
 import { NotExistenceException } from './exceptions/not.existence'
 import { CategoryRef } from './value-objects/category.ref'
 import { FranchiseRef } from './value-objects/franchise.ref'
+import { ProductImage } from './value-objects/image'
 import { ProductCurrency } from './value-objects/product.currency'
 import { ProductDescription } from './value-objects/product.description'
 import { ProductExistence } from './value-objects/product.existence'
@@ -20,6 +21,7 @@ export class Product extends AgreggateRoot<ProductId> {
         private _currency: ProductCurrency,
         private _category: CategoryRef,
         private _franchise: FranchiseRef,
+        private _image: ProductImage,
     ) {
         super(id)
     }
@@ -30,6 +32,10 @@ export class Product extends AgreggateRoot<ProductId> {
 
     get description() {
         return this._description
+    }
+
+    get image() {
+        return this._image
     }
 
     get existence() {
@@ -72,6 +78,10 @@ export class Product extends AgreggateRoot<ProductId> {
         this._category = category
     }
 
+    changeImage(image: ProductImage) {
+        this._image = image
+    }
+
     buy(quantity: ProductExistence) {
         if (quantity.value > this._existence.value)
             throw new NotExistenceException()
@@ -93,7 +103,8 @@ export class Product extends AgreggateRoot<ProductId> {
             !this.price ||
             !this.currency ||
             !this.category ||
-            !this.franchise
+            !this.franchise ||
+            !this.image
         )
             throw new InvalidProductException()
     }

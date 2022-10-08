@@ -16,6 +16,8 @@ import { FranchiseRef } from 'src/product/domain/value-objects/franchise.ref'
 import { ProviderRepository } from 'src/provider/application/repositories/provider.repository'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
+import { ImageStorage } from 'src/core/application/storage/images/image.storage'
+import { ProductImage } from 'src/product/domain/value-objects/image'
 
 export class CreateProductApplicationService
     implements ApplicationService<CreateProductDTO, CreateProductResponse>
@@ -24,11 +26,15 @@ export class CreateProductApplicationService
         private productRepository: ProductRepository,
         private uuid: UUIDGenerator,
         private providerService: GetProviderApplicationService,
+        private imageStorage: ImageStorage,
     ) {}
 
     async execute(data: CreateProductDTO): Promise<CreateProductResponse> {
         const provider = await this.providerService.execute({
             id: data.provider,
+        })
+        const image = await this.imageStorage.save({
+            path: data.image,
         })
         const product = new Product(
             new ProductId(this.uuid.generate()),
@@ -39,6 +45,7 @@ export class CreateProductApplicationService
             new ProductCurrency(data.currency),
             new CategoryRef(new CategoryId(data.category)),
             new FranchiseRef(new FranchiseId(provider.franchise)),
+            new ProductImage(image.url),
         )
         await this.productRepository.save(product)
         return {

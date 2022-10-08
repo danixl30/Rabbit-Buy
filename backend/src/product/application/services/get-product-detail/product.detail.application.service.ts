@@ -42,6 +42,7 @@ export class GetProductDetailApplicationService
                 name: franchise.id.value,
                 id: franchise.id.value,
             },
+            image: product.image.value,
         }
     }
 }

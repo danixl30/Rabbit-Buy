@@ -19,6 +19,7 @@ export class ListProductsApplicationService
                 id: e.id.value,
                 price: e.price.value,
                 currency: e.currency.value,
+                image: e.image.value,
             })),
         }
     }

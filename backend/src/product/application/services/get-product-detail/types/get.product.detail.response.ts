@@ -10,4 +10,5 @@ export type GetProductDetailResponse = {
         name: string
         id: string
     }
+    image: string
 }

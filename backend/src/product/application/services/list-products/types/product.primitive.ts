@@ -3,4 +3,5 @@ export type ProductPrimitive = {
     id: string
     price: number
     currency: string
+    image: string
 }

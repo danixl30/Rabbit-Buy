@@ -6,4 +6,5 @@ export type CreateProductDTO = {
     currency: string
     category: string
     existence: number
+    image: string
 }
