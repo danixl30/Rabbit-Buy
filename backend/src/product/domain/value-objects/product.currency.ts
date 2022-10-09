@@ -1,7 +1,11 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
+import { InvalidProductCurrencyException } from '../exceptions/invalid.product.currency'
 
 export class ProductCurrency implements ValueObject<ProductCurrency> {
-    constructor(private currency: string) {}
+    constructor(private currency: string) {
+        if (currency.trim().isEmpty())
+            throw new InvalidProductCurrencyException()
+    }
 
     get value(): string {
         return this.currency

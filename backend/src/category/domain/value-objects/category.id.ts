@@ -1,7 +1,11 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
+import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
+import { InvalidCategoryIdException } from '../exceptions/invalid.category.id'
 
 export class CategoryId implements ValueObject<CategoryId> {
-    constructor(private id: string) {}
+    constructor(private id: string) {
+        if (!regExpUUID.test(id)) throw new InvalidCategoryIdException()
+    }
 
     get value(): string {
         return this.id
