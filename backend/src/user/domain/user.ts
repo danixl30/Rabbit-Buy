@@ -8,17 +8,13 @@ import { Username } from './value-objects/username'
 
 export class User extends AgreggateRoot<UserId> {
     constructor(
-        _userId: UserId,
+        _id: UserId,
         private _username: Username,
         private _password: Password,
         private _email: Email,
         private _role: Role,
     ) {
-        super(_userId)
-    }
-
-    get id() {
-        return this._id
+        super(_id)
     }
 
     get username() {

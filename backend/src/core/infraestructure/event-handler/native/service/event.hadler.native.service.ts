@@ -10,7 +10,9 @@ export class EventHandlerNative implements EventHandler {
     } = {}
     publish(events: DomainEvent[]): void {
         events.forEach((event) =>
-            this.subscribers[event.name]?.forEach((sub) => sub(event)),
+            this.subscribers[event.constructor.name]?.forEach((sub) =>
+                sub(event),
+            ),
         )
     }
 

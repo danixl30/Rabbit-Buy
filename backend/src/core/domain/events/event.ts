@@ -1,3 +1,7 @@
 export abstract class DomainEvent {
-    abstract get name(): string
+    constructor(private _time = new Date()) {}
+
+    get time() {
+        return this._time
+    }
 }
