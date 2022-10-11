@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 import { FranchiseRif } from 'src/franchise/domain/value-objects/franchise.rif'
@@ -9,7 +10,10 @@ import { UpdateRifResponse } from './types/update.rif.response'
 export class UpdateRifApplicationService
     implements ApplicationService<UpdateRifDTO, UpdateRifResponse>
 {
-    constructor(private franchiseRepository: FranchiseRepository) {}
+    constructor(
+        private franchiseRepository: FranchiseRepository,
+        private eventHandler: EventHandler,
+    ) {}
 
     async execute(data: UpdateRifDTO): Promise<UpdateRifResponse> {
         const franchise = await this.franchiseRepository.searchById(
@@ -18,6 +22,7 @@ export class UpdateRifApplicationService
         if (!franchise) throw new FranchiseNotFoundException()
         franchise.changeRif(new FranchiseRif(data.rif))
         await this.franchiseRepository.save(franchise)
+        this.eventHandler.publish(franchise.pullEvents())
         return {
             id: franchise.id.value,
             rif: franchise.rif.value,

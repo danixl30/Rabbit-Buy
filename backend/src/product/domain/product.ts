@@ -1,4 +1,14 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { ProductBoughtEvent } from './events/product.bought'
+import { ProductCategoryChangedEvent } from './events/product.category.changed'
+import { ProductCreatedEvent } from './events/product.created'
+import { ProductCurrencyChangedEvent } from './events/product.currency.changed'
+import { ProductDeletedEvent } from './events/product.deleted'
+import { ProductDescriptionEvent } from './events/product.description.changed'
+import { ProductExistenceChangedEvent } from './events/product.existence.changed'
+import { ProductImageChangedEvent } from './events/product.image.changed'
+import { ProductNameChangedEvent } from './events/product.name.changed'
+import { ProductPriceChangedEvent } from './events/product.price.changed'
 import { InvalidProductException } from './exceptions/invalid.product'
 import { NotExistenceException } from './exceptions/not.existence'
 import { CategoryRef } from './value-objects/category.ref'
@@ -24,6 +34,19 @@ export class Product extends AgreggateRoot<ProductId> {
         private _image: ProductImage,
     ) {
         super(id)
+        this.apply(
+            new ProductCreatedEvent(
+                id,
+                this.name,
+                this.description,
+                this.existence,
+                this.price,
+                this.currency,
+                this.category,
+                this.franchise,
+                this.image,
+            ),
+        )
     }
 
     get name() {
@@ -60,26 +83,32 @@ export class Product extends AgreggateRoot<ProductId> {
 
     changeName(name: ProductName) {
         this._name = name
+        this.apply(new ProductNameChangedEvent(this.id, name))
     }
 
     changeDescription(description: ProductDescription) {
         this._description = description
+        this.apply(new ProductDescriptionEvent(this.id, description))
     }
 
     changePrice(price: ProductPrice) {
         this._price = price
+        this.apply(new ProductPriceChangedEvent(this.id, price))
     }
 
     changeCurrency(currency: ProductCurrency) {
         this._currency = currency
+        this.apply(new ProductCurrencyChangedEvent(this.id, currency))
     }
 
     changeCategory(category: CategoryRef) {
         this._category = category
+        this.apply(new ProductCategoryChangedEvent(this.id, category))
     }
 
     changeImage(image: ProductImage) {
         this._image = image
+        this.apply(new ProductImageChangedEvent(this.id, image))
     }
 
     buy(quantity: ProductExistence) {
@@ -88,10 +117,16 @@ export class Product extends AgreggateRoot<ProductId> {
         this._existence = new ProductExistence(
             this._existence.value - quantity.value,
         )
+        this.apply(new ProductBoughtEvent(this.id, quantity))
     }
 
     changeExistence(existence: ProductExistence) {
         this._existence = existence
+        this.apply(new ProductExistenceChangedEvent(this.id, existence))
+    }
+
+    delete() {
+        this.apply(new ProductDeletedEvent(this.id))
     }
 
     validateState(): void {

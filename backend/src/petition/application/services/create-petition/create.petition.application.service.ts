@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { UUIDGenerator } from 'src/core/application/UUID/UUID.generator'
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
@@ -26,6 +27,7 @@ export class CreatePetitionApplicationService
         private petitionRepository: PetitionRepository,
         private productDetalil: GetProductDetailApplicationService,
         private uuid: UUIDGenerator,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: CreatePetitionDTO): Promise<CreatePetitionResponse> {
@@ -46,6 +48,7 @@ export class CreatePetitionApplicationService
             new FranchiseRef(new FranchiseId(product.franchise.id)),
         )
         await this.petitionRepository.save(petition)
+        this.eventHandler.publish(petition.pullEvents())
         return {
             id: petition.id.value,
         }

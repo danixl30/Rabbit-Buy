@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { ImageStorage } from 'src/core/application/storage/images/image.storage'
 import { ProductId } from 'src/product/domain/value-objects/product.id'
@@ -12,6 +13,7 @@ export class DeleteProductApplicationService
     constructor(
         private productRepository: ProductRepository,
         private imageStorage: ImageStorage,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: DeleteProductDTO): Promise<DeleteProductResponse> {
@@ -19,7 +21,9 @@ export class DeleteProductApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
+        product.delete()
         await this.productRepository.delete(product)
+        this.eventHandler.publish(product.pullEvents())
         await this.imageStorage.delete({
             url: product.image.value,
         })

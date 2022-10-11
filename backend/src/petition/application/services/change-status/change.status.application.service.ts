@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { PetitionId } from 'src/petition/domain/value-objects/petition.id'
 import { Status } from 'src/petition/domain/value-objects/status'
@@ -13,7 +14,10 @@ export class ChangePetitionStatusApplicationService
             ChangePetitionStatusResponse
         >
 {
-    constructor(private petitionRepository: PetitionRepository) {}
+    constructor(
+        private petitionRepository: PetitionRepository,
+        private eventHandler: EventHandler,
+    ) {}
 
     async execute(
         data: ChangePetitionStatusDTO,
@@ -24,6 +28,7 @@ export class ChangePetitionStatusApplicationService
         if (!petition) throw new PetitionNotFoundException()
         petition.changeStatus(new Status(data.status))
         await this.petitionRepository.save(petition)
+        this.eventHandler.publish(petition.pullEvents())
         return {
             id: petition.id.value,
         }

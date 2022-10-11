@@ -1,7 +1,7 @@
 import { DomainEvent } from 'src/core/domain/events/event'
 import { FranchiseId } from '../value-objects/franchise.id'
 
-export class FranchiseCreatedEvent extends DomainEvent {
+export class FranchiseDeletedEvent extends DomainEvent {
     constructor(private _id: FranchiseId) {
         super()
     }

@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { UUIDGenerator } from 'src/core/application/UUID/UUID.generator'
 import { FranchiseGroupId } from 'src/franchise/domain/value-objects/franchise.group.id'
@@ -13,6 +14,7 @@ export class UpdateGroudIdApplicationService
     constructor(
         private franchiseRepository: FranchiseRepository,
         private uuidGenerator: UUIDGenerator,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: UpdateGroudIdDTO): Promise<UpdateGroudIdResponse> {
@@ -22,6 +24,7 @@ export class UpdateGroudIdApplicationService
         if (!resp) throw new FranchiseNotFoundException()
         resp.changeGroupId(new FranchiseGroupId(this.uuidGenerator.generate()))
         await this.franchiseRepository.save(resp)
+        this.eventHandler.publish(resp.pullEvents())
         return {
             groupId: resp.groupId.value,
         }

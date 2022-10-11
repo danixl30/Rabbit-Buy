@@ -1,6 +1,7 @@
 import { Category } from 'src/category/domain/category'
 import { CategoryId } from 'src/category/domain/value-objects/category.id'
 import { CategoryName } from 'src/category/domain/value-objects/category.name'
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { UUIDGenerator } from 'src/core/application/UUID/UUID.generator'
 import { CategoryRepository } from '../../repositories/category.repository'
@@ -13,6 +14,7 @@ export class CreateCategoryApplicationService
     constructor(
         private categoryRepository: CategoryRepository,
         private uuidGenerator: UUIDGenerator,
+        private eventHandler: EventHandler,
     ) {}
     async execute(data: CreateCategoryDTO): Promise<CreateCategoryResponse> {
         const category = new Category(
@@ -20,6 +22,7 @@ export class CreateCategoryApplicationService
             new CategoryName(data.name),
         )
         await this.categoryRepository.save(category)
+        this.eventHandler.publish(category.pullEvents())
         return {
             name: category.name.value,
             id: category.id.value,

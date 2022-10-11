@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { FranchiseNotFoundException } from 'src/franchise/application/exceptions/franchise.not.found'
 import { FranchiseRepository } from 'src/franchise/application/repositories/franchise.repository'
@@ -18,6 +19,7 @@ export class CreateProviderApplicationService
         private createUserService: RegisterUserApplicationService,
         private providerRepository: ProviderRepository,
         private franchiseRepository: FranchiseRepository,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: CreateProviderDTO): Promise<CreateProviderResponse> {
@@ -32,6 +34,7 @@ export class CreateProviderApplicationService
             new FranchiseRef(franchise.id),
         )
         await this.providerRepository.save(provider)
+        this.eventHandler.publish(franchise.pullEvents())
         return {
             id: provider.id.value,
         }

@@ -13,11 +13,11 @@ import { ProductRepository } from '../../repositories/product.repository'
 import { CreateProductDTO } from './types/create.product.dto'
 import { CreateProductResponse } from './types/create.product.response'
 import { FranchiseRef } from 'src/product/domain/value-objects/franchise.ref'
-import { ProviderRepository } from 'src/provider/application/repositories/provider.repository'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 import { ImageStorage } from 'src/core/application/storage/images/image.storage'
 import { ProductImage } from 'src/product/domain/value-objects/image'
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 
 export class CreateProductApplicationService
     implements ApplicationService<CreateProductDTO, CreateProductResponse>
@@ -27,6 +27,7 @@ export class CreateProductApplicationService
         private uuid: UUIDGenerator,
         private providerService: GetProviderApplicationService,
         private imageStorage: ImageStorage,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: CreateProductDTO): Promise<CreateProductResponse> {
@@ -48,6 +49,7 @@ export class CreateProductApplicationService
             new ProductImage(image.url),
         )
         await this.productRepository.save(product)
+        this.eventHandler.publish(product.pullEvents())
         return {
             id: product.id.value,
         }

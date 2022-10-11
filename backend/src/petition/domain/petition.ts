@@ -1,4 +1,7 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { PetitionCreatedEvent } from './events/petition.created'
+import { PetitionDeletedEvent } from './events/petition.deleted'
+import { PetitionStatusChangedEvent } from './events/petition.status.changed'
 import { InvalidPetitionException } from './exceptions/invalid.petition'
 import { FranchiseRef } from './value-objects/franchise.ref'
 import { PetitionDate } from './value-objects/petition.date'
@@ -23,6 +26,19 @@ export class Petition extends AgreggateRoot<PetitionId> {
         private _franchise: FranchiseRef,
     ) {
         super(id)
+        this.apply(
+            new PetitionCreatedEvent(
+                id,
+                this.productName,
+                this.price,
+                this.quantity,
+                this.currency,
+                this.client,
+                this.status,
+                this.date,
+                this.franchise,
+            ),
+        )
     }
 
     get productName() {
@@ -59,6 +75,11 @@ export class Petition extends AgreggateRoot<PetitionId> {
 
     changeStatus(status: Status) {
         this._status = status
+        this.apply(new PetitionStatusChangedEvent(this.id, status))
+    }
+
+    delete() {
+        this.apply(new PetitionDeletedEvent(this.id))
     }
 
     validateState(): void {

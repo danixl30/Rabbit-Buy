@@ -1,4 +1,7 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { FranchiseCreatedEvent } from './events/franchise.created'
+import { FranchiseDeletedEvent } from './events/franchise.deleted'
+import { FranchiseGroupIdChangedEvent } from './events/franchise.group.id.changed'
 import { InvalidFranchiseException } from './exceptions/invalid.franchise'
 import { FranchiseGroupId } from './value-objects/franchise.group.id'
 import { FranchiseId } from './value-objects/franchise.id'
@@ -13,6 +16,9 @@ export class Franchise extends AgreggateRoot<FranchiseId> {
         private _groupId: FranchiseGroupId,
     ) {
         super(id)
+        this.apply(
+            new FranchiseCreatedEvent(id, this.name, this.rif, this.groupId),
+        )
     }
 
     get name() {
@@ -37,6 +43,11 @@ export class Franchise extends AgreggateRoot<FranchiseId> {
 
     changeGroupId(groupId: FranchiseGroupId) {
         this._groupId = groupId
+        this.apply(new FranchiseGroupIdChangedEvent(this.id, groupId))
+    }
+
+    delete() {
+        this.apply(new FranchiseDeletedEvent(this.id))
     }
 
     validateState(): void {

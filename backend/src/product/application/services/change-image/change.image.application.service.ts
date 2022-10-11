@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { ImageStorage } from 'src/core/application/storage/images/image.storage'
 import { ProductImage } from 'src/product/domain/value-objects/image'
@@ -14,6 +15,7 @@ export class ChangeProductImageApplicationService
     constructor(
         private productRepository: ProductRepository,
         private imageStorage: ImageStorage,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(
@@ -29,6 +31,7 @@ export class ChangeProductImageApplicationService
         })
         product.changeImage(new ProductImage(newImage.url))
         await this.productRepository.save(product)
+        this.eventHandler.publish(product.pullEvents())
         await this.imageStorage.delete({
             url: oldImage.value,
         })

@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { Email } from 'src/user/domain/value-objects/email'
 import { UserId } from 'src/user/domain/value-objects/user.id'
@@ -10,7 +11,10 @@ import { ChangeEmailResponse } from './types/change.email.response'
 export class ChangeEmailApplicationService
     implements ApplicationService<ChangeEmailDTO, ChangeEmailResponse>
 {
-    constructor(private userRepository: UserRepository) {}
+    constructor(
+        private userRepository: UserRepository,
+        private eventHandler: EventHandler,
+    ) {}
 
     async execute(data: ChangeEmailDTO): Promise<ChangeEmailResponse> {
         const possibleUser = await this.userRepository.getByEmail(
@@ -21,6 +25,7 @@ export class ChangeEmailApplicationService
         if (!user) throw new UserNotFoundException()
         user.changeEmail(new Email(data.email))
         await this.userRepository.save(user)
+        this.eventHandler.publish(user.pullEvents())
         return {
             id: user.id.value,
         }

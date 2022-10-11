@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { UUIDGenerator } from 'src/core/application/UUID/UUID.generator'
 import { Franchise } from 'src/franchise/domain/franchise'
@@ -15,6 +16,7 @@ export class CreateFranchiseApplicationService
     constructor(
         private franchiseRepository: FranchiseRepository,
         private uuidGenerator: UUIDGenerator,
+        private eventHandler: EventHandler,
     ) {}
 
     async execute(data: CreateFranchiseDTO): Promise<CreateFranchiseResponse> {
@@ -25,6 +27,7 @@ export class CreateFranchiseApplicationService
             new FranchiseGroupId(this.uuidGenerator.generate()),
         )
         await this.franchiseRepository.save(franchise)
+        this.eventHandler.publish(franchise.pullEvents())
         return {
             name: franchise.name.value,
             id: franchise.id.value,

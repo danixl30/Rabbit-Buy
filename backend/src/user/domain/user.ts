@@ -1,4 +1,9 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { UserCreatedEvent } from './events/user.created'
+import { UserDeletedEvent } from './events/user.deleted'
+import { UserEmailChangedEvent } from './events/user.email.changed'
+import { UserPasswordChangedEvent } from './events/user.password.changed'
+import { UserUsernameChangedEvent } from './events/user.username.changed'
 import { InvalidUserException } from './exceptions/invalid.user'
 import { Email } from './value-objects/email'
 import { Password } from './value-objects/password'
@@ -15,6 +20,15 @@ export class User extends AgreggateRoot<UserId> {
         private _role: Role,
     ) {
         super(_id)
+        this.apply(
+            new UserCreatedEvent(
+                this.id,
+                this.username,
+                this.password,
+                this.email,
+                this.role,
+            ),
+        )
     }
 
     get username() {
@@ -35,14 +49,21 @@ export class User extends AgreggateRoot<UserId> {
 
     changeUsername(newUsername: Username) {
         this._username = newUsername
+        this.apply(new UserUsernameChangedEvent(this.id, this.username))
     }
 
     changePassword(newPassword: Password) {
         this._password = newPassword
+        this.apply(new UserPasswordChangedEvent(this.id, this.password))
     }
 
     changeEmail(newEmail: Email) {
         this._email = newEmail
+        this.apply(new UserEmailChangedEvent(this.id, this.email))
+    }
+
+    delete() {
+        this.apply(new UserDeletedEvent(this.id))
     }
 
     validateState(): void {

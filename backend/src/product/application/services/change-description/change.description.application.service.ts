@@ -1,3 +1,4 @@
+import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { ProductDescription } from 'src/product/domain/value-objects/product.description'
 import { ProductId } from 'src/product/domain/value-objects/product.id'
@@ -13,7 +14,10 @@ export class ChangeProductDescriptionApplicationService
             ChangeProductDescriptionResponse
         >
 {
-    constructor(private productRepository: ProductRepository) {}
+    constructor(
+        private productRepository: ProductRepository,
+        private eventHandler: EventHandler,
+    ) {}
 
     async execute(
         data: ChangeProductDescriptionDTO,
@@ -24,6 +28,7 @@ export class ChangeProductDescriptionApplicationService
         if (!product) throw new ProductNotFoundException()
         product.changeDescription(new ProductDescription(data.description))
         await this.productRepository.save(product)
+        this.eventHandler.publish(product.pullEvents())
         return {
             id: product.id.value,
         }
