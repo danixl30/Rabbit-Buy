@@ -8,7 +8,7 @@ import { ProductRepository } from '../../repositories/product.repository'
 import { ChangeProductCategoryDTO } from './types/change.category.dto'
 import { ChangeProductCategoryResponse } from './types/change.category.response'
 
-export class ChangeProductCategoryApplicationService
+export class AddProductCategoryApplicationService
     implements
         ApplicationService<
             ChangeProductCategoryDTO,
@@ -27,7 +27,7 @@ export class ChangeProductCategoryApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.changeCategory(new CategoryRef(new CategoryId(data.category)))
+        product.addCategory(new CategoryRef(new CategoryId(data.category)))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

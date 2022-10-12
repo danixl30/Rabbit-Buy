@@ -2,7 +2,7 @@ import { DomainEvent } from 'src/core/domain/events/event'
 import { CategoryRef } from '../value-objects/category.ref'
 import { ProductId } from '../value-objects/product.id'
 
-export class ProductCategoryChangedEvent extends DomainEvent {
+export class ProductCategoryRemovedEvent extends DomainEvent {
     constructor(private _id: ProductId, private _category: CategoryRef) {
         super()
     }

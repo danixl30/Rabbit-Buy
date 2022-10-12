@@ -44,9 +44,9 @@ export class CreateProductApplicationService
             new ProductExistence(data.existence),
             new ProductPrice(data.price),
             new ProductCurrency(data.currency),
-            new CategoryRef(new CategoryId(data.category)),
             new FranchiseRef(new FranchiseId(provider.franchise)),
             new ProductImage(image.url),
+            data.categories.map((e) => new CategoryRef(new CategoryId(e))),
         )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())

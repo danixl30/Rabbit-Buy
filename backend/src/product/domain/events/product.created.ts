@@ -17,9 +17,9 @@ export class ProductCreatedEvent extends DomainEvent {
         private _existence: ProductExistence,
         private _price: ProductPrice,
         private _currency: ProductCurrency,
-        private _category: CategoryRef,
         private _franchise: FranchiseRef,
         private _image: ProductImage,
+        private _categories: CategoryRef[],
     ) {
         super()
     }
@@ -52,8 +52,8 @@ export class ProductCreatedEvent extends DomainEvent {
         return this._currency
     }
 
-    get category() {
-        return this._category
+    get categories() {
+        return this._categories
     }
 
     get franchise() {

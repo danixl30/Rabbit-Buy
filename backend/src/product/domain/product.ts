@@ -1,6 +1,7 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { ProductBoughtEvent } from './events/product.bought'
-import { ProductCategoryChangedEvent } from './events/product.category.changed'
+import { ProductCategoryAddedEvent } from './events/product.category.added'
+import { ProductCategoryRemovedEvent } from './events/product.category.removed'
 import { ProductCreatedEvent } from './events/product.created'
 import { ProductCurrencyChangedEvent } from './events/product.currency.changed'
 import { ProductDeletedEvent } from './events/product.deleted'
@@ -29,9 +30,9 @@ export class Product extends AgreggateRoot<ProductId> {
         private _existence: ProductExistence,
         private _price: ProductPrice,
         private _currency: ProductCurrency,
-        private _category: CategoryRef,
         private _franchise: FranchiseRef,
         private _image: ProductImage,
+        private _categories: CategoryRef[] = [],
     ) {
         super(id)
         this.apply(
@@ -42,9 +43,9 @@ export class Product extends AgreggateRoot<ProductId> {
                 this.existence,
                 this.price,
                 this.currency,
-                this.category,
                 this.franchise,
                 this.image,
+                this.categories,
             ),
         )
     }
@@ -73,8 +74,8 @@ export class Product extends AgreggateRoot<ProductId> {
         return this._currency
     }
 
-    get category() {
-        return this._category
+    get categories() {
+        return [...this._categories]
     }
 
     get franchise() {
@@ -101,9 +102,14 @@ export class Product extends AgreggateRoot<ProductId> {
         this.apply(new ProductCurrencyChangedEvent(this.id, currency))
     }
 
-    changeCategory(category: CategoryRef) {
-        this._category = category
-        this.apply(new ProductCategoryChangedEvent(this.id, category))
+    addCategory(category: CategoryRef) {
+        this._categories.push(category)
+        this.apply(new ProductCategoryAddedEvent(this.id, category))
+    }
+
+    removeCategory(category: CategoryRef) {
+        this._categories.filter((e) => !e.equals(category))
+        this.apply(new ProductCategoryRemovedEvent(this.id, category))
     }
 
     changeImage(image: ProductImage) {
@@ -137,7 +143,6 @@ export class Product extends AgreggateRoot<ProductId> {
             !this.existence ||
             !this.price ||
             !this.currency ||
-            !this.category ||
             !this.franchise ||
             !this.image
         )

@@ -2,12 +2,18 @@ import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { CategoryCreatedEvent } from './events/category.created'
 import { CategoryDeletedEvent } from './events/category.deleted'
 import { CategoryNameChangedEvent } from './events/category.name.changed'
+import { CategorySubCategoryAddedEvent } from './events/category.sub.category.added'
+import { CategorySubCategoryRemovedEvent } from './events/category.sub.category.removed'
 import { InvalidCategoryException } from './exceptions/invalid.category'
 import { CategoryId } from './value-objects/category.id'
 import { CategoryName } from './value-objects/category.name'
 
 export class Category extends AgreggateRoot<CategoryId> {
-    constructor(id: CategoryId, private _name: CategoryName) {
+    constructor(
+        id: CategoryId,
+        private _name: CategoryName,
+        private _subCategories: CategoryId[] = [],
+    ) {
         super(id)
         this.apply(new CategoryCreatedEvent(id, this.name))
     }
@@ -16,9 +22,25 @@ export class Category extends AgreggateRoot<CategoryId> {
         return this._name
     }
 
+    get subCategories() {
+        return this._subCategories
+    }
+
     changeName(name: CategoryName) {
         this._name = name
         this.apply(new CategoryNameChangedEvent(this.id, name))
+    }
+
+    addSubCategory(category: CategoryId) {
+        this._subCategories.push(category)
+        this.apply(new CategorySubCategoryAddedEvent(this.id, category))
+    }
+
+    removeSubCategory(category: CategoryId) {
+        this._subCategories = this._subCategories.filter(
+            (e) => !e.equals(category),
+        )
+        this.apply(new CategorySubCategoryRemovedEvent(this.id, category))
     }
 
     delete() {
