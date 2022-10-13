@@ -25,7 +25,7 @@ export class GetProductDetailApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        const categories = await product.categories.asyncMap<Category>(
+        const categories = await product.categories.asyncMap(
             async (e) => await this.categoryRepository.searchById(e.value),
         )
         const franchise = await this.franchiseRepository.searchById(
