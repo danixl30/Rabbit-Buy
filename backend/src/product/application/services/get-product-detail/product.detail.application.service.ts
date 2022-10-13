@@ -1,4 +1,5 @@
 import { CategoryRepository } from 'src/category/application/repositories/category.repository'
+import { Category } from 'src/category/domain/category'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { FranchiseRepository } from 'src/franchise/application/repositories/franchise.repository'
 import { ProductId } from 'src/product/domain/value-objects/product.id'
@@ -24,8 +25,8 @@ export class GetProductDetailApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        const category = await this.categoryRepository.searchById(
-            product.category.value,
+        const categories = await product.categories.asyncMap<Category>(
+            async (e) => await this.categoryRepository.searchById(e.value),
         )
         const franchise = await this.franchiseRepository.searchById(
             product.franchise.value,
@@ -37,7 +38,7 @@ export class GetProductDetailApplicationService
             existence: product.existence.value,
             price: product.price.value,
             currency: product.currency.value,
-            category: category?.name.value,
+            categories: categories.map((e) => e.name.value),
             franchise: {
                 name: franchise.id.value,
                 id: franchise.id.value,

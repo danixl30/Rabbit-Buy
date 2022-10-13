@@ -5,7 +5,7 @@ export type GetProductDetailResponse = {
     price: number
     currency: string
     existence: number
-    category: string
+    categories: string[]
     franchise: {
         name: string
         id: string
