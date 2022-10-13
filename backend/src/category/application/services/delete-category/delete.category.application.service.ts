@@ -22,6 +22,9 @@ export class DeleteCategoryApplicationService
         category.delete()
         await this.categoryRepository.delete(category)
         this.eventHandler.publish(category.pullEvents())
+        await category.subCategories.asyncForEach(
+            async (e) => await this.execute({ id: e.value }),
+        )
         return {
             name: category.name.value,
             id: category.id.value,

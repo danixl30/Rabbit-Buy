@@ -6,4 +6,5 @@ export const categoryDomainToPrimitive = (
 ): CategoryPrimitive => ({
     name: category.name.value,
     id: category.id.value,
+    subLevels: category.subCategories.isNotEmpty(),
 })

@@ -1,5 +1,4 @@
 import { CategoryRepository } from 'src/category/application/repositories/category.repository'
-import { Category } from 'src/category/domain/category'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { FranchiseRepository } from 'src/franchise/application/repositories/franchise.repository'
 import { ProductId } from 'src/product/domain/value-objects/product.id'
