@@ -10,6 +10,14 @@ export class ProductExistence implements ValueObject<ProductExistence> {
         return this.existence
     }
 
+    isGreaterThan(value: ProductExistence): boolean {
+        return this.existence > value.value
+    }
+
+    substract(value: ProductExistence): ProductExistence {
+        return new ProductExistence(this.existence - value.value)
+    }
+
     equals(other: ProductExistence): boolean {
         return other.value === this.value
     }

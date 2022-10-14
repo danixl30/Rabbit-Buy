@@ -118,11 +118,9 @@ export class Product extends AgreggateRoot<ProductId> {
     }
 
     buy(quantity: ProductExistence) {
-        if (quantity.value > this._existence.value)
+        if (quantity.isGreaterThan(this.existence))
             throw new NotExistenceException()
-        this._existence = new ProductExistence(
-            this._existence.value - quantity.value,
-        )
+        this._existence = this.existence.substract(quantity)
         this.apply(new ProductBoughtEvent(this.id, quantity))
     }
 
