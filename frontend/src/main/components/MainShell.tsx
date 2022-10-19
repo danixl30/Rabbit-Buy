@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './MainShellStyle.css';
+import '../Styles/MainShellStyle.css';
 import {
   AppShell,
   Navbar,

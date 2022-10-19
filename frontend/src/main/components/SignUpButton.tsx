@@ -6,7 +6,7 @@ type SignUpButtonProps = {
 
 export const SignUpButton = (props : SignUpButtonProps) => {
     return(
-        <Button onClick = {props.onClick} variant="outline" radius="xl" size="lg" compact>
+        <Button onClick = {props.onClick} size="lg" compact>
         REGISTRARSE
         </Button>
     );
