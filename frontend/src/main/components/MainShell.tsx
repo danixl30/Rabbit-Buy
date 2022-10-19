@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './MainShellStyle.css';
 import {
   AppShell,
   Navbar,
@@ -21,10 +22,8 @@ function HeaderMain(props : LoginButtonProps) {
     <AppShell
       padding="md"
       navbar={<Navbar width={{ base: 300 }} height={500} p="xs">{/* Navbar content */}</Navbar>}
-      header={<Header height={50} p="xs">{
-        <div style={{ display: 'flex', alignItems: 'rigth', height: '100%' }}>
-            <button onClick={props.onclick}>Login</button>
-        </div>}
+      header={<Header className='App-header' height={50} p="xs">{
+        <button onClick={props.onclick}>Login</button>}
         </Header>}
       styles={(theme) => ({
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
