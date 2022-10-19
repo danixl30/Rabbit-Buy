@@ -10,11 +10,13 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
+  Grid,
 } from '@mantine/core'
-
+import { SignInButton } from './SignInButton';
+import { SignUpButton } from './SignUpButton';
 
 type LoginButtonProps = {
-    onclick: () => void
+    onClick : () => void
 }
 
 function HeaderMain(props : LoginButtonProps) {
@@ -23,7 +25,18 @@ function HeaderMain(props : LoginButtonProps) {
       padding="md"
       navbar={<Navbar width={{ base: 300 }} height={500} p="xs">{/* Navbar content */}</Navbar>}
       header={<Header className='App-header' height={50} p="xs">{
-        <button onClick={props.onclick}>Login</button>}
+        <>
+        <Grid>
+          <Grid.Col span={3}>
+            <SignInButton onClick={props.onClick}></SignInButton>
+          </Grid.Col>
+          <Grid.Col span={3}  offset={3}>
+            <SignUpButton onClick={props.onClick}></SignUpButton>
+         </Grid.Col>
+        </Grid>
+        </>
+      }
+
         </Header>}
       styles={(theme) => ({
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },

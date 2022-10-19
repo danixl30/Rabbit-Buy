@@ -4,12 +4,10 @@ import { useMainPage } from "../hooks/useMainPage"
 
 
 export default function MainPage() {
-    let msg : string;
     const { goToLogin } = useMainPage(useRouterDomNavigation())
     return (
         <>
-            <HeaderMain onclick = {goToLogin}></HeaderMain>
-            {/* <button onClick={onClickLoginButton}>Login</button> */}
+            <HeaderMain onClick = {goToLogin}></HeaderMain>
         </>
     )
 }
