@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { ProviderRepository } from 'src/provider/application/repositories/provider.repository'
@@ -10,6 +11,7 @@ import {
     ProviderDocument,
 } from '../models/provider.model'
 
+@Injectable()
 export class ProviderMongoRepository implements ProviderRepository {
     constructor(
         @InjectModel(ProviderDb.name)

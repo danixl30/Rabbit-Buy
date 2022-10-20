@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { FranchiseRepository } from 'src/franchise/application/repositories/franchise.repository'
@@ -10,6 +11,7 @@ import {
     FranchiseDocument,
 } from '../models/franchise.model'
 
+@Injectable()
 export class FranchiseMongoRepository implements FranchiseRepository {
     constructor(
         @InjectModel(FranchiseDb.name)
