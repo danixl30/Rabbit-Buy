@@ -1,8 +1,17 @@
 .App-header {
-    background-color: #282c34;
+    background-color: #586d96;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
   }
 
+  .signInDiv{
+    position:relative;
+    left:940px;
+  }
+
+  .signUpDiv{
+    position:relative;
+    left:950px;
+  }
   

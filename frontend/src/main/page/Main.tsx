@@ -7,7 +7,7 @@ export default function MainPage() {
     const { goToLogin } = useMainPage(useRouterDomNavigation())
     return (
         <>
-            <HeaderMain onClick = {goToLogin}></HeaderMain>
+            <HeaderMain onclick={goToLogin}></HeaderMain>
         </>
     )
 }
