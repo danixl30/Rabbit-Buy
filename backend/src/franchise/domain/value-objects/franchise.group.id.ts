@@ -4,7 +4,7 @@ import { InvalidGroupIdException } from '../exceptions/invalid.group.id'
 
 export class FranchiseGroupId implements ValueObject<FranchiseGroupId> {
     constructor(private groupId: string) {
-        if (regExpUUID.test(this.groupId)) throw new InvalidGroupIdException()
+        if (!regExpUUID.test(this.groupId)) throw new InvalidGroupIdException()
     }
 
     get value(): string {

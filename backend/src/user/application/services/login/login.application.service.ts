@@ -7,6 +7,7 @@ import { UserNotFoundException } from '../../exceptions/user.not.found'
 import { UserRepository } from '../../repositories/user.repository'
 import { LoginServiceDTO } from './types/login.dto'
 import { LoginResponse } from './types/login.response'
+import { UserLogged } from './types/user.logged'
 
 export class LoginApplicationService
     implements ApplicationService<LoginServiceDTO, LoginResponse>
@@ -21,7 +22,7 @@ export class LoginApplicationService
         if (!user) throw new UserNotFoundException()
         if (!this.crypto.compare(data.password, user.password.value))
             throw new InvalidPasswordException()
-        const token = this.tokenManager.sign({ id: user.id.value })
+        const token = this.tokenManager.sign<UserLogged>({ id: user.id.value })
         return {
             token,
             role: user.role.value,

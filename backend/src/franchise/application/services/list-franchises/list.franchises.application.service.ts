@@ -7,7 +7,7 @@ export class ListFranchisesApplicationService
 {
     constructor(private franchiseRepository: FranchiseRepository) {}
 
-    async execute(_: undefined): Promise<ListFranchisesResponse> {
+    async execute(_: undefined = undefined): Promise<ListFranchisesResponse> {
         const franchises = await this.franchiseRepository.list()
         return {
             franchises: franchises.map((e) => ({

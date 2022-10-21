@@ -3,8 +3,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 export const configSwagger = (app: INestApplication) => {
     const config = new DocumentBuilder()
-        .setTitle('RabbirFood docs')
-        .setDescription('RabbirFood API docs')
+        .setTitle('Rabbit Buy docs')
+        .setDescription('Rabbit Buy API docs')
         .setVersion('1.0')
         .build()
     const document = SwaggerModule.createDocument(app, config)

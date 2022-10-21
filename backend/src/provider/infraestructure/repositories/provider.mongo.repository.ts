@@ -24,6 +24,7 @@ export class ProviderMongoRepository implements ProviderRepository {
             providerToSave._id = aggregate.id.value
             providerToSave.franchise = aggregate.franchise.value.value
             await providerToSave.save()
+            return aggregate
         }
         provider.franchise = aggregate.franchise.value.value
         await provider.save()

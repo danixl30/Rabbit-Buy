@@ -11,6 +11,10 @@ export class Role implements ValueObject<Role> {
         return this.role
     }
 
+    match(role: Role): boolean {
+        return role.value === this.value
+    }
+
     equals(other: Role): boolean {
         return other.value === this.role
     }

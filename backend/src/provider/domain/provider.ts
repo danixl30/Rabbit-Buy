@@ -20,6 +20,6 @@ export class Provider extends AgreggateRoot<ProviderId> {
     }
 
     validateState(): void {
-        if (!this.id || this.franchise) throw new InvalidProviderException()
+        if (!this.id || !this.franchise) throw new InvalidProviderException()
     }
 }
