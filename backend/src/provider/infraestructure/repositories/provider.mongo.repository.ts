@@ -37,8 +37,7 @@ export class ProviderMongoRepository implements ProviderRepository {
 
     async searchById(id: ProviderId): Promise<Provider> {
         const provider = await this.providerModel.findById(id.value)
-        if (!provider) return null
-        return providerDbToDomain(provider)
+        return provider ? providerDbToDomain(provider) : null
     }
 
     async findByFranchise(franchise: FranchiseRef): Promise<Provider[]> {

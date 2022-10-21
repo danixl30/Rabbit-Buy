@@ -43,13 +43,11 @@ export class UserMongoRepository implements UserRepository {
 
     async getById(userId: UserId): Promise<User> {
         const user = await this.userModel.findById(userId.value)
-        if (!user) return null
-        return userDocumentToDomain(user)
+        return user ? userDocumentToDomain(user) : null
     }
 
     async getByEmail(email: Email): Promise<User> {
         const user = await this.userModel.findOne({ email: email.value })
-        if (!user) return null
-        return userDocumentToDomain(user)
+        return user ? userDocumentToDomain(user) : null
     }
 }

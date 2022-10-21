@@ -42,16 +42,14 @@ export class FranchiseMongoRepository implements FranchiseRepository {
 
     async searchById(id: FranchiseId): Promise<Franchise> {
         const franchise = await this.franchiseModel.findById(id.value)
-        if (!franchise) return null
-        return franchiseDbToDomain(franchise)
+        return franchise ? franchiseDbToDomain(franchise) : null
     }
 
     async searchByGroudId(groupId: FranchiseGroupId): Promise<Franchise> {
         const franchise = await this.franchiseModel.findOne({
             groupId: groupId.value,
         })
-        if (!franchise) return null
-        return franchiseDbToDomain(franchise)
+        return franchise ? franchiseDbToDomain(franchise) : null
     }
 
     async list(): Promise<Franchise[]> {
