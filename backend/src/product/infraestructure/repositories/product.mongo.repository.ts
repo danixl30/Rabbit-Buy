@@ -83,16 +83,23 @@ export class ProductMongoRepository implements ProductRepository {
         }
         const products = await this.productModel
             .find({
-                name: { $search: '"' + criteria.text + '"' },
+                $or: [
+                    {
+                        productName: new RegExp(criteria.text, 'i'),
+                    },
+                    {
+                        description: new RegExp(criteria.text, 'i'),
+                    },
+                ],
             })
             .sort({ dateAdded: -1 })
+            .skip((page.value - 1) * 10)
             .limit(10)
-            .skip(page.value)
         return products.map(productDbToDomain)
     }
 
     async list(page?: ProductPage): Promise<Product[]> {
-        if (page) {
+        if (!page) {
             const products = await this.productModel
                 .find()
                 .sort({ dateAdded: -1 })
@@ -101,8 +108,8 @@ export class ProductMongoRepository implements ProductRepository {
         const products = await this.productModel
             .find()
             .sort({ dateAdded: -1 })
+            .skip((page.value - 1) * 10)
             .limit(10)
-            .skip(page.value)
         return products.map(productDbToDomain)
     }
 

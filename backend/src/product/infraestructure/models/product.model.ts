@@ -29,4 +29,4 @@ export class Product {
 
 export const ProductSchema = SchemaFactory.createForClass(Product)
 
-ProductSchema.index({ name: 'text', productName: 'text' })
+ProductSchema.index({ name: 'text', productName: 'text', description: 'text' })

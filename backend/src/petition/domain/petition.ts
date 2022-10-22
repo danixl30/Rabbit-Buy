@@ -10,6 +10,7 @@ import { PetitionQuantity } from './value-objects/petition.quantity'
 import { ProductCurrency } from './value-objects/product.currency'
 import { ProductName } from './value-objects/product.name'
 import { ProductPrice } from './value-objects/product.price'
+import { ProductRef } from './value-objects/product.ref'
 import { Status } from './value-objects/status'
 import { UserRef } from './value-objects/user.ref'
 
@@ -17,6 +18,7 @@ export class Petition extends AgreggateRoot<PetitionId> {
     constructor(
         id: PetitionId,
         private _productName: ProductName,
+        private _productId: ProductRef,
         private _price: ProductPrice,
         private _quantity: PetitionQuantity,
         private _currency: ProductCurrency,
@@ -30,6 +32,7 @@ export class Petition extends AgreggateRoot<PetitionId> {
             new PetitionCreatedEvent(
                 id,
                 this.productName,
+                this.product,
                 this.price,
                 this.quantity,
                 this.currency,
@@ -43,6 +46,10 @@ export class Petition extends AgreggateRoot<PetitionId> {
 
     get productName() {
         return this._productName
+    }
+
+    get product() {
+        return this._productId
     }
 
     get franchise() {
@@ -90,7 +97,8 @@ export class Petition extends AgreggateRoot<PetitionId> {
             !this.productName ||
             !this.price ||
             !this.currency ||
-            !this.franchise
+            !this.franchise ||
+            !this.product
         )
             throw new InvalidPetitionException()
     }

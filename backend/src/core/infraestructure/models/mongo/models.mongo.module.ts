@@ -6,6 +6,11 @@ import {
 } from 'src/franchise/infraestructure/models/franchise.model'
 import { FranchiseMongoRepository } from 'src/franchise/infraestructure/repositories/franchise.mongo.repository'
 import {
+    Petition,
+    PetitionSchema,
+} from 'src/petition/infraestructure/models/petition.model'
+import { PetitionMongoRepository } from 'src/petition/infraestructure/repositories/petition.mongo.repository'
+import {
     Product,
     ProductSchema,
 } from 'src/product/infraestructure/models/product.model'
@@ -25,6 +30,7 @@ import { UserMongoRepository } from 'src/user/infraestructure/repositories/user.
             { name: Franchise.name, schema: FranchiseSchema },
             { name: Provider.name, schema: ProviderSchema },
             { name: Product.name, schema: ProductSchema },
+            { name: Petition.name, schema: PetitionSchema },
         ]),
     ],
     providers: [
@@ -32,12 +38,14 @@ import { UserMongoRepository } from 'src/user/infraestructure/repositories/user.
         ProviderMongoRepository,
         FranchiseMongoRepository,
         ProductMongoRepository,
+        PetitionMongoRepository,
     ],
     exports: [
         UserMongoRepository,
         ProviderMongoRepository,
         FranchiseMongoRepository,
         ProductMongoRepository,
+        PetitionMongoRepository,
     ],
 })
 export class MongoModelsModule {}

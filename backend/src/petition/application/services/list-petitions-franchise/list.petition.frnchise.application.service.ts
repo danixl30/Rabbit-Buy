@@ -6,7 +6,7 @@ import { PetitionRepository } from '../../repositories/petition.repository'
 import { ListPetitionsFranchiseDTO } from './types/dto'
 import { ListPetitionsFranchiseResponse } from './types/response'
 
-export class ListPetitionsClientApplicationService
+export class ListPetitionsProviderApplicationService
     implements
         ApplicationService<
             ListPetitionsFranchiseDTO,

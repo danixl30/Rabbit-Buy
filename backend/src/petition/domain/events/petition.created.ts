@@ -6,6 +6,7 @@ import { PetitionQuantity } from '../value-objects/petition.quantity'
 import { ProductCurrency } from '../value-objects/product.currency'
 import { ProductName } from '../value-objects/product.name'
 import { ProductPrice } from '../value-objects/product.price'
+import { ProductRef } from '../value-objects/product.ref'
 import { Status } from '../value-objects/status'
 import { UserRef } from '../value-objects/user.ref'
 
@@ -13,6 +14,7 @@ export class PetitionCreatedEvent extends DomainEvent {
     constructor(
         private _id: PetitionId,
         private _productName: ProductName,
+        private _productId: ProductRef,
         private _price: ProductPrice,
         private _quantity: PetitionQuantity,
         private _currency: ProductCurrency,
@@ -30,6 +32,10 @@ export class PetitionCreatedEvent extends DomainEvent {
 
     get productName() {
         return this._productName
+    }
+
+    get product() {
+        return this._productId
     }
 
     get franchise() {

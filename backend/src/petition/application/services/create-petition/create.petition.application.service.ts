@@ -10,10 +10,12 @@ import { PetitionQuantity } from 'src/petition/domain/value-objects/petition.qua
 import { ProductCurrency } from 'src/petition/domain/value-objects/product.currency'
 import { ProductName } from 'src/petition/domain/value-objects/product.name'
 import { ProductPrice } from 'src/petition/domain/value-objects/product.price'
+import { ProductRef } from 'src/petition/domain/value-objects/product.ref'
 import { Status } from 'src/petition/domain/value-objects/status'
 import { Statuses } from 'src/petition/domain/value-objects/statuses'
 import { UserRef } from 'src/petition/domain/value-objects/user.ref'
 import { GetProductDetailApplicationService } from 'src/product/application/services/get-product-detail/product.detail.application.service'
+import { ProductId } from 'src/product/domain/value-objects/product.id'
 import { UserId } from 'src/user/domain/value-objects/user.id'
 import { PetitionRepository } from '../../repositories/petition.repository'
 import { ExistenceInsuficentException } from './exceptions/existence.insuficent'
@@ -39,6 +41,7 @@ export class CreatePetitionApplicationService
         const petition = new Petition(
             new PetitionId(this.uuid.generate()),
             new ProductName(product.name),
+            new ProductRef(new ProductId(data.product)),
             new ProductPrice(product.price),
             new PetitionQuantity(data.quantity),
             new ProductCurrency(product.currency),

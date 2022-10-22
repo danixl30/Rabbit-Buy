@@ -12,7 +12,7 @@ import {
     Query,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiConsumes, ApiHeader } from '@nestjs/swagger'
+import { ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger'
 import { Express } from 'express'
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
 import { CloudinaryImageStorage } from 'src/core/infraestructure/storage/image-cloudinary/service/cloudinary.service'
@@ -31,13 +31,14 @@ import { GetProviderApplicationService } from 'src/provider/application/services
 import { ConcreteExceptionReductor } from 'src/core/infraestructure/exception/exception.reductor'
 import { User as UserAuth } from 'src/user/infraestructure/decorators/user/user.decorator'
 import { User } from 'src/user/domain/user'
-import { rmSync } from 'fs'
 import { GetProductDetailApplicationService } from 'src/product/application/services/get-product-detail/product.detail.application.service'
 import { ListProductsApplicationService } from 'src/product/application/services/list-products/list.products.application.service'
 import { GetProductByCriteriaApplicationService } from 'src/product/application/services/get-by-criteria/get.products.criteria.application.service'
 import { configImageMulter } from '../helpers/multer.helper'
+import { FileFsManager } from 'src/core/infraestructure/files/fs/service/file.fs.manager'
 
 @Controller('product')
+@ApiTags('product')
 export class ProductController {
     constructor(
         private productRepository: ProductMongoRepository,
@@ -46,6 +47,7 @@ export class ProductController {
         private imageStorage: CloudinaryImageStorage,
         private franchiseRepository: FranchiseMongoRepository,
         private providerRepository: ProviderMongoRepository,
+        private fileManager: FileFsManager,
     ) {}
 
     @Post('create')
@@ -70,7 +72,7 @@ export class ProductController {
             ),
             new ConcreteExceptionReductor(),
         ).execute({ ...createDTO, image: file.path, provider: user.id.value })
-        rmSync(file.path)
+        await this.fileManager.delete({ path: file.path })
         return res
     }
 

@@ -1,15 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsInt, IsString, Length, Max, ValidateIf } from 'class-validator'
-import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
+import { IsString, Length, ValidateIf } from 'class-validator'
 
 export class CreateProductRequestDTO {
     @ApiProperty()
     @IsString()
-    //@Length(5, 20)
+    @Length(5, 20)
     name: string
     @ApiProperty()
     @IsString()
-    //@Max(500)
+    @Length(0, 500)
     description: string
     @ApiProperty()
     @ValidateIf((o) => o.price >= 0)
@@ -18,10 +17,11 @@ export class CreateProductRequestDTO {
     @IsString()
     currency: string
     @ApiProperty()
-    //@ValidateIf(o => o.existence >= 0)
+    @ValidateIf(
+        (o) => o.existence >= 0 && Math.ceil(o.existence) === o.existence,
+    )
     existence: number
     @ApiProperty()
-    //@ValidateIf(o => !Boolean(o.categories.find((e: string) => !regExpUUID.test(e))))
     categories: string[]
     @ApiProperty({ type: 'string', format: 'binary', required: true })
     image?: Express.Multer.File
