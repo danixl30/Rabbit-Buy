@@ -15,7 +15,7 @@ import { ProductPrice } from 'src/product/domain/value-objects/product.price'
 export const productDbToDomain = (product: ProductDocument): Product =>
     new Product(
         new ProductId(product.id),
-        new ProductName(product.name),
+        new ProductName(product.productName),
         new ProductDescription(product.description),
         new ProductExistence(product.existence),
         new ProductPrice(product.price),

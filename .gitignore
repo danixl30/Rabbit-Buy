@@ -1,6 +1,7 @@
 # compiled output
 /backend/dist
 /backend/node_modules
+/backend/public
 
 # Logs
 /backend/logs

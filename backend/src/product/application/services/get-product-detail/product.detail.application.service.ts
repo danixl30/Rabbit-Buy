@@ -39,7 +39,7 @@ export class GetProductDetailApplicationService
             currency: product.currency.value,
             categories: categories.map((e) => e.name.value),
             franchise: {
-                name: franchise.id.value,
+                name: franchise.name.value,
                 id: franchise.id.value,
             },
             image: product.image.value,

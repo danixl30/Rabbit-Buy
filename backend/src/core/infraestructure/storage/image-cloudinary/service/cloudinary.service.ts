@@ -6,8 +6,9 @@ import { SaveImageOptions } from 'src/core/application/storage/images/types/save
 import { ImageSaved } from 'src/core/application/storage/images/types/saved'
 
 cloudinary.config({
-    api_key: '',
-    api_secret: '',
+    api_key: '522569626842588',
+    api_secret: 'WnyV1hvgq0dYpyv3K9a6RFkUFrs',
+    cloud_name: 'dfgd7hsw3',
 })
 
 @Injectable()

@@ -8,7 +8,7 @@ export class Product {
     @Prop({ required: true, unique: true })
     _id: string
     @Prop({ required: true })
-    name: string
+    productName: string
     @Prop({ default: '' })
     description: string
     @Prop({ required: true })
@@ -28,3 +28,5 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product)
+
+ProductSchema.index({ name: 'text', productName: 'text' })

@@ -20,8 +20,8 @@ export class ProductMongoRepository implements ProductRepository {
         const product = await this.productModel.findById(aggregate.id.value)
         if (!product) {
             const productToSave = new this.productModel()
-            productToSave.id = aggregate.id.value
-            productToSave.name = aggregate.name.value
+            productToSave._id = aggregate.id.value
+            productToSave.productName = aggregate.name.value
             productToSave.description = aggregate.description.value
             productToSave.price = aggregate.price.value
             productToSave.existence = aggregate.existence.value
@@ -34,7 +34,7 @@ export class ProductMongoRepository implements ProductRepository {
             await productToSave.save()
             return aggregate
         }
-        product.name = aggregate.name.value
+        product.productName = aggregate.name.value
         product.description = aggregate.description.value
         product.price = aggregate.price.value
         product.existence = aggregate.existence.value
@@ -60,31 +60,30 @@ export class ProductMongoRepository implements ProductRepository {
         criteria: FilterByCriteriaDTO,
         page?: ProductPage,
     ): Promise<Product[]> {
-        if (page) {
+        if (!page) {
             const products = await this.productModel
                 .find({
-                    name: {
-                        $regex: criteria.text,
-                        option: 'i',
-                    },
-                    description: {
-                        $regex: criteria.text,
-                        option: 'i',
-                    },
+                    $or: [
+                        {
+                            name: {
+                                $regex: criteria.text,
+                                $options: 'i',
+                            },
+                        },
+                        {
+                            description: {
+                                $regex: criteria.text,
+                                $options: 'i',
+                            },
+                        },
+                    ],
                 })
                 .sort({ dateAdded: -1 })
             return products.map(productDbToDomain)
         }
         const products = await this.productModel
             .find({
-                name: {
-                    $regex: criteria.text,
-                    option: 'i',
-                },
-                description: {
-                    $regex: criteria.text,
-                    option: 'i',
-                },
+                name: { $search: '"' + criteria.text + '"' },
             })
             .sort({ dateAdded: -1 })
             .limit(10)
