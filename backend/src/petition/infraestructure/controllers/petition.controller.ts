@@ -8,7 +8,7 @@ import {
     ParseUUIDPipe,
     ParseIntPipe,
 } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
 import { ConcreteUUIDGenerator } from 'src/core/infraestructure/UUID/service/concrete.UUID.generator'
 import { ProductMongoRepository } from 'src/product/infraestructure/repositories/product.mongo.repository'
@@ -35,6 +35,7 @@ import { Roles } from 'src/user/infraestructure/guards/roles/metadata/roles.meta
 import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
 
 @Controller('petition')
+@ApiHeader({ name: 'auth' })
 @ApiTags('petition')
 @UseGuards(UserGuard)
 export class PetitionController {
@@ -71,7 +72,7 @@ export class PetitionController {
     @Get('client/:page')
     async getByClient(
         @UserAuth() user: User,
-        @Param('id', new ParseIntPipe()) page: number,
+        @Param('page', new ParseIntPipe()) page: number,
     ) {
         return await new ExceptionDecorator(
             new ListPetitionsClientApplicationService(this.petitionRepository),

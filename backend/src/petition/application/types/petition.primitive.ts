@@ -6,4 +6,5 @@ export type PetitionPrimitive = {
     price: number
     currency: string
     status: Statuses
+    quantity: number
 }

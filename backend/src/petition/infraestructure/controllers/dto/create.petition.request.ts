@@ -6,8 +6,6 @@ export class CreatePetitionRequestDTO {
     @IsUUID()
     product: string
     @ApiProperty()
-    @ValidateIf(
-        (o) => o.existence >= 0 && Math.ceil(o.existence) === o.existence,
-    )
+    @ValidateIf((o) => o.existence > 0 && o.existence.nextInt() === o.existence)
     quantity: number
 }

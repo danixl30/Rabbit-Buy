@@ -36,6 +36,7 @@ export class GetPetitionDetailApplicationService
             price: petition.price.value,
             currency: petition.currency.value,
             status: petition.status.value,
+            quantity: petition.quantity.value,
             client: {
                 name: client.username,
                 email: client.email,

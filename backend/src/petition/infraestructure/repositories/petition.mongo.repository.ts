@@ -56,7 +56,7 @@ export class PetitionMongoRepository implements PetitionRepository {
     }
 
     async searchById(id: PetitionId): Promise<Petition> {
-        const petition = await this.petitionModel.findByIdAndDelete(id.value)
+        const petition = await this.petitionModel.findById(id.value)
         return petition ? petitionDbToDomain(petition) : null
     }
 

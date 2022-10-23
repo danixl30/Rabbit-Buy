@@ -1,6 +1,7 @@
 interface String {
     isEmpty(): boolean
     isNotEmpty(): boolean
+    isInRage(lower: number, greater: number): boolean
 }
 
 String.prototype.isEmpty = function (): boolean {
@@ -9,4 +10,8 @@ String.prototype.isEmpty = function (): boolean {
 
 String.prototype.isNotEmpty = function (): boolean {
     return this.length !== 0
+}
+
+String.prototype.isInRage = function (lower, greater) {
+    return this.lenght >= lower && this.lenght <= greater
 }

@@ -27,6 +27,7 @@ export class ListPetitionsClientApplicationService
                 price: e.price.value,
                 currency: e.currency.value,
                 status: e.status.value,
+                quantity: e.quantity.value,
             })),
         }
     }
