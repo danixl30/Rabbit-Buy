@@ -1,5 +1,5 @@
 import { diskStorage } from 'multer'
-import { join } from 'path'
+import { join } from 'node:path'
 import { Express } from 'express'
 
 const imageFilter = (
