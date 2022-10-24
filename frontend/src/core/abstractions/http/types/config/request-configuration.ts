@@ -5,4 +5,5 @@ export type RequestConfiguration<T> = {
     body?: T
     params?: string[]
     headers?: Dicctionary<string>
+    queries?: Dicctionary<string>
 }

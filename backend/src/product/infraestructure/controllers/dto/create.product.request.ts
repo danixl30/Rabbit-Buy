@@ -17,9 +17,7 @@ export class CreateProductRequestDTO {
     @IsString()
     currency: string
     @ApiProperty()
-    @ValidateIf(
-        (o) => o.existence >= 0 && o.existence.nextInt() === o.existence,
-    )
+    @ValidateIf((o) => o.existence >= 0)
     existence: number
     @ApiProperty()
     categories: string[]

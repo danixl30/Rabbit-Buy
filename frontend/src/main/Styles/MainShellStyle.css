@@ -3,15 +3,14 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-  }
+}
 
-  .signInDiv{
-    position:relative;
-    left:940px;
-  }
+.signInDiv {
+    position: relative;
+    left: 940px;
+}
 
-  .signUpDiv{
-    position:relative;
-    left:950px;
-  }
-  
+.signUpDiv {
+    position: relative;
+    left: 950px;
+}

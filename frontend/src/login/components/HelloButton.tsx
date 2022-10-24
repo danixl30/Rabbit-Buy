@@ -1,8 +1,7 @@
-
 type HelloButtonProps = {
-    onClick : () => void
+    onClick: () => void
 }
 
-export const HelloButton = (props : HelloButtonProps) => (
+export const HelloButton = (props: HelloButtonProps) => (
     <button onClick={props.onClick}>Hello Button</button>
 )

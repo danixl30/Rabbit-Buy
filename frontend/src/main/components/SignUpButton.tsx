@@ -1,13 +1,13 @@
-import { Button } from '@mantine/core';
+import { Button } from '@mantine/core'
 
 type SignUpButtonProps = {
-    onClick : () => void
+    onClick: () => void
 }
 
-export const SignUpButton = (props : SignUpButtonProps) => {
-    return(
-        <Button onClick = {props.onClick} size="lg" compact>
-        REGISTRARSE
+export const SignUpButton = (props: SignUpButtonProps) => {
+    return (
+        <Button onClick={props.onClick} size="lg" compact>
+            REGISTRARSE
         </Button>
-    );
+    )
 }

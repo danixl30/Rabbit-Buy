@@ -5,17 +5,17 @@ import axios from 'axios'
 import { Job } from '../../../abstractions/http/types/job/job'
 import { abortControllerBuilder } from './abort-controller/abort-controller-builder'
 
-const core = axios.create({
-    url: 'http://localhost:4000',
-})
-
 export const useAxiosHttp = (): UseHttp => {
+    const core = axios.create({
+        baseURL: 'http://localhost:4000/api',
+    })
     const get = <T, U>(data: RequestConfiguration<T>): Job<U> => {
         const body = data.body || {}
         const headers = data.headers || {}
         const { signal, cancel } = abortControllerBuilder()
         const job = async (): Promise<Response<U>> => {
             const resp = await core.get<U>(data.url, {
+                params: data.queries || {},
                 headers,
                 signal,
                 ...body,
