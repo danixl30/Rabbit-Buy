@@ -13,6 +13,7 @@ export const PasswordInput = (props: PasswordInputProps) => (
             value={props.value}
             onChange={props.onChange}
             placeholder={props.placeholder || 'Password'}
+            label={props.placeholder || 'Password'}
         />
     </>
 )

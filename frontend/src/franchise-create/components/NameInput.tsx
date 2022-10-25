@@ -14,6 +14,7 @@ export const NameInput = (props: NameInputProps) => (
             value={props.value}
             onChange={props.onChange}
             placeholder="Nombre de la franquisia"
+            label="Nombre de la franquisia"
         />
     </>
 )

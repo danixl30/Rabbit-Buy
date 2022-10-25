@@ -1,20 +1,20 @@
 import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
 
-export type RifInputProps = {
+export type NameInputProps = {
     value: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     error?: string
 }
 
-export const RifInput = (props: RifInputProps) => (
+export const NameInput = (props: NameInputProps) => (
     <>
         <TextInput
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="RIF"
-            label="RIF"
+            placeholder="Name"
+            label="Nombre"
         />
     </>
 )

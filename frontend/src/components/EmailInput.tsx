@@ -1,4 +1,4 @@
-import { Input, TextInput } from '@mantine/core'
+import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
 
 export type EmailInputProps = {
@@ -14,6 +14,7 @@ export const EmailInput = (props: EmailInputProps) => (
             value={props.value}
             onChange={props.onChange}
             placeholder="Email"
+            label="Email"
         />
     </>
 )

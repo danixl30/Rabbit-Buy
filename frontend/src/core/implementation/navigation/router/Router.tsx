@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { CREATE_PRODUCT } from '../../../../create-product/page/route'
 import { CREATE_FRANCHISE } from '../../../../franchise-create/page/route'
 import { LOGIN_PAGE } from '../../../../login/page/route'
 import { MAIN_PAGE } from '../../../../main/page/route'
@@ -21,6 +22,9 @@ const RegisterProviderPage = lazy(
 )
 const CreateFranchisePage = lazy(
     () => import('../../../../franchise-create/page/CreateFranchise'),
+)
+const CreateProduct = lazy(
+    () => import('../../../../create-product/page/CreateProduct'),
 )
 
 export default function Router() {
@@ -50,6 +54,10 @@ export default function Router() {
                         <Route
                             path={CREATE_FRANCHISE}
                             element={<CreateFranchisePage />}
+                        />
+                        <Route
+                            path={CREATE_PRODUCT}
+                            element={<CreateProduct />}
                         />
                     </Routes>
                 </BrowserRouter>
