@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { UseNavigation } from '../../core/abstractions/navigation/navigation'
-import { UseProductService } from '../../services/abstractions/product-service'
-import { ProductDetail } from '../../services/abstractions/types/product-detail'
+import { UseProductService } from '../../services/abstractions/product/product-service'
+import { ProductDetail } from '../../services/abstractions/product/types/product-detail'
 
 export const useProductDetail = (
     navigation: UseNavigation,

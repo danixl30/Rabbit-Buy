@@ -1,7 +1,7 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
-import { UseProductService } from '../../abstractions/product-service'
-import { Product } from '../../abstractions/types/product'
-import { ProductDetail } from '../../abstractions/types/product-detail'
+import { UseProductService } from '../../abstractions/product/product-service'
+import { Product } from '../../abstractions/product/types/product'
+import { ProductDetail } from '../../abstractions/product/types/product-detail'
 
 export const useProductServiceHttp = (http: UseHttp): UseProductService => {
     const get = async (page: number): Promise<Product[]> => {

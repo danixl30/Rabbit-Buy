@@ -1,5 +1,5 @@
-import { Card, CardSection, Center, Space } from '@mantine/core'
-import { Product } from '../../services/abstractions/types/product'
+import { Card, CardSection, Center } from '@mantine/core'
+import { Product } from '../../services/abstractions/product/types/product'
 import { List } from './List'
 import { ProductImage } from './ProductImage'
 import { ProductNameText } from './ProductNameText'

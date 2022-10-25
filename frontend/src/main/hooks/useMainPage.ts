@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { UseNavigation } from '../../core/abstractions/navigation/navigation'
 import { LOGIN_PAGE } from '../../login/page/route'
-import { UseProductService } from '../../services/abstractions/product-service'
-import { Product } from '../../services/abstractions/types/product'
+import { UseProductService } from '../../services/abstractions/product/product-service'
+import { Product } from '../../services/abstractions/product/types/product'
 import { MAIN_PAGE } from '../page/route'
 
 export const useMainPage = (
