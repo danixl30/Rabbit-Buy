@@ -4,6 +4,7 @@ import { Response } from '../../../abstractions/http/types/response/response'
 import axios from 'axios'
 import { Job } from '../../../abstractions/http/types/job/job'
 import { abortControllerBuilder } from './abort-controller/abort-controller-builder'
+import { RequestConfigurationFile } from '../../../abstractions/http/types/config/request-config-file'
 
 export const useAxiosHttp = (): UseHttp => {
     const core = axios.create({
@@ -94,10 +95,48 @@ export const useAxiosHttp = (): UseHttp => {
         }
     }
 
+    const upload = <T, U>(
+        data: RequestConfigurationFile<T>,
+        onProgress: (loaded: number, total: number) => void,
+    ): Job<U> => {
+        const body = data.body || {}
+        const headers = data.headers || {}
+        const formData = new FormData()
+        Object.keys(data.files).forEach((key) =>
+            formData.append(key, data.files[key]),
+        )
+        const { signal, cancel } = abortControllerBuilder()
+        const config = {
+            onUploadProgress: (event: ProgressEvent) => {
+                onProgress(event.loaded, event.total)
+            },
+        }
+        const job = async (): Promise<Response<U>> => {
+            const resp = await core.post<U>(data.url, formData, {
+                headers: {
+                    ...headers,
+                    'Content-Type': 'multipart/form-data',
+                },
+                signal,
+                ...body,
+                ...config,
+            })
+            return {
+                code: resp.status,
+                body: resp.data,
+            }
+        }
+        return {
+            job,
+            cancel,
+        }
+    }
+
     return {
         get,
         post,
         put,
         delete: deleteReq,
+        upload,
     }
 }
