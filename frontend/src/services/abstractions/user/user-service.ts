@@ -1,4 +1,4 @@
-import {User} from '../../../global-state/user/types/user'
+import { User } from '../../../global-state/user/types/user'
 import { AdminRegister } from './types/admin-register'
 import { Login } from './types/login'
 import { LoginResponse } from './types/login-response'

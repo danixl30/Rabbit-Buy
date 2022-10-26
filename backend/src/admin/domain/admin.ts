@@ -1,18 +1,18 @@
-import {AgreggateRoot} from "src/core/domain/aggregates/aggregate.root";
-import {AdminCreatedEvent} from "./events/admin.created";
-import {AdminDeletedEvent} from "./events/admin.deleted";
-import {AdminEmailChangedEvent} from "./events/admin.email.changed";
-import {AdminNameChangedEvent} from "./events/admin.name.changed";
-import {InvalidAdminException} from "./exceptions/invalid.admin";
-import {AdminEmail} from "./value-objects/admin.email";
-import {AdminId} from "./value-objects/admin.id";
-import {AdminName} from "./value-objects/admin.name";
+import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AdminCreatedEvent } from './events/admin.created'
+import { AdminDeletedEvent } from './events/admin.deleted'
+import { AdminEmailChangedEvent } from './events/admin.email.changed'
+import { AdminNameChangedEvent } from './events/admin.name.changed'
+import { InvalidAdminException } from './exceptions/invalid.admin'
+import { AdminEmail } from './value-objects/admin.email'
+import { AdminId } from './value-objects/admin.id'
+import { AdminName } from './value-objects/admin.name'
 
 export class Admin extends AgreggateRoot<AdminId> {
     constructor(
         id: AdminId,
         private _name: AdminName,
-        private _email: AdminEmail
+        private _email: AdminEmail,
     ) {
         super(id)
         this.apply(new AdminCreatedEvent(id, this.name, this.email))
@@ -41,10 +41,7 @@ export class Admin extends AgreggateRoot<AdminId> {
     }
 
     validateState(): void {
-        if (
-            !this.id
-            || !this.name
-            || !this.email
-        ) throw new InvalidAdminException()
+        if (!this.id || !this.name || !this.email)
+            throw new InvalidAdminException()
     }
 }

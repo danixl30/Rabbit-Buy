@@ -1,5 +1,5 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
-import {User} from '../../../global-state/user/types/user'
+import { User } from '../../../global-state/user/types/user'
 import { AdminRegister } from '../../abstractions/user/types/admin-register'
 import { Login } from '../../abstractions/user/types/login'
 import { LoginResponse } from '../../abstractions/user/types/login-response'
@@ -47,8 +47,8 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         const { job } = http.get<unknown, User>({
             url: '/user',
             headers: {
-                auth: token
-            }
+                auth: token,
+            },
         })
         return (await job()).body!!
     }
@@ -58,6 +58,6 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         register,
         registerAdmin,
         registerProvider,
-        getUser
+        getUser,
     }
 }

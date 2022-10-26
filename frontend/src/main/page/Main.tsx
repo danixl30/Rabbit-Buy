@@ -1,6 +1,6 @@
 import { Button, Center, Input, Loader, Space } from '@mantine/core'
 import { ChangeEvent, KeyboardEvent } from 'react'
-import {NavBar} from '../../components/NavBar'
+import { NavBar } from '../../components/NavBar'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'

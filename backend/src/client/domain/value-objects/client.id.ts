@@ -1,6 +1,6 @@
-import {ValueObject} from "src/core/domain/value-objects/value.object";
-import {regExpUUID} from "src/utils/reg-exps/UUID/UUID.reg.exp";
-import {InvalidClientIdException} from "../exceptions/invalid.client.id";
+import { ValueObject } from 'src/core/domain/value-objects/value.object'
+import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
+import { InvalidClientIdException } from '../exceptions/invalid.client.id'
 
 export class ClientId implements ValueObject<ClientId> {
     constructor(private id: string) {

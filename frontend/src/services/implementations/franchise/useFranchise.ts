@@ -1,6 +1,6 @@
-import {UseHttp} from "../../../core/abstractions/http/http";
-import {CreateFranchise} from "../../abstractions/franchise/dto/create-franchise";
-import {UseFranchise} from "../../abstractions/franchise/franchise-service";
+import { UseHttp } from '../../../core/abstractions/http/http'
+import { CreateFranchise } from '../../abstractions/franchise/dto/create-franchise'
+import { UseFranchise } from '../../abstractions/franchise/franchise-service'
 
 export const useFranchise = (http: UseHttp): UseFranchise => {
     const create = async (token: string, dto: CreateFranchise) => {
@@ -8,14 +8,14 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
             url: 'franchise/create',
             body: dto,
             headers: {
-                auth: token
-            }
+                auth: token,
+            },
         })
         await job()
         return true
     }
 
     return {
-        create
+        create,
     }
 }

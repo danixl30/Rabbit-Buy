@@ -1,6 +1,6 @@
-import { createContext, useState, ReactNode } from "react"
-import {Optional} from "../../utils/types/optional"
-import {User} from "./types/user"
+import { createContext, useState, ReactNode } from 'react'
+import { Optional } from '../../utils/types/optional'
+import { User } from './types/user'
 
 export type UserState = {
     user: Optional<User>
@@ -19,10 +19,10 @@ export const UserStateProvider = (props: UserStateProviderProps) => {
     const putUser = (user: User) => setUser(user)
 
     return (
-        <UserContext.Provider 
+        <UserContext.Provider
             value={{
                 user,
-                putUser
+                putUser,
             }}
         >
             {props.children}
