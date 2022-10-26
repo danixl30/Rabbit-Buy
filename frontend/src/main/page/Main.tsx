@@ -1,5 +1,6 @@
 import { Button, Center, Input, Loader, Space } from '@mantine/core'
 import { ChangeEvent, KeyboardEvent } from 'react'
+import {NavBar} from '../../components/NavBar'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
@@ -41,42 +42,44 @@ export default function MainPage() {
 
     return (
         <>
-            <Center>
-                <List>
-                    <Input
-                        onKeyPress={onKeyPress}
-                        value={inputSearch}
-                        placeholder="Buscar"
-                        onChange={onChangeInput}
-                    />
-                    <Space h="xl" />
-                    <ProductList>
-                        {products.map((e) => (
-                            <div key={e.id}>
-                                <ProductCard
-                                    name={e.name}
-                                    id={e.id}
-                                    price={e.price}
-                                    currency={e.currency}
-                                    image={e.image}
-                                    onClick={() => onClickProduct(e)}
-                                />
-                            </div>
-                        ))}
-                    </ProductList>
-                    {!isTop && (
-                        <>
-                            {!isLoading ? (
-                                <Button onClick={onClickShowMore}>
-                                    Obtener mas
-                                </Button>
-                            ) : (
-                                <Loader />
-                            )}
-                        </>
-                    )}
-                </List>
-            </Center>
+            <NavBar>
+                <Center>
+                    <List>
+                        <Input
+                            onKeyPress={onKeyPress}
+                            value={inputSearch}
+                            placeholder="Buscar"
+                            onChange={onChangeInput}
+                        />
+                        <Space h="xl" />
+                        <ProductList>
+                            {products.map((e) => (
+                                <div key={e.id}>
+                                    <ProductCard
+                                        name={e.name}
+                                        id={e.id}
+                                        price={e.price}
+                                        currency={e.currency}
+                                        image={e.image}
+                                        onClick={() => onClickProduct(e)}
+                                    />
+                                </div>
+                            ))}
+                        </ProductList>
+                        {!isTop && (
+                            <>
+                                {!isLoading ? (
+                                    <Button onClick={onClickShowMore}>
+                                        Obtener mas
+                                    </Button>
+                                ) : (
+                                    <Loader />
+                                )}
+                            </>
+                        )}
+                    </List>
+                </Center>
+            </NavBar>
         </>
     )
 }

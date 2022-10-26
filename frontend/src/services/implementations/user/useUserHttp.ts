@@ -1,4 +1,5 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
+import {User} from '../../../global-state/user/types/user'
 import { AdminRegister } from '../../abstractions/user/types/admin-register'
 import { Login } from '../../abstractions/user/types/login'
 import { LoginResponse } from '../../abstractions/user/types/login-response'
@@ -42,10 +43,21 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         return true
     }
 
+    const getUser = async (token: string) => {
+        const { job } = http.get<unknown, User>({
+            url: '/user',
+            headers: {
+                auth: token
+            }
+        })
+        return (await job()).body!!
+    }
+
     return {
         login,
         register,
         registerAdmin,
         registerProvider,
+        getUser
     }
 }
