@@ -15,6 +15,7 @@ export const NameInput = (props: NameInputProps) => (
             onChange={props.onChange}
             placeholder="Name"
             label="Nombre"
+            radius="md"
         />
     </>
 )

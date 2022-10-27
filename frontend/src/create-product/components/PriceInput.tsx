@@ -14,13 +14,8 @@ export const PriceInput = (props: PriceInputProps) => (
             onChange={props.onChange}
             placeholder="Price"
             label="Price"
+            radius="md"
             min={0}
-            parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
-            formatter={(value) =>
-                !Number.isNaN(parseFloat(value || ''))
-                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                    : '$ '
-            }
         />
     </>
 )

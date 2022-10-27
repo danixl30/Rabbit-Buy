@@ -15,6 +15,7 @@ export const EmailInput = (props: EmailInputProps) => (
             onChange={props.onChange}
             placeholder="Email"
             label="Email"
+            radius="md"
         />
     </>
 )

@@ -1,4 +1,5 @@
-import { Container, Loader, Space, Title } from '@mantine/core'
+import { Center, Container, Loader, Space, Title } from '@mantine/core'
+import { Layout } from '../../components/Layout'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
@@ -21,41 +22,47 @@ export default function ProductDetailPage() {
     if (isLoading)
         return (
             <>
-                <Loader />
+                <Layout>
+                    <Center>
+                        <Loader />
+                    </Center>
+                </Layout>
             </>
         )
     return (
         <>
-            <Container>
-                <Title order={1}>Product detail:</Title>
-                <ProductContainer>
-                    <Item span={4}>
-                        <ProductImage src={product!!.image} />
-                    </Item>
-                    <Item span={4}>
-                        <ProductName text={product!!.name} />
-                        <Space h="xl" />
-                        <ProductDescription text={product!!.description} />
-                    </Item>
-                    <Item span={1}>
-                        <ProductFranchise name={product!!.franchise.name} />
-                        <Space h="md" />
-                        <ProductPrice
-                            price={product!!.price}
-                            currency={product!!.currency}
-                        />
-                        <Space h="md" />
-                        <QuantityInput
-                            disabled={product!!.existence < 1}
-                            quantity={product!!.existence}
-                        />
-                        <Space h="md" />
-                        <MakePetitionButton
-                            disabled={product!!.existence < 1}
-                        />
-                    </Item>
-                </ProductContainer>
-            </Container>
+            <Layout>
+                <Container>
+                    <Title order={1}>Product detail:</Title>
+                    <ProductContainer>
+                        <Item span={4}>
+                            <ProductImage src={product!!.image} />
+                        </Item>
+                        <Item span={4}>
+                            <ProductName text={product!!.name} />
+                            <Space h="xl" />
+                            <ProductDescription text={product!!.description} />
+                        </Item>
+                        <Item span={1}>
+                            <ProductFranchise name={product!!.franchise.name} />
+                            <Space h="md" />
+                            <ProductPrice
+                                price={product!!.price}
+                                currency={product!!.currency}
+                            />
+                            <Space h="md" />
+                            <QuantityInput
+                                disabled={product!!.existence < 1}
+                                quantity={product!!.existence}
+                            />
+                            <Space h="md" />
+                            <MakePetitionButton
+                                disabled={product!!.existence < 1}
+                            />
+                        </Item>
+                    </ProductContainer>
+                </Container>
+            </Layout>
         </>
     )
 }

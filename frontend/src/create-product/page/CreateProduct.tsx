@@ -13,6 +13,7 @@ import { ExistenceInput } from '../components/ExistenceInput'
 import { ImageInput } from '../../components/ImageInput'
 import { useImage } from '../hooks/useImage'
 import { ProductImage } from '../components/ProductImage'
+import { Layout } from '../../components/Layout'
 
 export default function CreateProduct() {
     const {
@@ -40,46 +41,51 @@ export default function CreateProduct() {
 
     return (
         <>
-            <Center>
-                <FormCard>
-                    <Center>
-                        <CreateProductTitle />
-                    </Center>
-                    <Space h="xl" />
-                    <SimpleGrid cols={1}>
-                        <NameInput value={name} onChange={onChangeNameInput} />
-                        <DescriptionInput
-                            value={description}
-                            onChange={onChangeDescriptionInput}
-                        />
-                        <SimpleGrid cols={2}>
-                            <PriceInput
-                                value={price}
-                                onChange={onChangePrice}
+            <Layout>
+                <Center>
+                    <FormCard>
+                        <Center>
+                            <CreateProductTitle />
+                        </Center>
+                        <Space h="xl" />
+                        <SimpleGrid cols={1}>
+                            <NameInput
+                                value={name}
+                                onChange={onChangeNameInput}
                             />
-                            <CurrencyInput
-                                value={currency}
-                                onChange={onChangeCurrencyInput}
+                            <DescriptionInput
+                                value={description}
+                                onChange={onChangeDescriptionInput}
                             />
+                            <SimpleGrid cols={2}>
+                                <PriceInput
+                                    value={price}
+                                    onChange={onChangePrice}
+                                />
+                                <CurrencyInput
+                                    value={currency}
+                                    onChange={onChangeCurrencyInput}
+                                />
+                            </SimpleGrid>
+                            <ExistenceInput
+                                value={existence}
+                                onChange={onChangeExistence}
+                            />
+                            <ImageInput onChange={onChangeImage} />
                         </SimpleGrid>
-                        <ExistenceInput
-                            value={existence}
-                            onChange={onChangeExistence}
-                        />
-                        <ImageInput onChange={onChangeImage} />
-                    </SimpleGrid>
-                    {imageText && (
-                        <>
-                            <Space h="xl" />
-                            <ProductImage src={imageText} />
-                        </>
-                    )}
-                    <Space h="xl" />
-                    <Center>
-                        <CreateButton onClick={() => {}} disabled />
-                    </Center>
-                </FormCard>
-            </Center>
+                        {imageText && (
+                            <>
+                                <Space h="xl" />
+                                <ProductImage src={imageText} />
+                            </>
+                        )}
+                        <Space h="xl" />
+                        <Center>
+                            <CreateButton onClick={() => {}} disabled />
+                        </Center>
+                    </FormCard>
+                </Center>
+            </Layout>
         </>
     )
 }

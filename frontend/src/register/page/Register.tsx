@@ -2,6 +2,7 @@ import { Center, SimpleGrid, Space } from '@mantine/core'
 import { ChangeEvent } from 'react'
 import { EmailInput } from '../../components/EmailInput'
 import { FormCard } from '../../components/FormCard'
+import { Layout } from '../../components/Layout'
 import { PasswordInput } from '../../components/PasswordInput'
 import { UsernameInput } from '../../components/UsernameInput'
 import { RegisterButton } from '../components/RegisterButton'
@@ -31,37 +32,42 @@ export default function RegisterPage() {
 
     return (
         <>
-            <Center>
-                <FormCard>
-                    <Center>
-                        <RegisterTitle />
-                    </Center>
-                    <Space h="xl" />
-                    <SimpleGrid cols={1}>
-                        <UsernameInput
-                            value={username}
-                            onChange={onChangeUsernameInput}
-                        />
-                        <EmailInput
-                            value={email}
-                            onChange={onChangeEmailInput}
-                        />
-                        <PasswordInput
-                            value={password}
-                            onChange={onChangePasswordInput}
-                        />
-                        <PasswordInput
-                            value={confirmPassword}
-                            onChange={onChangeConfirmPasswordInput}
-                            placeholder="Confirm password"
-                        />
-                    </SimpleGrid>
-                    <Space h="xl" />
-                    <Center>
-                        <RegisterButton disabled={true} onClick={() => {}} />
-                    </Center>
-                </FormCard>
-            </Center>
+            <Layout>
+                <Center>
+                    <FormCard>
+                        <Center>
+                            <RegisterTitle />
+                        </Center>
+                        <Space h="xl" />
+                        <SimpleGrid cols={1}>
+                            <UsernameInput
+                                value={username}
+                                onChange={onChangeUsernameInput}
+                            />
+                            <EmailInput
+                                value={email}
+                                onChange={onChangeEmailInput}
+                            />
+                            <PasswordInput
+                                value={password}
+                                onChange={onChangePasswordInput}
+                            />
+                            <PasswordInput
+                                value={confirmPassword}
+                                onChange={onChangeConfirmPasswordInput}
+                                placeholder="Confirm password"
+                            />
+                        </SimpleGrid>
+                        <Space h="xl" />
+                        <Center>
+                            <RegisterButton
+                                disabled={true}
+                                onClick={() => {}}
+                            />
+                        </Center>
+                    </FormCard>
+                </Center>
+            </Layout>
         </>
     )
 }

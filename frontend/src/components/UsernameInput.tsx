@@ -15,6 +15,7 @@ export const UsernameInput = (props: UsernameInputProps) => (
             onChange={props.onChange}
             placeholder="Nombre de usuario"
             label="Nombre de usuario"
+            radius="md"
         />
     </>
 )

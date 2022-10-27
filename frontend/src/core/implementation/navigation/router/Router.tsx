@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { CREATE_PRODUCT } from '../../../../create-product/page/route'
 import { CREATE_FRANCHISE } from '../../../../franchise-create/page/route'
 import { LOGIN_PAGE } from '../../../../login/page/route'
@@ -59,6 +59,7 @@ export default function Router() {
                             path={CREATE_PRODUCT}
                             element={<CreateProduct />}
                         />
+                        <Route path="*" element={<Navigate to={MAIN_PAGE} />} />
                     </Routes>
                 </BrowserRouter>
             </Suspense>

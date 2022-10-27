@@ -15,6 +15,7 @@ export const ExistenceInput = (props: ExistenceInputProps) => (
             placeholder="Existence"
             min={0}
             label="Existencia"
+            radius="md"
         />
     </>
 )

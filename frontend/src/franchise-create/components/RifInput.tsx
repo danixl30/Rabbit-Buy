@@ -15,6 +15,7 @@ export const RifInput = (props: RifInputProps) => (
             onChange={props.onChange}
             placeholder="RIF"
             label="RIF"
+            radius="md"
         />
     </>
 )

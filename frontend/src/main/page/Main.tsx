@@ -1,5 +1,6 @@
 import { Button, Center, Input, Loader, Space } from '@mantine/core'
 import { ChangeEvent, KeyboardEvent } from 'react'
+import { Layout } from '../../components/Layout'
 import { NavBar } from '../../components/NavBar'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
@@ -36,13 +37,15 @@ export default function MainPage() {
     if (isLoading && !products)
         return (
             <>
-                <Loader />
+                <Center>
+                    <Loader />
+                </Center>
             </>
         )
 
     return (
         <>
-            <NavBar>
+            <Layout>
                 <Center>
                     <List>
                         <Input
@@ -50,6 +53,7 @@ export default function MainPage() {
                             value={inputSearch}
                             placeholder="Buscar"
                             onChange={onChangeInput}
+                            radius="md"
                         />
                         <Space h="xl" />
                         <ProductList>
@@ -79,7 +83,7 @@ export default function MainPage() {
                         )}
                     </List>
                 </Center>
-            </NavBar>
+            </Layout>
         </>
     )
 }

@@ -15,6 +15,7 @@ export const GroupIdInput = (props: GroupIdInputProps) => (
             onChange={props.onChange}
             placeholder="Group Id"
             label="Group Id"
+            radius="md"
         />
     </>
 )

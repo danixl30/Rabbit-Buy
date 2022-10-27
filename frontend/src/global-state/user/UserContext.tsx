@@ -7,14 +7,21 @@ export type UserState = {
     putUser(user: User): void
 }
 
-const UserContext = createContext<Optional<UserState>>(undefined)
+export const UserContext = createContext<Optional<UserState>>(undefined)
 
 export type UserStateProviderProps = {
     children: ReactNode | ReactNode[]
 }
 
+const userTest = {
+    username: 'test1',
+    email: 'test@mail.com',
+    id: '1',
+    role: 'USER',
+}
+
 export const UserStateProvider = (props: UserStateProviderProps) => {
-    const [user, setUser] = useState<User>()
+    const [user, setUser] = useState<User>(userTest)
 
     const putUser = (user: User) => setUser(user)
 

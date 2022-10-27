@@ -15,6 +15,7 @@ export const CurrencyInput = (props: CurrencyInputProps) => (
             onChange={props.onChange}
             placeholder="Currency"
             label="Currency"
+            radius="md"
         />
     </>
 )
