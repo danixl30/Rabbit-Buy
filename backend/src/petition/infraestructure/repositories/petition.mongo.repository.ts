@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { PetitionRepository } from 'src/petition/application/repositories/petition.repository'
+import { CriteriaValues } from 'src/petition/application/types/criteria.values'
 import { PaginationDTO } from 'src/petition/application/types/pagination.dto'
 import { Petition } from 'src/petition/domain/petition'
 import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
@@ -99,6 +100,38 @@ export class PetitionMongoRepository implements PetitionRepository {
         const petitions = await this.petitionModel
             .find({
                 franchise: franchise.value.value,
+            })
+            .sort({ date: -1 })
+            .skip((page.page - 1) * 10)
+            .limit(10)
+        return petitions.map(petitionDbToDomain)
+    }
+
+    async filterByClientCriteria(
+        client: UserRef,
+        criterias: CriteriaValues,
+        page?: PaginationDTO,
+    ): Promise<Petition[]> {
+        const petitions = await this.petitionModel
+            .find({
+                client: client.value.value,
+                productName: new RegExp(criterias.term),
+            })
+            .sort({ date: -1 })
+            .skip((page.page - 1) * 10)
+            .limit(10)
+        return petitions.map(petitionDbToDomain)
+    }
+
+    async filterByFranchiseCriteria(
+        franchise: FranchiseRef,
+        criterias: CriteriaValues,
+        page?: PaginationDTO,
+    ): Promise<Petition[]> {
+        const petitions = await this.petitionModel
+            .find({
+                franchise: franchise.value.value,
+                productName: new RegExp(criterias.term),
             })
             .sort({ date: -1 })
             .skip((page.page - 1) * 10)

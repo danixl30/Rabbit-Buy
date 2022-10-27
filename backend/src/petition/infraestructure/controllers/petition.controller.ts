@@ -1,5 +1,6 @@
 import {
     Controller,
+    Query,
     UseGuards,
     Post,
     Body,
@@ -33,6 +34,8 @@ import { ProviderMongoRepository } from 'src/provider/infraestructure/repositori
 import { Roles as RolesData } from 'src/user/domain/value-objects/roles'
 import { Roles } from 'src/user/infraestructure/guards/roles/metadata/roles.metadata'
 import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
+import { ListPetitionsClientCriteriaApplicationService } from 'src/petition/application/services/list-petitions-client-by-criteria/list.petitions.client.criteria.application.service'
+import { ListPetitionsProviderCriteriaApplicationService } from 'src/petition/application/services/list-petitions-franchise-by-criteria/list.petition.frnchise.criteria.application.service'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -50,6 +53,8 @@ export class PetitionController {
     ) {}
 
     @Post('create')
+    @Roles(RolesData.USER)
+    @UseGuards(RolesGuard)
     async create(
         @Body() createDto: CreatePetitionRequestDTO,
         @UserAuth() user: User,
@@ -70,6 +75,8 @@ export class PetitionController {
     }
 
     @Get('client/:page')
+    @Roles(RolesData.USER)
+    @UseGuards(RolesGuard)
     async getByClient(
         @UserAuth() user: User,
         @Param('page', new ParseIntPipe()) page: number,
@@ -78,6 +85,22 @@ export class PetitionController {
             new ListPetitionsClientApplicationService(this.petitionRepository),
             new ConcreteExceptionReductor(),
         ).execute({ client: user.id.value, page })
+    }
+
+    @Get('client/criteria/:page')
+    @Roles(RolesData.USER)
+    @UseGuards(RolesGuard)
+    async getByClientCriteria(
+        @UserAuth() user: User,
+        @Param('page', new ParseIntPipe()) page: number,
+        @Query('term') term: string,
+    ) {
+        return await new ExceptionDecorator(
+            new ListPetitionsClientCriteriaApplicationService(
+                this.petitionRepository,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({ client: user.id.value, page, term })
     }
 
     @Get('franchise/:page')
@@ -94,6 +117,23 @@ export class PetitionController {
             ),
             new ConcreteExceptionReductor(),
         ).execute({ provider: user.id.value, page })
+    }
+
+    @Get('franchise/criteria/:page')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(RolesGuard)
+    async getByFranchiseCriteria(
+        @UserAuth() user: User,
+        @Param('id', new ParseIntPipe()) page: number,
+        @Query('term') term: string,
+    ) {
+        return await new ExceptionDecorator(
+            new ListPetitionsProviderCriteriaApplicationService(
+                this.petitionRepository,
+                new GetProviderApplicationService(this.providerRepository),
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({ provider: user.id.value, page, term })
     }
 
     @Get(':id')
