@@ -1,7 +1,7 @@
-import { Button, Center, Input, Loader, Space } from '@mantine/core'
-import { ChangeEvent, KeyboardEvent } from 'react'
+import { Button, Center, Loader, Space } from '@mantine/core'
+import { ChangeEvent } from 'react'
 import { Layout } from '../../components/Layout'
-import { NavBar } from '../../components/NavBar'
+import { SearchInput } from '../../components/SearchInput'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
@@ -30,10 +30,6 @@ export default function MainPage() {
         onChangeInputSearch(e.target.value)
     }
 
-    const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') onSubmitSearch()
-    }
-
     if (isLoading && !products)
         return (
             <>
@@ -48,24 +44,18 @@ export default function MainPage() {
             <Layout>
                 <Center>
                     <List>
-                        <Input
-                            onKeyPress={onKeyPress}
+                        <SearchInput
                             value={inputSearch}
-                            placeholder="Buscar"
                             onChange={onChangeInput}
-                            radius="md"
+                            submit={onSubmitSearch}
                         />
                         <Space h="xl" />
                         <ProductList>
                             {products.map((e) => (
                                 <div key={e.id}>
                                     <ProductCard
-                                        name={e.name}
-                                        id={e.id}
-                                        price={e.price}
-                                        currency={e.currency}
-                                        image={e.image}
                                         onClick={() => onClickProduct(e)}
+                                        {...e}
                                     />
                                 </div>
                             ))}

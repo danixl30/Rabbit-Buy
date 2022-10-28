@@ -17,6 +17,7 @@ import { UseNavigation } from '../core/abstractions/navigation/navigation'
 import { UserState } from '../global-state/user/UserContext'
 import { LOGIN_PAGE } from '../login/page/route'
 import { MAIN_PAGE } from '../main/page/route'
+import { PROFILE_PAGE } from '../profile/page/route'
 import { REGISTER_PAGE } from '../register/page/route'
 
 export type NavBarProps = {
@@ -78,7 +79,9 @@ const ClientBar = (props: NavBarProps) => {
                 <Grid.Col span={3}>
                     <Center style={{ padding: 0 }}>
                         <SimpleGrid cols={2} spacing={0} style={{ padding: 0 }}>
-                            <ActionIcon>
+                            <ActionIcon
+                                onClick={() => navigation.goTo(PROFILE_PAGE)}
+                            >
                                 <Avatar radius="xl" />
                             </ActionIcon>
                             <SimpleGrid
@@ -107,9 +110,7 @@ export const NavBar = (props: NavBarProps) => {
                 header={
                     <Header height={70} p="md">
                         {!userState.user && <NotUserBar {...props} />}
-                        {userState.user && userState.user.role === 'USER' && (
-                            <ClientBar {...props} />
-                        )}
+                        {userState.user && <ClientBar {...props} />}
                     </Header>
                 }
             >

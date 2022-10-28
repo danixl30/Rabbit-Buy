@@ -7,4 +7,8 @@ export type PetitionPrimitive = {
     currency: string
     status: Statuses
     quantity: number
+    client?: {
+        name: string
+        email: string
+    }
 }

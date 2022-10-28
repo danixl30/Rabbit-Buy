@@ -17,7 +17,7 @@ const userTest = {
     username: 'test1',
     email: 'test@mail.com',
     id: '1',
-    role: 'USER',
+    role: 'PROVIDER',
 }
 
 export const UserStateProvider = (props: UserStateProviderProps) => {

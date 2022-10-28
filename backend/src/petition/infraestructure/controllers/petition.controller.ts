@@ -108,12 +108,13 @@ export class PetitionController {
     @UseGuards(RolesGuard)
     async getByFranchise(
         @UserAuth() user: User,
-        @Param('id', new ParseIntPipe()) page: number,
+        @Param('page', new ParseIntPipe()) page: number,
     ) {
         return await new ExceptionDecorator(
             new ListPetitionsProviderApplicationService(
                 this.petitionRepository,
                 new GetProviderApplicationService(this.providerRepository),
+                new FindUserApplicationService(this.userRepository),
             ),
             new ConcreteExceptionReductor(),
         ).execute({ provider: user.id.value, page })
@@ -124,13 +125,14 @@ export class PetitionController {
     @UseGuards(RolesGuard)
     async getByFranchiseCriteria(
         @UserAuth() user: User,
-        @Param('id', new ParseIntPipe()) page: number,
+        @Param('page', new ParseIntPipe()) page: number,
         @Query('term') term: string,
     ) {
         return await new ExceptionDecorator(
             new ListPetitionsProviderCriteriaApplicationService(
                 this.petitionRepository,
                 new GetProviderApplicationService(this.providerRepository),
+                new FindUserApplicationService(this.userRepository),
             ),
             new ConcreteExceptionReductor(),
         ).execute({ provider: user.id.value, page, term })

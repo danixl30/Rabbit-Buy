@@ -1,1 +1,1 @@
-export const CREATE_PRODUCT = 'product/create'
+export const CREATE_PRODUCT = '/product/create'

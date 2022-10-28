@@ -2,6 +2,7 @@ import { ApplicationService } from 'src/core/application/service/application.ser
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
+import { FindUserApplicationService } from 'src/user/application/services/find-user/find.user.application.service'
 import { PetitionRepository } from '../../repositories/petition.repository'
 import { ListPetitionsFranchiseDTO } from './types/dto'
 import { ListPetitionsFranchiseResponse } from './types/response'
@@ -16,6 +17,7 @@ export class ListPetitionsProviderCriteriaApplicationService
     constructor(
         private petitionRepository: PetitionRepository,
         private getProvider: GetProviderApplicationService,
+        private userDetail: FindUserApplicationService,
     ) {}
 
     async execute(
@@ -35,14 +37,23 @@ export class ListPetitionsProviderCriteriaApplicationService
                 },
             )
         return {
-            petitions: petitions.map((e) => ({
-                id: e.id.value,
-                name: e.productName.value,
-                price: e.price.value,
-                currency: e.currency.value,
-                status: e.status.value,
-                quantity: e.quantity.value,
-            })),
+            petitions: await petitions.asyncMap(async (e) => {
+                const client = await this.userDetail.execute({
+                    id: e.client.value.value,
+                })
+                return {
+                    id: e.id.value,
+                    name: e.productName.value,
+                    price: e.price.value,
+                    currency: e.currency.value,
+                    status: e.status.value,
+                    quantity: e.quantity.value,
+                    client: {
+                        name: client.username,
+                        email: client.email,
+                    },
+                }
+            }),
         }
     }
 }

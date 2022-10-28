@@ -4,6 +4,7 @@ import { CREATE_PRODUCT } from '../../../../create-product/page/route'
 import { CREATE_FRANCHISE } from '../../../../franchise-create/page/route'
 import { LOGIN_PAGE } from '../../../../login/page/route'
 import { MAIN_PAGE } from '../../../../main/page/route'
+import { PROFILE_PAGE } from '../../../../profile/page/route'
 import { REGISTER_ADMIN } from '../../../../register-admin/page/route'
 import { REGISTER_PROVIDER } from '../../../../register-provider/page/route'
 import { REGISTER_PAGE } from '../../../../register/page/route'
@@ -26,6 +27,7 @@ const CreateFranchisePage = lazy(
 const CreateProduct = lazy(
     () => import('../../../../create-product/page/CreateProduct'),
 )
+const ProfilePage = lazy(() => import('../../../../profile/page/ProfilePage'))
 
 export default function Router() {
     return (
@@ -59,6 +61,7 @@ export default function Router() {
                             path={CREATE_PRODUCT}
                             element={<CreateProduct />}
                         />
+                        <Route path={PROFILE_PAGE} element={<ProfilePage />} />
                         <Route path="*" element={<Navigate to={MAIN_PAGE} />} />
                     </Routes>
                 </BrowserRouter>
