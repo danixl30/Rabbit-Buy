@@ -5,6 +5,7 @@ import { FormCard } from '../../components/FormCard'
 import { Layout } from '../../components/Layout'
 import { PasswordInput } from '../../components/PasswordInput'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
+import { ForgotPassword } from '../components/ForgotPassword'
 import { LoginButton } from '../components/LoginButton'
 import { LoginTitle } from '../components/LoginTitle'
 import { useLoginPage } from '../hooks/useLoginPage'
@@ -32,7 +33,7 @@ export default function LoginPage() {
                                 onChange={onChangeEmailInput}
                             />
                             <PasswordInput
-                                placeholder="Password"
+                                placeholder="Contraseña"
                                 value={password}
                                 onChange={onChangePasswordInput}
                             />
@@ -44,6 +45,8 @@ export default function LoginPage() {
                                 onClick={() => {}}
                             />
                         </Center>
+                        <Space h="xl" />
+                        <ForgotPassword />
                     </FormCard>
                 </Center>
             </Layout>

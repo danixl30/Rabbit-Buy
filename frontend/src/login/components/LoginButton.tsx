@@ -7,7 +7,24 @@ export type LoginButtonProps = {
 
 export const LoginButton = (props: LoginButtonProps) => (
     <>
-        <Button disabled={props.disabled} onClick={props.onClick}>
+        <Button
+            color="orange"
+            styles={(theme) => ({
+                root: {
+                    backgroundColor: '#f57c00',
+                    border: 0,
+                    height: 30,
+                    paddingLeft: 20,
+                    paddingRight: 20,
+
+                    '&:hover': {
+                        backgroundColor: theme.fn.darken('#f57c00', 0.05),
+                    },
+                },
+            })}
+            disabled={props.disabled}
+            onClick={props.onClick}
+        >
             Login
         </Button>
     </>

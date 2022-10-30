@@ -13,7 +13,7 @@ export const NameInput = (props: NameInputProps) => (
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="Name"
+            placeholder="Nombre"
             label="Nombre"
             radius="md"
         />

@@ -8,7 +8,7 @@ export type RegisterButtonProps = {
 export const RegisterButton = (props: RegisterButtonProps) => (
     <>
         <Button disabled={props.disabled} onClick={props.onClick}>
-            Register
+            Registrar
         </Button>
     </>
 )

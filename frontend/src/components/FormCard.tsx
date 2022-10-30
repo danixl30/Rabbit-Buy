@@ -7,7 +7,7 @@ export type FormCardProps = {
 
 export const FormCard = (props: FormCardProps) => (
     <>
-        <Card shadow="sm" p="lg" radius="md" withBorder>
+        <Card shadow="sm" pr={100} pl={100} pb={30} radius="md" withBorder>
             {props.children}
         </Card>
     </>

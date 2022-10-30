@@ -64,7 +64,7 @@ export default function RegisterProviderPage() {
                             <PasswordInput
                                 value={confirmPassword}
                                 onChange={onChangeConfirmPasswordInput}
-                                placeholder="Confirm password"
+                                placeholder="Confirmar contraseña"
                             />
                         </SimpleGrid>
                         <Space h="xl" />

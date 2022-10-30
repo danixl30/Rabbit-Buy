@@ -13,8 +13,8 @@ export const DescriptionInput = (props: DescriptionInputProps) => (
             onChange={props.onChange}
             minRows={2}
             maxRows={4}
-            placeholder="Descripcion"
-            label="Descripcion"
+            placeholder="Descripción"
+            label="Descripción"
             radius="md"
         />
     </>

@@ -34,7 +34,7 @@ export default function CreateProduct() {
 
     const onChangeNameInput = (e: ChangeEvent<HTMLInputElement>) =>
         onChangeName(e.target.value)
-    const onChangeCurrencyInput = (e: ChangeEvent<HTMLInputElement>) =>
+    const onChangeCurrencyInput = (e: ChangeEvent<HTMLSelectElement>) =>
         onChangeCurrency(e.target.value)
     const onChangeDescriptionInput = (e: ChangeEvent<HTMLTextAreaElement>) =>
         onChangeDescription(e.target.value)

@@ -1,5 +1,6 @@
 import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { User } from 'tabler-icons-react'
 
 export type UsernameInputProps = {
     value: string
@@ -16,6 +17,11 @@ export const UsernameInput = (props: UsernameInputProps) => (
             placeholder="Nombre de usuario"
             label="Nombre de usuario"
             radius="md"
+            rightSection = {<User
+                size={20}
+                strokeWidth={1}
+                color={'#000000'}
+              />} 
         />
     </>
 )

@@ -1,5 +1,6 @@
 import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { Notes } from 'tabler-icons-react'
 
 export type RifInputProps = {
     value: string
@@ -16,6 +17,9 @@ export const RifInput = (props: RifInputProps) => (
             placeholder="RIF"
             label="RIF"
             radius="md"
+            rightSection={
+                <Notes size={20} strokeWidth={0.5} color={'#000000'} />
+            }
         />
     </>
 )
