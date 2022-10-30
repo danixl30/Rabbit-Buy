@@ -5,7 +5,11 @@ import { FormCard } from '../../components/FormCard'
 import { Layout } from '../../components/Layout'
 import { PasswordInput } from '../../components/PasswordInput'
 import { UsernameInput } from '../../components/UsernameInput'
+import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
+import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
+import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
 import { RegisterButton } from '../../register/components/RegisterButton'
+import { useUserHttp } from '../../services/implementations/user/useUserHttp'
 import { RegisterAdminTitle } from '../components/RegisterAdminTitle'
 import { useRegisterAdmin } from '../hooks/useRegisterAdmin'
 
@@ -21,7 +25,18 @@ export default function RegisterAdminPage() {
         onChangeUsername,
         onChangeConfirmPassword,
         onChangeSecretPass,
-    } = useRegisterAdmin()
+        errorEmail,
+        errorPassword,
+        errorUsername,
+        errorConfirmPassword,
+        submitable,
+        onSubmit,
+        loading,
+    } = useRegisterAdmin(
+        useUserHttp(useAxiosHttp()),
+        useRouterDomNavigation(),
+        useToastToastify(),
+    )
 
     const onChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) =>
         onChangeEmail(e.target.value)
@@ -47,19 +62,23 @@ export default function RegisterAdminPage() {
                             <UsernameInput
                                 value={username}
                                 onChange={onChangeUsernameInput}
+                                error={errorUsername}
                             />
                             <EmailInput
                                 value={email}
                                 onChange={onChangeEmailInput}
+                                error={errorEmail}
                             />
                             <PasswordInput
                                 value={password}
                                 onChange={onChangePasswordInput}
+                                error={errorPassword}
                             />
                             <PasswordInput
                                 value={confirmPassword}
                                 onChange={onChangeConfirmPasswordInput}
                                 placeholder="Confirm password"
+                                error={errorConfirmPassword}
                             />
                             <PasswordInput
                                 value={secretPass}
@@ -70,8 +89,8 @@ export default function RegisterAdminPage() {
                         <Space h="xl" />
                         <Center>
                             <RegisterButton
-                                disabled={true}
-                                onClick={() => {}}
+                                disabled={!submitable || loading}
+                                onClick={onSubmit}
                             />
                         </Center>
                     </FormCard>

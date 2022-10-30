@@ -13,15 +13,8 @@ export type UserStateProviderProps = {
     children: ReactNode | ReactNode[]
 }
 
-const userTest = {
-    username: 'test1',
-    email: 'test@mail.com',
-    id: '1',
-    role: 'PROVIDER',
-}
-
 export const UserStateProvider = (props: UserStateProviderProps) => {
-    const [user, setUser] = useState<User>(userTest)
+    const [user, setUser] = useState<User>()
 
     const putUser = (user: User) => setUser(user)
 

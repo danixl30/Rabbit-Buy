@@ -2,6 +2,10 @@ import { Center, Container, Loader, Space, Title } from '@mantine/core'
 import { Layout } from '../../components/Layout'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
+import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
+import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
+import { getUserContext } from '../../global-state/user/get-user-context'
+import { usePetition } from '../../services/implementations/petition/usePetition'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
 import { Item } from '../components/Item'
 import { MakePetitionButton } from '../components/MakePetitionButton'
@@ -15,10 +19,23 @@ import { QuantityInput } from '../components/QuantityInput'
 import { useProductDetail } from '../hooks/useProductDetail'
 
 export default function ProductDetailPage() {
-    const { product, isLoading, isError } = useProductDetail(
+    const {
+        product,
+        isLoading,
+        isError,
+        quantity,
+        onMakePetition,
+        onChangeQuantity,
+    } = useProductDetail(
         useRouterDomNavigation(),
         useProductServiceHttp(useAxiosHttp()),
+        usePetition(useAxiosHttp()),
+        useToastToastify(),
+        useCookieSession(),
     )
+
+    const userState = getUserContext()
+
     if (isLoading)
         return (
             <>
@@ -54,10 +71,16 @@ export default function ProductDetailPage() {
                             <QuantityInput
                                 disabled={product!!.existence < 1}
                                 quantity={product!!.existence}
+                                value={quantity}
+                                onChange={onChangeQuantity}
                             />
                             <Space h="md" />
                             <MakePetitionButton
-                                disabled={product!!.existence < 1}
+                                disabled={
+                                    product!!.existence < 1 ||
+                                    userState?.user?.role !== 'USER'
+                                }
+                                onClick={onMakePetition}
                             />
                         </Item>
                     </ProductContainer>

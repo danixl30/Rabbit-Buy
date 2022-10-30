@@ -1,1 +1,1 @@
-export const REGISTER_PAGE = 'user/register'
+export const REGISTER_PAGE = '/user/register'

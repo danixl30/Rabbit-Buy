@@ -37,11 +37,16 @@ export const useAxiosHttp = (): UseHttp => {
         const headers = data.headers || {}
         const { signal, cancel } = abortControllerBuilder()
         const job = async (): Promise<Response<U>> => {
-            const resp = await core.post<U>(data.url, {
-                headers,
-                signal,
-                ...body,
-            })
+            const resp = await core.post<U>(
+                data.url,
+                {
+                    signal,
+                    ...body,
+                },
+                {
+                    headers,
+                },
+            )
             return {
                 code: resp.status,
                 body: resp.data,
