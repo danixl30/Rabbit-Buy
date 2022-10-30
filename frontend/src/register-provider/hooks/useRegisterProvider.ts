@@ -5,6 +5,7 @@ import { LOGIN_PAGE } from '../../login/page/route'
 import { UseUserService } from '../../services/abstractions/user/user-service'
 import { regExpEmail } from '../../utils/reg-exps/email/email.reg.exp'
 import { regExpPassword } from '../../utils/reg-exps/password/password.reg.exp'
+import { regExpUUID } from '../../utils/reg-exps/UUID/UUID.reg.exp'
 
 export const useRegisterProvider = (
     service: UseUserService,
@@ -22,6 +23,7 @@ export const useRegisterProvider = (
     const [errorEmail, setErrorEmail] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
     const [errorUsername, setErrorUsername] = useState('')
+    const [errorGroupId, setErrorGroupId] = useState('')
 
     const onChangeEmail = (value: string) => setEmail(value.trim())
 
@@ -82,6 +84,12 @@ export const useRegisterProvider = (
         else setErrorConfirmPassword('')
     }, [confirmPassword])
 
+    useEffect(() => {
+        if (groupId && !regExpUUID.test(groupId))
+            setErrorGroupId('Invalid groupId')
+        else setErrorGroupId('')
+    }, [groupId])
+
     const submitable =
         email &&
         username &&
@@ -91,7 +99,8 @@ export const useRegisterProvider = (
         !errorPassword &&
         !errorUsername &&
         !errorConfirmPassword &&
-        groupId
+        groupId &&
+        !errorGroupId
 
     return {
         username,
@@ -111,5 +120,6 @@ export const useRegisterProvider = (
         submitable,
         loading,
         onSubmit,
+        errorGroupId,
     }
 }

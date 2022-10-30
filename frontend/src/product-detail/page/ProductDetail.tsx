@@ -69,7 +69,11 @@ export default function ProductDetailPage() {
                             />
                             <Space h="md" />
                             <QuantityInput
-                                disabled={product!!.existence < 1}
+                                disabled={
+                                    product!!.existence < 1 ||
+                                    !userState?.user ||
+                                    userState?.user?.role !== 'USER'
+                                }
                                 quantity={product!!.existence}
                                 value={quantity}
                                 onChange={onChangeQuantity}
@@ -78,6 +82,7 @@ export default function ProductDetailPage() {
                             <MakePetitionButton
                                 disabled={
                                     product!!.existence < 1 ||
+                                    !userState?.user ||
                                     userState?.user?.role !== 'USER'
                                 }
                                 onClick={onMakePetition}

@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
+        "format": "prettier --write \"src/**/*.tsx\" \"src/**/*.ts\"",
         "preview": "vite preview"
     },
     "dependencies": {
@@ -14,6 +15,7 @@
         "@tabler/icons": "^1.108.0",
         "axios": "^0.27.2",
         "js-cookie": "^3.0.1",
+        "object-to-formdata": "^4.4.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.4.1",

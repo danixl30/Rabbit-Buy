@@ -2,6 +2,9 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { CREATE_PRODUCT } from '../../../../create-product/page/route'
 import { CREATE_FRANCHISE } from '../../../../franchise-create/page/route'
+import { LogedGuard } from '../../../../guards/LogedGuard'
+import { NotLogedGuard } from '../../../../guards/NotLogedGuard'
+import { RolesGuard } from '../../../../guards/RolesGuard'
 import { LOGIN_PAGE } from '../../../../login/page/route'
 import { MAIN_PAGE } from '../../../../main/page/route'
 import { PROFILE_PAGE } from '../../../../profile/page/route'
@@ -36,32 +39,43 @@ export default function Router() {
                 <BrowserRouter>
                     <Routes>
                         <Route path={MAIN_PAGE} element={<MainPage />} />
-                        <Route path={LOGIN_PAGE} element={<LoginPage />} />
                         <Route
                             path="/detail/:id"
                             element={<ProductDetailPage />}
                         />
-                        <Route
-                            path={REGISTER_PAGE}
-                            element={<RegisterPage />}
-                        />
-                        <Route
-                            path={REGISTER_ADMIN}
-                            element={<RegisterAdminPage />}
-                        />
-                        <Route
-                            path={REGISTER_PROVIDER}
-                            element={<RegisterProviderPage />}
-                        />
-                        <Route
-                            path={CREATE_FRANCHISE}
-                            element={<CreateFranchisePage />}
-                        />
-                        <Route
-                            path={CREATE_PRODUCT}
-                            element={<CreateProduct />}
-                        />
-                        <Route path={PROFILE_PAGE} element={<ProfilePage />} />
+                        <Route element={<NotLogedGuard />}>
+                            <Route path={LOGIN_PAGE} element={<LoginPage />} />
+                            <Route
+                                path={REGISTER_PAGE}
+                                element={<RegisterPage />}
+                            />
+                            <Route
+                                path={REGISTER_ADMIN}
+                                element={<RegisterAdminPage />}
+                            />
+                            <Route
+                                path={REGISTER_PROVIDER}
+                                element={<RegisterProviderPage />}
+                            />
+                        </Route>
+                        <Route element={<LogedGuard />}>
+                            <Route element={<RolesGuard role="ADMIN" />}>
+                                <Route
+                                    path={CREATE_FRANCHISE}
+                                    element={<CreateFranchisePage />}
+                                />
+                            </Route>
+                            <Route element={<RolesGuard role="PROVIDER" />}>
+                                <Route
+                                    path={CREATE_PRODUCT}
+                                    element={<CreateProduct />}
+                                />
+                            </Route>
+                            <Route
+                                path={PROFILE_PAGE}
+                                element={<ProfilePage />}
+                            />
+                        </Route>
                         <Route path="*" element={<Navigate to={MAIN_PAGE} />} />
                     </Routes>
                 </BrowserRouter>

@@ -33,6 +33,7 @@ export default function RegisterProviderPage() {
         submitable,
         loading,
         onSubmit,
+        errorGroupId,
     } = useRegisterProvider(
         useUserHttp(useAxiosHttp()),
         useRouterDomNavigation(),
@@ -73,6 +74,7 @@ export default function RegisterProviderPage() {
                             <GroupIdInput
                                 value={groupId}
                                 onChange={onChangeGroupIdInput}
+                                error={errorGroupId}
                             />
                             <PasswordInput
                                 value={password}

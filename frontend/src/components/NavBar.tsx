@@ -14,11 +14,14 @@ import {
 } from '@mantine/core'
 import { ReactNode } from 'react'
 import { UseNavigation } from '../core/abstractions/navigation/navigation'
+import { useCookieSession } from '../core/implementation/session/cookies/useCookieSession'
 import { UserState } from '../global-state/user/UserContext'
+import { useLogout } from '../hooks/useLogout'
 import { LOGIN_PAGE } from '../login/page/route'
 import { MAIN_PAGE } from '../main/page/route'
 import { PROFILE_PAGE } from '../profile/page/route'
 import { REGISTER_PAGE } from '../register/page/route'
+import { ToolTip } from './ToolTip'
 
 export type NavBarProps = {
     children: ReactNode | ReactNode[]
@@ -68,6 +71,7 @@ const NotUserBar = (props: NavBarProps) => {
 
 const ClientBar = (props: NavBarProps) => {
     const { navigation, userState } = props
+    const onLogout = useLogout(useCookieSession(), userState, navigation)
     return (
         <>
             <Grid>
@@ -78,23 +82,24 @@ const ClientBar = (props: NavBarProps) => {
                 <Grid.Col span={3}></Grid.Col>
                 <Grid.Col span={3}>
                     <Center style={{ padding: 0 }}>
-                        <SimpleGrid cols={2} spacing={0} style={{ padding: 0 }}>
+                        <ToolTip text="Configuracion">
                             <ActionIcon
                                 onClick={() => navigation.goTo(PROFILE_PAGE)}
                             >
                                 <Avatar radius="xl" />
                             </ActionIcon>
-                            <SimpleGrid
-                                cols={1}
-                                verticalSpacing={0}
-                                spacing="xs"
-                            >
-                                <Title order={5}>
-                                    {userState.user?.username}
-                                </Title>
-                                <Text>{userState.user?.email}</Text>
-                            </SimpleGrid>
+                        </ToolTip>
+                        <Space w="md" />
+                        <SimpleGrid cols={1} verticalSpacing={0} spacing="xs">
+                            <Title order={5}>{userState.user?.username}</Title>
+                            <Text>{userState.user?.email}</Text>
                         </SimpleGrid>
+                        <Space w="sm" />
+                        <ToolTip text="Logout">
+                            <ActionIcon onClick={onLogout}>
+                                <Avatar radius="xl" />
+                            </ActionIcon>
+                        </ToolTip>
                     </Center>
                 </Grid.Col>
             </Grid>

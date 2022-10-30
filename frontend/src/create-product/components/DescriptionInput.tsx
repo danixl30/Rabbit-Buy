@@ -14,7 +14,7 @@ export const DescriptionInput = (props: DescriptionInputProps) => (
             minRows={2}
             maxRows={4}
             placeholder="Descripcion"
-            label="Descripcion"
+            label="Descripcion (opcional)"
             radius="md"
         />
     </>

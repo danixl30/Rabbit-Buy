@@ -14,7 +14,11 @@ export const usePetitionsSubPage = (
     const [page, setPage] = useState(1)
     const [isTop, setIsTop] = useState(false)
 
-    const onSubmit = (value: string) => setTerm(value)
+    const onSubmit = (value: string) => {
+        setPage(1)
+        setPetions([])
+        setTerm(value)
+    }
 
     const onGetMore = () => setPage(page + 1)
 
@@ -76,8 +80,6 @@ export const usePetitionsSubPage = (
     }, [page])
 
     useEffect(() => {
-        setPage(1)
-        setPetions([])
         if (!term) getPetition()
         else getPetitionByTerm()
     }, [term])

@@ -35,7 +35,7 @@ export default function ConsultFranchises() {
             >
                 <Text>{`Nombre: ${franchise?.name}`}</Text>
                 <Text>{`Rif: ${franchise?.rif}`}</Text>
-                <Text>{`GroupId: ${franchise?.groudId}`}</Text>
+                <Text>{`GroupId: ${franchise?.groupId}`}</Text>
             </ModalLayout>
             <Text size={50}>Consultar franquisias</Text>
             <SimpleGrid cols={2}>
