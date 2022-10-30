@@ -14,6 +14,10 @@ import { ImageInput } from '../../components/ImageInput'
 import { useImage } from '../hooks/useImage'
 import { ProductImage } from '../components/ProductImage'
 import { Layout } from '../../components/Layout'
+import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
+import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
+import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
+import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 
 export default function CreateProduct() {
     const {
@@ -29,7 +33,17 @@ export default function CreateProduct() {
         onChangeCurrency,
         onChangeExistence,
         onChangeDescription,
-    } = useCreateProduct(useToastToastify())
+        submitable,
+        errorName,
+        loading,
+        onSubmit,
+        errorCurrency,
+    } = useCreateProduct(
+        useToastToastify(),
+        useProductServiceHttp(useAxiosHttp()),
+        useCookieSession(),
+        useRouterDomNavigation(),
+    )
     const { imageText } = useImage(image)
 
     const onChangeNameInput = (e: ChangeEvent<HTMLInputElement>) =>
@@ -52,6 +66,7 @@ export default function CreateProduct() {
                             <NameInput
                                 value={name}
                                 onChange={onChangeNameInput}
+                                error={errorName}
                             />
                             <DescriptionInput
                                 value={description}
@@ -65,6 +80,7 @@ export default function CreateProduct() {
                                 <CurrencyInput
                                     value={currency}
                                     onChange={onChangeCurrencyInput}
+                                    error={errorCurrency}
                                 />
                             </SimpleGrid>
                             <ExistenceInput
@@ -81,7 +97,10 @@ export default function CreateProduct() {
                         )}
                         <Space h="xl" />
                         <Center>
-                            <CreateButton onClick={() => {}} disabled />
+                            <CreateButton
+                                onClick={onSubmit}
+                                disabled={!submitable || loading}
+                            />
                         </Center>
                     </FormCard>
                 </Center>

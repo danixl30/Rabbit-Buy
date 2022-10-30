@@ -10,14 +10,19 @@ import { CreateProductCard } from '../components/CreateProductCard'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { CREATE_FRANCHISE } from '../../franchise-create/page/route'
 import { CREATE_PRODUCT } from '../../create-product/page/route'
+import { ConsultFranchisesCard } from '../components/ConsutFranchisesCard'
 
 const UserProfile = lazy(() => import('../subpages/user-profile/UserProfile'))
 const PetitionConsult = lazy(
     () => import('../subpages/petitions/PetitionsConsult'),
 )
+const ConsultFranchises = lazy(
+    () => import('../subpages/franchises/ConsultFranchises'),
+)
 
 const PROFILE_CONFIG = 'PROFILE_CONFIG'
 const PETITION_CONSULT = 'PETITION_CONSULT'
+const CONSULT_FRANCHISES = 'CONSULT_FRANCHISES'
 
 export default function ProfilePage() {
     const navigation = useRouterDomNavigation()
@@ -44,6 +49,11 @@ export default function ProfilePage() {
                                     onClick={onClickLink(CREATE_FRANCHISE)}
                                 />
                             )}
+                            {state?.user?.role === 'ADMIN' && (
+                                <ConsultFranchisesCard
+                                    onClick={onClickItem(CONSULT_FRANCHISES)}
+                                />
+                            )}
                             {state?.user?.role === 'PROVIDER' && (
                                 <CreateProductCard
                                     onClick={onClickLink(CREATE_PRODUCT)}
@@ -59,6 +69,9 @@ export default function ProfilePage() {
                             </Collapse>
                             <Collapse in={subPage === PETITION_CONSULT}>
                                 <PetitionConsult />
+                            </Collapse>
+                            <Collapse in={subPage === CONSULT_FRANCHISES}>
+                                <ConsultFranchises />
                             </Collapse>
                         </Suspense>
                     </SimpleGrid>

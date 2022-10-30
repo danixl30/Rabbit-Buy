@@ -1,1 +1,1 @@
-export const CREATE_FRANCHISE = 'franchise/create'
+export const CREATE_FRANCHISE = '/franchise/create'

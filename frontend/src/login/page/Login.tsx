@@ -4,15 +4,32 @@ import { EmailInput } from '../../components/EmailInput'
 import { FormCard } from '../../components/FormCard'
 import { Layout } from '../../components/Layout'
 import { PasswordInput } from '../../components/PasswordInput'
+import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { ForgotPassword } from '../components/ForgotPassword'
+import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
+import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
+import { useUserHttp } from '../../services/implementations/user/useUserHttp'
 import { LoginButton } from '../components/LoginButton'
 import { LoginTitle } from '../components/LoginTitle'
 import { useLoginPage } from '../hooks/useLoginPage'
 
 export default function LoginPage() {
-    const { email, password, onChangeEmail, onChangePassword } = useLoginPage(
+    const {
+        email,
+        password,
+        onChangeEmail,
+        onChangePassword,
+        errorEmail,
+        errorPassword,
+        submitable,
+        loading,
+        onSubmit,
+    } = useLoginPage(
         useRouterDomNavigation(),
+        useUserHttp(useAxiosHttp()),
+        useToastToastify(),
+        useCookieSession(),
     )
     const onChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) =>
         onChangeEmail(e.target.value)
@@ -31,18 +48,20 @@ export default function LoginPage() {
                             <EmailInput
                                 value={email}
                                 onChange={onChangeEmailInput}
+                                error={errorEmail}
                             />
                             <PasswordInput
                                 placeholder="Contraseña"
                                 value={password}
                                 onChange={onChangePasswordInput}
+                                error={errorPassword}
                             />
                         </SimpleGrid>
                         <Space h="xl" />
                         <Center>
                             <LoginButton
-                                disabled={!password || !email}
-                                onClick={() => {}}
+                                disabled={!submitable || loading}
+                                onClick={onSubmit}
                             />
                         </Center>
                         <Space h="xl" />

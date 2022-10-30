@@ -14,6 +14,10 @@ export const useToastToastify = (): UseToast => {
                 render: msg,
                 type: alertType,
                 isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+                draggable: true,
+                hideProgressBar: false,
             })
     }
 

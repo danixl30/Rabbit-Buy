@@ -6,7 +6,13 @@ export default function ToastContainer(props: ToastContainerProps) {
     return (
         <>
             {props.children}
-            <ToastifyContainer closeOnClick />
+            <ToastifyContainer
+                hideProgressBar={false}
+                draggable
+                pauseOnFocusLoss
+                closeOnClick
+                autoClose={3000}
+            />
         </>
     )
 }

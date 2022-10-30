@@ -28,7 +28,7 @@ export class ListPetitionsProviderCriteriaApplicationService
         })
         const petitions =
             await this.petitionRepository.filterByFranchiseCriteria(
-                new FranchiseRef(new FranchiseId(provider.id)),
+                new FranchiseRef(new FranchiseId(provider.franchise)),
                 {
                     term: data.term,
                 },

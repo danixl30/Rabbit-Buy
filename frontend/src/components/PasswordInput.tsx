@@ -5,6 +5,7 @@ export type PasswordInputProps = {
     value: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
+    error?: string
 }
 
 export const PasswordInput = (props: PasswordInputProps) => (
@@ -15,6 +16,7 @@ export const PasswordInput = (props: PasswordInputProps) => (
             placeholder={props.placeholder || 'Contraseña'}
             label={props.placeholder || 'Contraseña'}
             radius="md"
+            error={props.error}
         />
     </>
 )

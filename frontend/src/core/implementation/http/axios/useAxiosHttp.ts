@@ -1,7 +1,8 @@
+import axios from 'axios'
+import { serialize } from 'object-to-formdata'
 import { UseHttp } from '../../../abstractions/http/http'
 import { RequestConfiguration } from '../../../abstractions/http/types/config/request-configuration'
 import { Response } from '../../../abstractions/http/types/response/response'
-import axios from 'axios'
 import { Job } from '../../../abstractions/http/types/job/job'
 import { abortControllerBuilder } from './abort-controller/abort-controller-builder'
 import { RequestConfigurationFile } from '../../../abstractions/http/types/config/request-config-file'
@@ -37,11 +38,16 @@ export const useAxiosHttp = (): UseHttp => {
         const headers = data.headers || {}
         const { signal, cancel } = abortControllerBuilder()
         const job = async (): Promise<Response<U>> => {
-            const resp = await core.post<U>(data.url, {
-                headers,
-                signal,
-                ...body,
-            })
+            const resp = await core.post<U>(
+                data.url,
+                {
+                    signal,
+                    ...body,
+                },
+                {
+                    headers,
+                },
+            )
             return {
                 code: resp.status,
                 body: resp.data,
@@ -95,13 +101,12 @@ export const useAxiosHttp = (): UseHttp => {
         }
     }
 
-    const upload = <T, U>(
+    const upload = <T extends object, U>(
         data: RequestConfigurationFile<T>,
         onProgress: (loaded: number, total: number) => void,
     ): Job<U> => {
-        const body = data.body || {}
         const headers = data.headers || {}
-        const formData = new FormData()
+        const formData = data.body ? serialize(data.body) : new FormData()
         Object.keys(data.files).forEach((key) =>
             formData.append(key, data.files[key]),
         )
@@ -118,7 +123,6 @@ export const useAxiosHttp = (): UseHttp => {
                     'Content-Type': 'multipart/form-data',
                 },
                 signal,
-                ...body,
                 ...config,
             })
             return {

@@ -7,7 +7,7 @@ export type UseHttp = {
     post: <T, U>(data: RequestConfiguration<T>) => Job<U>
     put: <T, U>(data: RequestConfiguration<T>) => Job<U>
     delete: <T, U>(data: RequestConfiguration<T>) => Job<U>
-    upload: <T, U>(
+    upload: <T extends object, U>(
         data: RequestConfigurationFile<T>,
         onProgress: (loaded: number, total: number) => void,
     ) => Job<U>

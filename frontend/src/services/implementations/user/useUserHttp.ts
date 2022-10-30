@@ -10,7 +10,7 @@ import { UseUserService } from '../../abstractions/user/user-service'
 export const useUserHttp = (http: UseHttp): UseUserService => {
     const login = async (data: Login): Promise<LoginResponse> => {
         const { job } = http.post<Login, LoginResponse>({
-            url: '/user/login',
+            url: '/user/auth/login',
             body: data,
         })
         return (await job()).body!!
@@ -36,7 +36,7 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
 
     const registerAdmin = async (data: AdminRegister) => {
         const { job } = http.post<AdminRegister, unknown>({
-            url: '/provider/create',
+            url: '/user/register/admin',
             body: data,
         })
         await job()

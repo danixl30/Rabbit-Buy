@@ -13,6 +13,7 @@ export class ListFranchisesApplicationService
             franchises: franchises.map((e) => ({
                 name: e.name.value,
                 id: e.id.value,
+                rif: e.rif.value,
             })),
         }
     }
