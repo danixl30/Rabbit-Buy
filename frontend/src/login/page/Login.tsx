@@ -51,6 +51,7 @@ export default function LoginPage() {
                             />
                             <PasswordInput
                                 placeholder="Password"
+                                description = "the password must be a minimum of 8 characters, include an uppercase letter and a number"
                                 value={password}
                                 onChange={onChangePasswordInput}
                                 error={errorPassword}
