@@ -53,6 +53,7 @@ export default function LoginPage() {
                             <PasswordInput
                                 placeholder="Contraseña"
                                 value={password}
+                                description = " "
                                 onChange={onChangePasswordInput}
                                 error={errorPassword}
                             />

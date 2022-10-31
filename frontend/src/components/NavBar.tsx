@@ -11,6 +11,7 @@ import {
     Text,
     Title,
     UnstyledButton,
+    createStyles
 } from '@mantine/core'
 import { ReactNode } from 'react'
 import { UseNavigation } from '../core/abstractions/navigation/navigation'
@@ -34,10 +35,19 @@ type IconAppProps = {
     navigation: UseNavigation
 }
 
+const useStyles = createStyles((theme) => ({
+    titleButton: {
+        '&:hover': {
+            backgroundColor: theme.colors.gray[1],
+          },
+    }
+  }));
+
 const IconApp = (props: IconAppProps) => {
+    const { classes } = useStyles();
     return (
         <>
-            <UnstyledButton onClick={() => props.navigation.goTo(MAIN_PAGE)}>
+            <UnstyledButton onClick={() => props.navigation.goTo(MAIN_PAGE)} type = "button" className={classes.titleButton}>
                 <Title order={1}>Rabbit Buy</Title>
             </UnstyledButton>
         </>
