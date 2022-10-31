@@ -28,7 +28,7 @@ export const useLoginPage = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.warning('Datos invalidos')
+            toast.warning('Datos inválidos')
             return
         }
         setLoading(true)
@@ -45,20 +45,20 @@ export const useLoginPage = (
             if (e.rosponse?.status === 404)
                 onResult('Usuario no encontrado', 'error')
             else if (e.response?.status === 400)
-                onResult('Contrasena no valida', 'error')
+                onResult('Contraseña no válida', 'error')
             else onResult('Error en el login', 'error')
         }
         setLoading(false)
     }
 
     useEffect(() => {
-        if (email && !regExpEmail.test(email)) setErrorEmail('Email no valido')
+        if (email && !regExpEmail.test(email)) setErrorEmail('Correo no válido')
         else setErrorEmail('')
     }, [email])
 
     useEffect(() => {
         if (password && !regExpPassword.test(password))
-            setErrorPassword('Contrasena no valida')
+            setErrorPassword('Contraseña no válida')
         else setErrorPassword('')
     }, [password])
 

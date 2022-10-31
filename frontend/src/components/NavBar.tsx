@@ -67,7 +67,7 @@ const NotUserBar = (props: NavBarProps) => {
                 <Grid.Col span={3}>
                     <Center>
                         <Button onClick={() => navigation.goTo(LOGIN_PAGE)}>
-                            Login
+                            Iniciar Sesión
                         </Button>
                         <Space w="md" />
                         <Button onClick={() => navigation.goTo(REGISTER_PAGE)}>
