@@ -1,5 +1,6 @@
 import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { BuildingStore } from 'tabler-icons-react'
 
 export type GroupIdInputProps = {
     value: string
@@ -13,9 +14,12 @@ export const GroupIdInput = (props: GroupIdInputProps) => (
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="Group Id"
-            label="Group Id"
+            placeholder="ID de afiliación"
+            label="ID de afiliación"
             radius="md"
+            rightSection={
+                <BuildingStore size={20} strokeWidth={1} color={'#000000'} />
+            }
         />
     </>
 )

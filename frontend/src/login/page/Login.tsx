@@ -6,6 +6,7 @@ import { Layout } from '../../components/Layout'
 import { PasswordInput } from '../../components/PasswordInput'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
+import { ForgotPassword } from '../components/ForgotPassword'
 import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
 import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
 import { useUserHttp } from '../../services/implementations/user/useUserHttp'
@@ -50,7 +51,7 @@ export default function LoginPage() {
                                 error={errorEmail}
                             />
                             <PasswordInput
-                                placeholder="Password"
+                                placeholder="Contraseña"
                                 value={password}
                                 description = " "
                                 onChange={onChangePasswordInput}
@@ -64,6 +65,8 @@ export default function LoginPage() {
                                 onClick={onSubmit}
                             />
                         </Center>
+                        <Space h="xl" />
+                        <ForgotPassword />
                     </FormCard>
                 </Center>
             </Layout>

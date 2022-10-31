@@ -8,7 +8,7 @@ export type CreateButtonProps = {
 export const CreateButton = (props: CreateButtonProps) => (
     <>
         <Button disabled={props.disabled} onClick={props.onClick}>
-            Create
+            Crear
         </Button>
     </>
 )

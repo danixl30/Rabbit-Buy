@@ -9,11 +9,12 @@ export type PriceInputProps = {
 export const PriceInput = (props: PriceInputProps) => (
     <>
         <NumberInput
+            type="number"
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="Price"
-            label="Price"
+            placeholder=""
+            label="Precio"
             radius="md"
             min={0}
         />

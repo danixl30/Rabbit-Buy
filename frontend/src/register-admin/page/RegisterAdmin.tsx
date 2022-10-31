@@ -77,13 +77,13 @@ export default function RegisterAdminPage() {
                             <PasswordInput
                                 value={confirmPassword}
                                 onChange={onChangeConfirmPasswordInput}
-                                placeholder="Confirm password"
+                                placeholder="Confirmar contraseña"
                                 error={errorConfirmPassword}
                             />
                             <PasswordInput
                                 value={secretPass}
                                 onChange={onChangeSecretPassInput}
-                                placeholder="Secret password"
+                                placeholder="Código Secreto"
                             />
                         </SimpleGrid>
                         <Space h="xl" />

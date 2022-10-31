@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent } from 'react'
-import { ActionIcon, Avatar, Input } from '@mantine/core'
+import { ActionIcon, Input } from '@mantine/core'
+import { Search } from 'tabler-icons-react'
 
 export type SearchInputProps = {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
@@ -22,7 +23,7 @@ export const SearchInput = (props: SearchInputProps) => {
                 radius="md"
                 rightSection={
                     <ActionIcon onClick={props.submit}>
-                        <Avatar size={16} />
+                        <Search size={48} strokeWidth={0.5} color={'black'} />
                     </ActionIcon>
                 }
             />

@@ -1,7 +1,7 @@
 import {
+    Avatar,
     ActionIcon,
     AppShell,
-    Avatar,
     Button,
     Center,
     Grid,
@@ -22,6 +22,7 @@ import { LOGIN_PAGE } from '../login/page/route'
 import { MAIN_PAGE } from '../main/page/route'
 import { PROFILE_PAGE } from '../profile/page/route'
 import { REGISTER_PAGE } from '../register/page/route'
+import { UserCircle } from 'tabler-icons-react'
 import { ToolTip } from './ToolTip'
 
 export type NavBarProps = {
@@ -96,7 +97,11 @@ const ClientBar = (props: NavBarProps) => {
                             <ActionIcon
                                 onClick={() => navigation.goTo(PROFILE_PAGE)}
                             >
-                                <Avatar radius="xl" />
+                                <UserCircle
+                                    size={40}
+                                    strokeWidth={1}
+                                    color={'#000000'}
+                                />
                             </ActionIcon>
                         </ToolTip>
                         <Space w="md" />
