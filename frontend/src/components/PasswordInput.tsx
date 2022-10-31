@@ -16,7 +16,7 @@ export const PasswordInput = (props: PasswordInputProps) => (
             onChange={props.onChange}
             placeholder={props.placeholder || 'Password'}
             label={props.placeholder || 'Password'}
-            description = {props.description ||  "the password must be a minimum of 8 characters, include an uppercase letter and a number"}
+            description = {props.description}
             radius="md"
             error={props.error}
         />

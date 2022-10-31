@@ -72,6 +72,7 @@ export default function RegisterPage() {
                             <PasswordInput
                                 value={confirmPassword}
                                 onChange={onChangeConfirmPasswordInput}
+                                description = "La contraseña mínimo debe tener 8 caracteres, incluir una letra en mayúscula y un número"
                                 placeholder="Confirm password"
                                 error={errorConfirmPassword}
                             />
