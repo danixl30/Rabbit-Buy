@@ -33,7 +33,7 @@ export const useRegister = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.error('Datos no validos')
+            toast.error('Datos no válidos')
             return
         }
         setLoading(true)
@@ -56,25 +56,25 @@ export const useRegister = (
     }
 
     useEffect(() => {
-        if (email && !regExpEmail.test(email)) setErrorEmail('Email no valido')
+        if (email && !regExpEmail.test(email)) setErrorEmail('Correo no válido')
         else setErrorEmail('')
     }, [email])
 
     useEffect(() => {
         if (username && username.length < 5)
-            setErrorUsername('Nombre de usuario no valido')
+            setErrorUsername('Nombre de usuario no válido')
         else setErrorUsername('')
     }, [username])
 
     useEffect(() => {
         if (password && !regExpPassword.test(password))
-            setErrorPassword('Contrasena no valida')
+            setErrorPassword('Contraseña no válida')
         else setErrorPassword('')
     }, [password])
 
     useEffect(() => {
         if (confirmPassword && confirmPassword !== password)
-            setErrorConfirmPassword('Debe ser igual a la contrasena')
+            setErrorConfirmPassword('Debe ser igual a la contraseña')
         else setErrorConfirmPassword('')
     }, [confirmPassword])
 

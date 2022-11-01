@@ -66,7 +66,6 @@ export default function LoginPage() {
                             />
                         </Center>
                         <Space h="xl" />
-                        <ForgotPassword />
                     </FormCard>
                 </Center>
             </Layout>

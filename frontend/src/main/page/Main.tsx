@@ -68,7 +68,7 @@ export default function MainPage() {
                             <>
                                 {!isLoading ? (
                                     <Button onClick={onClickShowMore}>
-                                        Obtener mas
+                                        Obtener más
                                     </Button>
                                 ) : (
                                     <Loader />

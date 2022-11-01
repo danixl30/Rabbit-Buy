@@ -74,7 +74,7 @@ export default function RegisterPage() {
                                 value={confirmPassword}
                                 onChange={onChangeConfirmPasswordInput}
                                 description = " "
-                                placeholder="Confirm password"
+                                placeholder="Confirmar contraseña"
                                 error={errorConfirmPassword}
                             />
                         </SimpleGrid>
