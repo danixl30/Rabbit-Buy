@@ -3,7 +3,7 @@ import { Length } from 'class-validator'
 
 export class CreateFranchiseRequestDTO {
     @ApiProperty()
-    @Length(5, 10)
+    @Length(5, 20)
     name: string
     @ApiProperty()
     @Length(1, 10)

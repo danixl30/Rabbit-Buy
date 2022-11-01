@@ -12,7 +12,7 @@ export class RegisterUserRequestDTO {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    @Length(5, 10)
+    @Length(5, 20)
     username: string
     @ApiProperty()
     @IsEmail()

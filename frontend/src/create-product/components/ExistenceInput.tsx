@@ -1,4 +1,5 @@
 import { NumberInput } from '@mantine/core'
+import { SortDescendingNumbers } from 'tabler-icons-react'
 
 export type ExistenceInputProps = {
     value: number
@@ -16,6 +17,7 @@ export const ExistenceInput = (props: ExistenceInputProps) => (
             min={0}
             label="Existencia"
             radius="md"
+            icon={<SortDescendingNumbers size={20} />}
         />
     </>
 )

@@ -17,7 +17,7 @@ export const EmailInput = (props: EmailInputProps) => (
             placeholder="Correo"
             label="Correo"
             radius="md"
-            rightSection={<Mail size={20} strokeWidth={1} color={'#000000'} />}
+            icon={<Mail size={20} />}
         />
     </>
 )

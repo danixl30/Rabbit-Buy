@@ -5,5 +5,5 @@ import { RegisterUserRequestDTO } from 'src/user/infraestructure/controllers/dto
 export class CreateProviderRequestDTO extends RegisterUserRequestDTO {
     @ApiProperty()
     @IsUUID('4')
-    groudId: string
+    groupId: string
 }

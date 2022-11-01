@@ -1,4 +1,4 @@
- import { lazy, useState, Suspense } from 'react'
+import { lazy, useState, Suspense } from 'react'
 import { Center, Collapse, SimpleGrid } from '@mantine/core'
 import { Layout } from '../../components/Layout'
 import { ConfigTitle } from '../components/ConfigTitle'

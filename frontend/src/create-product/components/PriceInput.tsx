@@ -1,4 +1,5 @@
 import { NumberInput } from '@mantine/core'
+import { CreditCard } from 'tabler-icons-react'
 
 export type PriceInputProps = {
     value: number
@@ -17,6 +18,7 @@ export const PriceInput = (props: PriceInputProps) => (
             label="Precio"
             radius="md"
             min={0}
+            icon={<CreditCard size={20} />}
         />
     </>
 )

@@ -4,10 +4,12 @@ import { Layout } from '../../components/Layout'
 import { SearchInput } from '../../components/SearchInput'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
+import { ErrorComponent } from '../../error/ErrorComponent'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
 import { List } from '../components/List'
 import { ProductCard } from '../components/ProductCard'
 import { ProductList } from '../components/ProductList'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 import { useMainPage } from '../hooks/useMainPage'
 
 export default function MainPage() {
@@ -30,14 +32,9 @@ export default function MainPage() {
         onChangeInputSearch(e.target.value)
     }
 
-    if (isLoading && !products)
-        return (
-            <>
-                <Center>
-                    <Loader />
-                </Center>
-            </>
-        )
+    if (isLoading && products.length === 0) return <SkeletonLoading />
+
+    if (isError) return <ErrorComponent />
 
     return (
         <>
@@ -60,7 +57,7 @@ export default function MainPage() {
                                 </div>
                             ))}
                         </ProductList>
-                        {!isTop && (
+                        {!isTop && products.length >= 10 && (
                             <>
                                 {!isLoading ? (
                                     <Button onClick={onClickShowMore}>

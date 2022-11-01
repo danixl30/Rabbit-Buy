@@ -34,10 +34,10 @@ export default function ConsultFranchises() {
                 onClose={onCloseDetail}
             >
                 <Text>{`Nombre: ${franchise?.name}`}</Text>
-                <Text>{`Rif: ${franchise?.rif}`}</Text>
-                <Text>{`GroupId: ${franchise?.groupId}`}</Text>
+                <Text>{`RIF: ${franchise?.rif}`}</Text>
+                <Text>{`ID de afiliación: ${franchise?.groupId}`}</Text>
             </ModalLayout>
-            <Text size={50}>Consultar franquisias</Text>
+            <Text size={50}>Consultar franquicias</Text>
             <SimpleGrid cols={2}>
                 {franchises.map((e) => (
                     <div key={e.id}>

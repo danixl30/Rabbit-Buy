@@ -24,7 +24,7 @@ export const useCreateProduct = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.warning('Datos invalidos')
+            toast.warning('Datos inválidos')
             return
         }
         setLoading(true)
@@ -34,10 +34,10 @@ export const useCreateProduct = (
                 name,
                 rif,
             })
-            onResult('Franquisia creada satisfactoriamente', 'success')
+            onResult('Franquicia creada satisfactoriamente', 'success')
             navigation.goTo(PROFILE_PAGE)
         } catch (e: any) {
-            onResult('Error al crear la franquisia', 'error')
+            onResult('Error al crear la franquicia', 'error')
         }
         setLoading(false)
     }
@@ -48,7 +48,7 @@ export const useCreateProduct = (
     }, [name])
 
     useEffect(() => {
-        if (rif && rif.length < 5) setErrorRif('Rif invalido')
+        if (rif && rif.length < 5) setErrorRif('Rif inválido')
         else setErrorRif('')
     }, [rif])
 

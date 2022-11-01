@@ -1,5 +1,6 @@
 import { Textarea } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { AlignLeft } from 'tabler-icons-react'
 
 export type DescriptionInputProps = {
     value: string
@@ -16,6 +17,7 @@ export const DescriptionInput = (props: DescriptionInputProps) => (
             placeholder="Descripción"
             label="Descripción (opcional)"
             radius="md"
+            icon={<AlignLeft size={20} />}
         />
     </>
 )
