@@ -21,7 +21,7 @@ export const useConsultFranchise = (
             const data = await service.getAll(session.getSession()!!)
             setFranchises(data)
         } catch (e) {
-            toast.error('Error al listar las franquisias')
+            toast.error('Error al listar las franquicias')
         }
         setLoading(false)
     }
@@ -34,7 +34,7 @@ export const useConsultFranchise = (
             )
             setFranchise(data)
         } catch (e) {
-            toast.error('Error al listar las franquisias')
+            toast.error('Error al listar las franquicias')
         }
     }
 
