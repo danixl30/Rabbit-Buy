@@ -8,7 +8,7 @@ export type ProductPriceProps = {
 export const ProductPrice = (props: ProductPriceProps) => (
     <>
         <SimpleGrid cols={1}>
-            <Text>{'Price: ' + props.price + ' ' + props.currency}</Text>
+            <Text>{'Precio: ' + props.price + ' ' + props.currency}</Text>
         </SimpleGrid>
     </>
 )

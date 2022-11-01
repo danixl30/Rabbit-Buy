@@ -1,5 +1,6 @@
 import { TextInput } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import {ShoppingCart} from 'tabler-icons-react'
 
 export type NameInputProps = {
     value: string
@@ -16,6 +17,9 @@ export const NameInput = (props: NameInputProps) => (
             placeholder="Nombre"
             label="Nombre"
             radius="md"
+            icon={
+                <ShoppingCart size={20} />
+            }
         />
     </>
 )

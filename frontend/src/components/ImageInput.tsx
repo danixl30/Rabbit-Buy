@@ -1,4 +1,5 @@
 import { FileInput } from '@mantine/core'
+import {Photo} from 'tabler-icons-react'
 import { Optional } from '../utils/types/optional'
 
 export type ImageInputProps = {
@@ -11,6 +12,9 @@ export const ImageInput = (props: ImageInputProps) => (
             onChange={props.onChange}
             placeholder="Imagen"
             accept="image/png,image/jpeg"
+            icon={
+                <Photo size={20} />
+            }
         />
     </>
 )

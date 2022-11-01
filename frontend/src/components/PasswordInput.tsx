@@ -1,5 +1,6 @@
 import { PasswordInput as Password } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import {ShieldLock} from 'tabler-icons-react'
 
 export type PasswordInputProps = {
     value: string
@@ -19,6 +20,9 @@ export const PasswordInput = (props: PasswordInputProps) => (
             description = {props.description}
             radius="md"
             error={props.error}
+            icon={
+                <ShieldLock size={20}/>
+            }
         />
     </>
 )

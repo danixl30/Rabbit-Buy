@@ -1,5 +1,4 @@
 import {
-    Avatar,
     ActionIcon,
     AppShell,
     Button,
@@ -11,7 +10,6 @@ import {
     Text,
     Title,
     UnstyledButton,
-    createStyles
 } from '@mantine/core'
 import { ReactNode } from 'react'
 import { UseNavigation } from '../core/abstractions/navigation/navigation'
@@ -22,8 +20,9 @@ import { LOGIN_PAGE } from '../login/page/route'
 import { MAIN_PAGE } from '../main/page/route'
 import { PROFILE_PAGE } from '../profile/page/route'
 import { REGISTER_PAGE } from '../register/page/route'
-import { UserCircle } from 'tabler-icons-react'
+import { Login, Logout, Registered, Settings, UserPlus } from 'tabler-icons-react'
 import { ToolTip } from './ToolTip'
+import {useHoverStyles} from '../hooks/useHoverStyles'
 
 export type NavBarProps = {
     children: ReactNode | ReactNode[]
@@ -35,16 +34,8 @@ type IconAppProps = {
     navigation: UseNavigation
 }
 
-const useStyles = createStyles((theme) => ({
-    titleButton: {
-        '&:hover': {
-            backgroundColor: theme.colors.gray[1],
-          },
-    }
-  }));
-
 const IconApp = (props: IconAppProps) => {
-    const { classes } = useStyles();
+    const { classes } = useHoverStyles();
     return (
         <>
             <UnstyledButton onClick={() => props.navigation.goTo(MAIN_PAGE)} type = "button" className={classes.titleButton}>
@@ -55,7 +46,7 @@ const IconApp = (props: IconAppProps) => {
 }
 
 const NotUserBar = (props: NavBarProps) => {
-    const { navigation, userState } = props
+    const { navigation } = props
     return (
         <>
             <Grid>
@@ -66,11 +57,21 @@ const NotUserBar = (props: NavBarProps) => {
                 <Grid.Col span={3}></Grid.Col>
                 <Grid.Col span={3}>
                     <Center>
-                        <Button onClick={() => navigation.goTo(LOGIN_PAGE)}>
+                        <Button 
+                            onClick={() => navigation.goTo(LOGIN_PAGE)}
+                            leftIcon={
+                                <Login size={20} />
+                            }
+                        >
                             Login
                         </Button>
                         <Space w="md" />
-                        <Button onClick={() => navigation.goTo(REGISTER_PAGE)}>
+                        <Button 
+                            onClick={() => navigation.goTo(REGISTER_PAGE)}
+                            leftIcon={
+                                <UserPlus size={20} />
+                            }
+                        >
                             Registrarse
                         </Button>
                     </Center>
@@ -97,10 +98,8 @@ const ClientBar = (props: NavBarProps) => {
                             <ActionIcon
                                 onClick={() => navigation.goTo(PROFILE_PAGE)}
                             >
-                                <UserCircle
+                                <Settings
                                     size={40}
-                                    strokeWidth={1}
-                                    color={'#000000'}
                                 />
                             </ActionIcon>
                         </ToolTip>
@@ -112,7 +111,7 @@ const ClientBar = (props: NavBarProps) => {
                         <Space w="sm" />
                         <ToolTip text="Logout">
                             <ActionIcon onClick={onLogout}>
-                                <Avatar radius="xl" />
+                                <Logout size={80} />
                             </ActionIcon>
                         </ToolTip>
                     </Center>

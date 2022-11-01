@@ -4,6 +4,7 @@ import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
 import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
+import {ErrorComponent} from '../../error/ErrorComponent'
 import { getUserContext } from '../../global-state/user/get-user-context'
 import { usePetition } from '../../services/implementations/petition/usePetition'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
@@ -46,11 +47,15 @@ export default function ProductDetailPage() {
                 </Layout>
             </>
         )
+
+    if (isError) 
+        return <ErrorComponent />
+
     return (
         <>
             <Layout>
                 <Container>
-                    <Title order={1}>Product detail:</Title>
+                    <Title order={1}>Detalle del producto:</Title>
                     <ProductContainer>
                         <Item span={4}>
                             <ProductImage src={product!!.image} />
@@ -60,7 +65,7 @@ export default function ProductDetailPage() {
                             <Space h="xl" />
                             <ProductDescription text={product!!.description} />
                         </Item>
-                        <Item span={1}>
+                        <Item span={2}>
                             <ProductFranchise name={product!!.franchise.name} />
                             <Space h="md" />
                             <ProductPrice

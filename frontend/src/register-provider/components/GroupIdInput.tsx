@@ -17,7 +17,7 @@ export const GroupIdInput = (props: GroupIdInputProps) => (
             placeholder="ID de afiliación"
             label="ID de afiliación"
             radius="md"
-            rightSection={
+            icon={
                 <BuildingStore size={20} strokeWidth={1} color={'#000000'} />
             }
         />

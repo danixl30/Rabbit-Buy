@@ -5,5 +5,5 @@ export type ProductFranchiseProps = {
 }
 
 export const ProductFranchise = (props: ProductFranchiseProps) => (
-    <Title order={4}>{'By: ' + props.name}</Title>
+    <Title order={4}>{'Por: ' + props.name}</Title>
 )

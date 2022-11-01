@@ -17,7 +17,7 @@ export const RifInput = (props: RifInputProps) => (
             placeholder="RIF"
             label="RIF"
             radius="md"
-            rightSection={
+            icon={
                 <Notes size={20} strokeWidth={0.5} color={'#000000'} />
             }
         />
