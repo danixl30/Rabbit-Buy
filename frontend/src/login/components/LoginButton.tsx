@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import {Login} from 'tabler-icons-react'
+import { Login } from 'tabler-icons-react'
 
 export type LoginButtonProps = {
     onClick: () => void
@@ -12,9 +12,7 @@ export const LoginButton = (props: LoginButtonProps) => (
             color="orange"
             disabled={props.disabled}
             onClick={props.onClick}
-            leftIcon={
-                <Login size={20} />
-            }
+            leftIcon={<Login size={20} />}
         >
             Login
         </Button>

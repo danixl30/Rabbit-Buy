@@ -18,9 +18,7 @@ export const CurrencyInput = (props: CurrencyInputProps) => (
             data={['USD', 'Bs.']}
             label="Moneda"
             radius="md"
-            icon={
-                <Receipt2 size={20} strokeWidth={0.5} color={'#000000'} />
-            }
+            icon={<Receipt2 size={20} strokeWidth={0.5} color={'#000000'} />}
         />
     </>
 )

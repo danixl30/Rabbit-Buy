@@ -4,7 +4,7 @@ import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
 import { useCookieSession } from '../../core/implementation/session/cookies/useCookieSession'
 import { useToastToastify } from '../../core/implementation/toast/toastify/useToastToastify'
-import {ErrorComponent} from '../../error/ErrorComponent'
+import { ErrorComponent } from '../../error/ErrorComponent'
 import { getUserContext } from '../../global-state/user/get-user-context'
 import { usePetition } from '../../services/implementations/petition/usePetition'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
@@ -48,8 +48,7 @@ export default function ProductDetailPage() {
             </>
         )
 
-    if (isError) 
-        return <ErrorComponent />
+    if (isError) return <ErrorComponent />
 
     return (
         <>

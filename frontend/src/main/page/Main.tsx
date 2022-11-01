@@ -4,7 +4,7 @@ import { Layout } from '../../components/Layout'
 import { SearchInput } from '../../components/SearchInput'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
-import {ErrorComponent} from '../../error/ErrorComponent'
+import { ErrorComponent } from '../../error/ErrorComponent'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
 import { List } from '../components/List'
 import { ProductCard } from '../components/ProductCard'
@@ -40,8 +40,7 @@ export default function MainPage() {
             </>
         )
 
-    if (isError) 
-        return <ErrorComponent />
+    if (isError) return <ErrorComponent />
 
     return (
         <>

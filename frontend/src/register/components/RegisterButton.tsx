@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import {UserPlus} from 'tabler-icons-react'
+import { UserPlus } from 'tabler-icons-react'
 
 export type RegisterButtonProps = {
     onClick?: () => void
@@ -8,12 +8,10 @@ export type RegisterButtonProps = {
 
 export const RegisterButton = (props: RegisterButtonProps) => (
     <>
-        <Button 
-            disabled={props.disabled} 
+        <Button
+            disabled={props.disabled}
             onClick={props.onClick}
-            leftIcon={
-                <UserPlus size={20} />
-            }
+            leftIcon={<UserPlus size={20} />}
         >
             Registrar
         </Button>

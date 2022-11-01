@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import {ShoppingCartPlus} from 'tabler-icons-react'
+import { ShoppingCartPlus } from 'tabler-icons-react'
 
 export type MakePetitionProps = {
     disabled: boolean
@@ -8,7 +8,11 @@ export type MakePetitionProps = {
 
 export const MakePetitionButton = (props: MakePetitionProps) => (
     <>
-        <Button leftIcon={<ShoppingCartPlus size={20} />} onClick={props.onClick} disabled={props.disabled}>
+        <Button
+            leftIcon={<ShoppingCartPlus size={20} />}
+            onClick={props.onClick}
+            disabled={props.disabled}
+        >
             Realizar pedido!!
         </Button>
     </>

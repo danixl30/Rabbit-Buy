@@ -1,5 +1,5 @@
 import { Card, CardSection, Center } from '@mantine/core'
-import {useHoverStyles} from '../../hooks/useHoverStyles'
+import { useHoverStyles } from '../../hooks/useHoverStyles'
 import { Product } from '../../services/abstractions/product/types/product'
 import { List } from './List'
 import { ProductImage } from './ProductImage'
@@ -13,7 +13,14 @@ export type ProductCardProps = Product & {
 export const ProductCard = (props: ProductCardProps) => {
     const { classes } = useHoverStyles()
     return (
-        <Card className={classes.titleButton} onClick={props.onClick} shadow="sm" p="lg" radius="md" withBorder>
+        <Card
+            className={classes.titleButton}
+            onClick={props.onClick}
+            shadow="sm"
+            p="lg"
+            radius="md"
+            withBorder
+        >
             <CardSection>
                 <ProductImage src={props.image} />
             </CardSection>
@@ -22,7 +29,10 @@ export const ProductCard = (props: ProductCardProps) => {
                     <ProductNameText name={props.name} />
                 </Center>
                 <Center>
-                    <ProductPrice price={props.price} currency={props.currency} />
+                    <ProductPrice
+                        price={props.price}
+                        currency={props.currency}
+                    />
                 </Center>
             </List>
         </Card>

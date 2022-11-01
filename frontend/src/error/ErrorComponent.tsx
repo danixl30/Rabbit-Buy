@@ -1,5 +1,5 @@
-import {Button, Center, SimpleGrid, Text} from "@mantine/core"
-import {Refresh} from "tabler-icons-react"
+import { Button, Center, SimpleGrid, Text } from '@mantine/core'
+import { Refresh } from 'tabler-icons-react'
 
 export const ErrorComponent = () => {
     const onClickReload = () => location.reload()
@@ -7,10 +7,17 @@ export const ErrorComponent = () => {
         <>
             <SimpleGrid cols={1}>
                 <Center>
-                    <Text>Ha ocurrido un error, por favor refresque la pagina</Text>
+                    <Text>
+                        Ha ocurrido un error, por favor refresque la pagina
+                    </Text>
                 </Center>
                 <Center>
-                    <Button onClick={onClickReload} leftIcon={<Refresh size={20} />}>Refrescar</Button>
+                    <Button
+                        onClick={onClickReload}
+                        leftIcon={<Refresh size={20} />}
+                    >
+                        Refrescar
+                    </Button>
                 </Center>
             </SimpleGrid>
         </>
