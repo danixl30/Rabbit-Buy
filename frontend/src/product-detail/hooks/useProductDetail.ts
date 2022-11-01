@@ -42,6 +42,7 @@ export const useProductDetail = (
                 quantity,
             })
             onResult('Pedido realizado satisfactoriamente', 'success')
+            getData()
         } catch (e) {
             onResult('Error al realizar el pedido', 'error')
         }

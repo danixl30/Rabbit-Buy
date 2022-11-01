@@ -50,7 +50,10 @@ export const useConsultFranchise = (
 
     const onClickFranchise = (e: Franchise) => setSelected(e.id)
 
-    const onCloseDetail = () => setFranchise(undefined)
+    const onCloseDetail = () => {
+        setSelected('')
+        setFranchise(undefined)
+    }
 
     return {
         franchises,
