@@ -27,7 +27,7 @@ export const CreateFranchiseCard = (props: CreateFranchiseCardProps) => {
                 </Center>
                 <Space h="md" />
                 <Center>
-                    <Title order={4}>Crear franquisia</Title>
+                    <Title order={4}>Crear franquicia</Title>
                 </Center>
             </Card>
         </>

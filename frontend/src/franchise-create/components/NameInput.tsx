@@ -14,8 +14,8 @@ export const NameInput = (props: NameInputProps) => (
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="Nombre de la franquisia"
-            label="Nombre de la franquisia"
+            placeholder="Nombre de la franquicia"
+            label="Nombre de la franquicia"
             radius="md"
             icon={
                 <BuildingStore size={20} strokeWidth={0.5} color={'#000000'} />
