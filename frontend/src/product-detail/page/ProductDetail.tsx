@@ -17,6 +17,7 @@ import { ProductImage } from '../components/ProductImage'
 import { ProductName } from '../components/ProductName'
 import { ProductPrice } from '../components/ProductPrice'
 import { QuantityInput } from '../components/QuantityInput'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 import { useProductDetail } from '../hooks/useProductDetail'
 
 export default function ProductDetailPage() {
@@ -37,16 +38,7 @@ export default function ProductDetailPage() {
 
     const userState = getUserContext()
 
-    if (isLoading)
-        return (
-            <>
-                <Layout>
-                    <Center>
-                        <Loader />
-                    </Center>
-                </Layout>
-            </>
-        )
+    if (isLoading) return <SkeletonLoading />
 
     if (isError) return <ErrorComponent />
 

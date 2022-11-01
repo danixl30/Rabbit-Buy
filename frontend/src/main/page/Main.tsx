@@ -9,6 +9,7 @@ import { useProductServiceHttp } from '../../services/implementations/product/us
 import { List } from '../components/List'
 import { ProductCard } from '../components/ProductCard'
 import { ProductList } from '../components/ProductList'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 import { useMainPage } from '../hooks/useMainPage'
 
 export default function MainPage() {
@@ -31,14 +32,7 @@ export default function MainPage() {
         onChangeInputSearch(e.target.value)
     }
 
-    if (isLoading && !products)
-        return (
-            <>
-                <Center>
-                    <Loader />
-                </Center>
-            </>
-        )
+    if (isLoading && products.length === 0) return <SkeletonLoading />
 
     if (isError) return <ErrorComponent />
 

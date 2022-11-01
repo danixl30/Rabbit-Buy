@@ -7,7 +7,7 @@ export const ErrorComponent = () => {
         <>
             <SimpleGrid cols={1}>
                 <Center>
-                    <Text>
+                    <Text size={20}>
                         Ha ocurrido un error, por favor refresque la pagina
                     </Text>
                 </Center>
