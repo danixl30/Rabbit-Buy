@@ -24,7 +24,7 @@ export class CreateProviderApplicationService
 
     async execute(data: CreateProviderDTO): Promise<CreateProviderResponse> {
         const franchise = await this.franchiseRepository.searchByGroudId(
-            new FranchiseGroupId(data.groudId),
+            new FranchiseGroupId(data.groupId),
         )
         if (!franchise) throw new FranchiseNotFoundException()
         data.role = Roles.PROVIDER
