@@ -17,7 +17,7 @@ export const UsernameInput = (props: UsernameInputProps) => (
             placeholder="Nombre de usuario"
             label="Nombre de usuario"
             radius="md"
-            icon={<User size={20} strokeWidth={1} color={'#000000'} />}
+            icon={<User size={20} />}
         />
     </>
 )

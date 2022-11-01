@@ -36,7 +36,7 @@ export const useRegisterAdmin = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.warning('Datos invalidos')
+            toast.warning('Datos inválidos')
             return
         }
         setLoading(true)
@@ -55,7 +55,7 @@ export const useRegisterAdmin = (
             if (e.response?.status === 400)
                 onResult('El administrador ya existe', 'error')
             else if (e.response?.body?.message === 'INVALID_SECRET_PASSWORD')
-                onResult('Contrasena secreto invalida', 'error')
+                onResult('Código secreto inválida', 'error')
             else onResult('Hubo un error en el registro', 'error')
         }
         setLoading(false)
@@ -68,19 +68,19 @@ export const useRegisterAdmin = (
 
     useEffect(() => {
         if (username && username.length < 5)
-            setErrorUsername('Nombre de usuario no valido')
+            setErrorUsername('Nombre de usuario no válido')
         else setErrorUsername('')
     }, [username])
 
     useEffect(() => {
         if (password && !regExpPassword.test(password))
-            setErrorPassword('Contrasena no valida')
+            setErrorPassword('Contraseña no válida')
         else setErrorPassword('')
     }, [password])
 
     useEffect(() => {
         if (confirmPassword && confirmPassword !== password)
-            setErrorConfirmPassword('Debe ser igual a la contrasena')
+            setErrorConfirmPassword('Debe ser igual a la contraseña')
         else setErrorConfirmPassword('')
     }, [confirmPassword])
 

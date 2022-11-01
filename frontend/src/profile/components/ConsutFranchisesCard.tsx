@@ -23,7 +23,7 @@ export const ConsultFranchisesCard = (props: ConsultFranchisesCardProps) => {
                 </Center>
                 <Space h="md" />
                 <Center>
-                    <Title order={4}>Consultar franquisias</Title>
+                    <Title order={4}>Consultar franquicias</Title>
                 </Center>
             </Card>
         </>

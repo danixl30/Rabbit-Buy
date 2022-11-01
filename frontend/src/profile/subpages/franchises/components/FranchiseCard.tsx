@@ -9,7 +9,7 @@ export const FranchiseCard = (props: FranchiseCardProps) => (
     <>
         <Card onClick={props.onClick} shadow="sm" p="lg" radius="md" withBorder>
             <Text>{`Nombre: ${props.name}`}</Text>
-            <Text>{`Rif: ${props.rif}`}</Text>
+            <Text>{`RIF: ${props.rif}`}</Text>
         </Card>
     </>
 )

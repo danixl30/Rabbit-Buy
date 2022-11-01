@@ -17,7 +17,7 @@ export const EmailInput = (props: EmailInputProps) => (
             placeholder="Correo"
             label="Correo"
             radius="md"
-            icon={<Mail size={20} strokeWidth={1} />}
+            icon={<Mail size={20} />}
         />
     </>
 )
