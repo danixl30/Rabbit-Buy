@@ -8,6 +8,7 @@ import {
     Param,
     ParseUUIDPipe,
     ParseIntPipe,
+    Put,
 } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
@@ -36,6 +37,8 @@ import { Roles } from 'src/user/infraestructure/guards/roles/metadata/roles.meta
 import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
 import { ListPetitionsClientCriteriaApplicationService } from 'src/petition/application/services/list-petitions-client-by-criteria/list.petitions.client.criteria.application.service'
 import { ListPetitionsProviderCriteriaApplicationService } from 'src/petition/application/services/list-petitions-franchise-by-criteria/list.petition.frnchise.criteria.application.service'
+import { ChangePetitionStatusApplicationService } from 'src/petition/application/services/change-status/change.status.application.service'
+import { Statuses } from 'src/petition/domain/value-objects/statuses'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -136,6 +139,22 @@ export class PetitionController {
             ),
             new ConcreteExceptionReductor(),
         ).execute({ provider: user.id.value, page, term })
+    }
+
+    @Put('confirm/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(RolesGuard)
+    async confirm(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new ChangePetitionStatusApplicationService(
+                this.petitionRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+            status: Statuses.CONFIRMED,
+        })
     }
 
     @Get(':id')

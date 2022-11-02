@@ -66,11 +66,23 @@ export const usePetition = (http: UseHttp): UsePetition => {
         return (await job()).body!!.petitions
     }
 
+    const confirmPetition = async (token: string, id: string) => {
+        const { job } = http.put<unknown, unknown>({
+            url: 'petition/confirm/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
     return {
         make,
         getClient,
         getClientTerm,
         getFranchise,
         getFranchiseTerm,
+        confirmPetition,
     }
 }

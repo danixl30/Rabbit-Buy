@@ -1,7 +1,10 @@
+import { ReactNode } from 'react'
 import { Card, SimpleGrid, Text, Title } from '@mantine/core'
 import { Petition } from '../../../../services/abstractions/petition/types/petition'
 
-export type PetitionCardProps = Petition
+export type PetitionCardProps = Petition & {
+    extraData?: ReactNode | ReactNode[]
+}
 
 export const PetitionCard = (props: PetitionCardProps) => (
     <>
@@ -24,6 +27,7 @@ export const PetitionCard = (props: PetitionCardProps) => (
                 <SimpleGrid cols={1}>
                     <Text>{'Cantidad: ' + props.quantity}</Text>
                     <Text>{'Status: ' + props.status}</Text>
+                    {props.extraData}
                 </SimpleGrid>
             </SimpleGrid>
         </Card>

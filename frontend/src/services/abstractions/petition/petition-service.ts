@@ -15,4 +15,6 @@ export type UsePetition = {
         page: number,
         term: string,
     ): Promise<Petition[]>
+
+    confirmPetition(token: string, id: string): Promise<boolean>
 }

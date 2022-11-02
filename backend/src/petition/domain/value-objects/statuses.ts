@@ -1,6 +1,7 @@
 export enum Statuses {
     OPEN = 'OPEN',
-    CLOSE = 'CLOSE',
+    CLOSED = 'CLOSED',
     SUSPEND = 'SUSPEND',
     CANCELLED = 'CANCELLED',
+    CONFIRMED = 'CONFIRMED',
 }

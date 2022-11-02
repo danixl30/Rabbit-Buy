@@ -21,9 +21,7 @@ export class PetitionMongoRepository implements PetitionRepository {
     ) {}
 
     async save(aggregate: Petition): Promise<Petition> {
-        const petition = await this.petitionModel.findByIdAndDelete(
-            aggregate.id.value,
-        )
+        const petition = await this.petitionModel.findById(aggregate.id.value)
         if (!petition) {
             const petitionToSave = new this.petitionModel()
             petitionToSave._id = aggregate.id.value

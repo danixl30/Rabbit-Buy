@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 import { UseSession } from '../../../../core/abstractions/session/session'
 import { UserState } from '../../../../global-state/user/UserContext'
 import { UsePetition } from '../../../../services/abstractions/petition/petition-service'
@@ -73,6 +74,26 @@ export const usePetitionsSubPage = (
         }
     }
 
+    const confirmPetition = async (id: string) => {
+        try {
+            await service.confirmPetition(session.getSession()!!, id)
+            toast.success('Pedido confirmado')
+            setPetions(
+                petitions.map((e) => {
+                    if (e.id === id) {
+                        return {
+                            ...e,
+                            status: 'CONFIRMED',
+                        }
+                    }
+                    return { ...e }
+                }),
+            )
+        } catch (e) {
+            toast.error('Error al confirmar el pedido')
+        }
+    }
+
     useEffect(() => {
         if (page < 2) return
         if (!term) getPetition()
@@ -94,5 +115,6 @@ export const usePetitionsSubPage = (
         onSubmit,
         isTop,
         petitions,
+        confirmPetition,
     }
 }
