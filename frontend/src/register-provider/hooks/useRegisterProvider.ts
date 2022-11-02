@@ -69,6 +69,7 @@ export const useRegisterProvider = (
     useEffect(() => {
         if (username && username.length < 5)
             setErrorUsername('Nombre de usuario no valido')
+        else if (username.length > 20) setErrorUsername('Muy largo...')
         else setErrorUsername('')
     }, [username])
 

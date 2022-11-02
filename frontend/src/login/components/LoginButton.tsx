@@ -9,7 +9,6 @@ export type LoginButtonProps = {
 export const LoginButton = (props: LoginButtonProps) => (
     <>
         <Button
-            color="orange"
             disabled={props.disabled}
             onClick={props.onClick}
             leftIcon={<Login size={20} />}

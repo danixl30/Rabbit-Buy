@@ -4,66 +4,30 @@ import { SearchInput } from '../../../components/SearchInput'
 import { useAxiosHttp } from '../../../core/implementation/http/axios/useAxiosHttp'
 import { useCookieSession } from '../../../core/implementation/session/cookies/useCookieSession'
 import { getUserContext } from '../../../global-state/user/get-user-context'
-import { Petition } from '../../../services/abstractions/petition/types/petition'
 import { usePetition } from '../../../services/implementations/petition/usePetition'
+import { ConfirmPetitionButton } from './components/ConfirmPetitionButton'
 import { PetitionCard } from './components/PetitionCard'
 import { usePetitionsSubPage } from './hooks/usePetitionsSubPage'
 
-const petitionsTest: Petition[] = [
-    {
-        name: 'test1',
-        quantity: 1,
-        status: 'OPEN',
-        price: 1000,
-        id: '1',
-        client: {
-            name: 'client1',
-            email: 'client1@mail.com',
-        },
-        currency: 'USD',
-    },
-    {
-        name: 'test1',
-        quantity: 1,
-        status: 'OPEN',
-        price: 1000,
-        id: '1',
-        currency: 'USD',
-    },
-    {
-        name: 'test1',
-        quantity: 1,
-        status: 'OPEN',
-        price: 1000,
-        id: '1',
-        client: {
-            name: 'client1',
-            email: 'client1@mail.com',
-        },
-        currency: 'USD',
-    },
-    {
-        name: 'test1',
-        quantity: 1,
-        status: 'OPEN',
-        price: 1000,
-        id: '1',
-        currency: 'USD',
-    },
-]
-
 export default function PetitionConsult() {
-    const { petitions, onSubmit, isTop, onGetMore } = usePetitionsSubPage(
-        usePetition(useAxiosHttp()),
-        useCookieSession(),
-        getUserContext()!!,
-    )
+    const userState = getUserContext()
+    const { petitions, onSubmit, isTop, onGetMore, confirmPetition } =
+        usePetitionsSubPage(
+            usePetition(useAxiosHttp()),
+            useCookieSession(),
+            userState!!,
+        )
     const [input, setInput] = useState('')
 
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) =>
         setInput(e.target.value)
 
     const onSubmitInput = () => onSubmit(input)
+
+    const onClickConfirm = (id: string) => () => {
+        confirmPetition(id)
+    }
+
     return (
         <>
             <Center>
@@ -76,10 +40,22 @@ export default function PetitionConsult() {
                     />
                     {petitions.map((e) => (
                         <div key={e.id}>
-                            <PetitionCard {...e} />
+                            {userState?.user?.role === 'PROVIDER' &&
+                            e.status !== 'CONFIRMED' ? (
+                                <PetitionCard
+                                    extraData={
+                                        <ConfirmPetitionButton
+                                            onClick={onClickConfirm(e.id)}
+                                        />
+                                    }
+                                    {...e}
+                                />
+                            ) : (
+                                <PetitionCard {...e} />
+                            )}
                         </div>
                     ))}
-                    {!isTop && <Button onClick={onGetMore}>Obtener mas</Button>}
+                    {!isTop && <Button onClick={onGetMore}>Obtener más</Button>}
                 </SimpleGrid>
             </Center>
         </>

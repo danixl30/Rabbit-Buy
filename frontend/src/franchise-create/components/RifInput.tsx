@@ -18,6 +18,7 @@ export const RifInput = (props: RifInputProps) => (
             label="RIF"
             radius="md"
             icon={<Notes size={20} strokeWidth={0.5} color={'#000000'} />}
+            description={'Ejemplo: J-123456789'}
         />
     </>
 )

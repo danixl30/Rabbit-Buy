@@ -30,7 +30,7 @@ export default function ConsultFranchises() {
         <>
             <ModalLayout
                 opened={Boolean(franchise)}
-                title="Detalle de franquisia"
+                title="Detalle de franquicia"
                 onClose={onCloseDetail}
             >
                 <Text>{`Nombre: ${franchise?.name}`}</Text>

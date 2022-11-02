@@ -23,7 +23,7 @@ export const ProfileConfigCard = (props: ProfileConfigCardProps) => {
                 </Center>
                 <Space h="md" />
                 <Center>
-                    <Title order={4}>Configuracion de perfil</Title>
+                    <Title order={4}>Configuración de perfil</Title>
                 </Center>
             </Card>
         </>

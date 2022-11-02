@@ -100,7 +100,7 @@ const ClientBar = (props: NavBarProps) => {
                 <Grid.Col span={3}></Grid.Col>
                 <Grid.Col span={3}>
                     <Center style={{ padding: 0 }}>
-                        <ToolTip text="Configuracion">
+                        <ToolTip text="Configuración">
                             <ActionIcon
                                 onClick={() => navigation.goTo(PROFILE_PAGE)}
                             >

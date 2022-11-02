@@ -7,6 +7,7 @@ import { useRouterDomNavigation } from '../../core/implementation/navigation/nav
 import { ErrorComponent } from '../../error/ErrorComponent'
 import { useProductServiceHttp } from '../../services/implementations/product/useProductHttp'
 import { List } from '../components/List'
+import { NotProductsFound } from '../components/NotProductsFount'
 import { ProductCard } from '../components/ProductCard'
 import { ProductList } from '../components/ProductList'
 import { SkeletonLoading } from '../components/SkeletonLoading'
@@ -47,6 +48,7 @@ export default function MainPage() {
                             submit={onSubmitSearch}
                         />
                         <Space h="xl" />
+                        {products.length === 0 && <NotProductsFound />}
                         <ProductList>
                             {products.map((e) => (
                                 <div key={e.id}>

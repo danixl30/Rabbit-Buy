@@ -28,7 +28,7 @@ export const useCreateProduct = (
     const onChangeCurrency = (value: string) => setCurrency(value)
     const onChangeExistence = (value: number) => {
         if (value < 0) {
-            toast.error('Existencia invalida')
+            toast.error('Existencia inválida')
             setExistence(0)
             return
         }
@@ -36,7 +36,7 @@ export const useCreateProduct = (
     }
     const onChangePrice = (value: number) => {
         if (value < 0) {
-            toast.error('Precio invalido')
+            toast.error('Precio inválido')
             setPrice(0)
             return
         }
@@ -56,7 +56,7 @@ export const useCreateProduct = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.warning('Datos invalidos')
+            toast.warning('Datos inválidos')
             return
         }
         setLoading(true)
@@ -80,6 +80,7 @@ export const useCreateProduct = (
 
     useEffect(() => {
         if (name && name.length < 5) setErrorName('Nombre muy corto')
+        else if (name && name.length > 20) setErrorName('Nombre muy largo')
         else setErrorName('')
     }, [name])
 
