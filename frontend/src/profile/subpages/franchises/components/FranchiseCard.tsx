@@ -7,13 +7,21 @@ export type FranchiseCardProps = Franchise & {
 }
 
 export const FranchiseCard = (props: FranchiseCardProps) => {
-    
     const { classes } = useHoverStyles()
-    
-    return (<>
-        <Card className = {classes.titleButton} onClick={props.onClick} shadow="sm" p="lg" radius="md" withBorder>
-            <Text>{`Nombre: ${props.name}`}</Text>
-            <Text>{`RIF: ${props.rif}`}</Text>
-        </Card>
-    </>)
+
+    return (
+        <>
+            <Card
+                className={classes.titleButton}
+                onClick={props.onClick}
+                shadow="sm"
+                p="lg"
+                radius="md"
+                withBorder
+            >
+                <Text>{`Nombre: ${props.name}`}</Text>
+                <Text>{`RIF: ${props.rif}`}</Text>
+            </Card>
+        </>
+    )
 }

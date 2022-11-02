@@ -4,6 +4,7 @@ import { UseSession } from '../../core/abstractions/session/session'
 import { UseToast } from '../../core/abstractions/toast/toast'
 import { PROFILE_PAGE } from '../../profile/page/route'
 import { UseFranchise } from '../../services/abstractions/franchise/franchise-service'
+import { regExpRif } from '../../utils/reg-exps/rif/rif.reg.exp'
 
 export const useCreateProduct = (
     service: UseFranchise,
@@ -44,11 +45,12 @@ export const useCreateProduct = (
 
     useEffect(() => {
         if (name && name.length < 5) setErrorName('Nombre muy corto')
+        else if (name.length > 20) setErrorName('Nombre muy largo')
         else setErrorName('')
     }, [name])
 
     useEffect(() => {
-        if (rif && rif.length < 5) setErrorRif('Rif inválido')
+        if (rif && !regExpRif.test(rif)) setErrorRif('Rif inválido')
         else setErrorRif('')
     }, [rif])
 

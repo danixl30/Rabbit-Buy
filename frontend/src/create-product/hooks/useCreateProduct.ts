@@ -80,6 +80,7 @@ export const useCreateProduct = (
 
     useEffect(() => {
         if (name && name.length < 5) setErrorName('Nombre muy corto')
+        else if (name.length > 20) setErrorName('Muy largo...')
         else setErrorName('')
     }, [name])
 
