@@ -45,12 +45,13 @@ export const useCreateProduct = (
 
     useEffect(() => {
         if (name && name.length < 5) setErrorName('Nombre muy corto')
-        else if (name.length > 20) setErrorName('Nombre muy largo')
+        else if (name && name.length > 20) setErrorName('Nombre muy largo')
         else setErrorName('')
     }, [name])
 
+
     useEffect(() => {
-        if (rif && !regExpRif.test(rif)) setErrorRif('Rif inválido')
+        if (rif && rif.length < 5) setErrorRif('Rif inválido')
         else setErrorRif('')
     }, [rif])
 

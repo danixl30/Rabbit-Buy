@@ -55,7 +55,7 @@ export default function PetitionConsult() {
                             )}
                         </div>
                     ))}
-                    {!isTop && <Button onClick={onGetMore}>Obtener mas</Button>}
+                    {!isTop && <Button onClick={onGetMore}>Obtener más</Button>}
                 </SimpleGrid>
             </Center>
         </>

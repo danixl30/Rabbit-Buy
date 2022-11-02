@@ -13,7 +13,7 @@ export const MakePetitionButton = (props: MakePetitionProps) => (
             onClick={props.onClick}
             disabled={props.disabled}
         >
-            Realizar pedido!!
+            Realizar pedido!
         </Button>
     </>
 )
