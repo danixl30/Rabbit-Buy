@@ -13,7 +13,7 @@ export const ExistenceInput = (props: ExistenceInputProps) => (
             error={props.error}
             value={props.value}
             onChange={props.onChange}
-            placeholder="Existence"
+            placeholder="Existencia"
             min={0}
             label="Existencia"
             radius="md"

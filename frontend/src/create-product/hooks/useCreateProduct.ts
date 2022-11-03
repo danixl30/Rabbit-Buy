@@ -84,12 +84,11 @@ export const useCreateProduct = (
         else setErrorName('')
     }, [name])
 
-    useEffect(() => {
-        if (currency && currency.length < 3)
-            setErrorCurrency('Debe ser de 3 caracteres')
-        else if (currency.length > 3) setErrorCurrency('Muy largo...')
+     useEffect(() => {
+        if (currency && currency === 'Seleccione...')
+            setErrorCurrency('Seleccione una moneda')
         else setErrorCurrency('')
-    }, [currency])
+    }, [currency]) 
 
     const submitable =
         name &&
