@@ -42,7 +42,7 @@ export class CreatePetitionApplicationService
             new PetitionId(this.uuid.generate()),
             new ProductName(product.name),
             new ProductRef(new ProductId(data.product)),
-            new ProductPrice(product.price),
+            new ProductPrice(product.price * data.quantity),
             new PetitionQuantity(data.quantity),
             new ProductCurrency(product.currency),
             new UserRef(new UserId(data.userId)),

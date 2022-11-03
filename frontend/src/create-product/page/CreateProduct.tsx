@@ -87,8 +87,7 @@ export default function CreateProduct() {
                                 value={existence}
                                 onChange={onChangeExistence}
                             />
-                            <ImageInput onChange={onChangeImage} 
-                            />
+                            <ImageInput onChange={onChangeImage} />
                         </SimpleGrid>
                         {imageText && (
                             <>
