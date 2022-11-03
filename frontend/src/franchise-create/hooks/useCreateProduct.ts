@@ -49,9 +49,8 @@ export const useCreateProduct = (
         else setErrorName('')
     }, [name])
 
-
     useEffect(() => {
-        if (rif && rif.length < 5) setErrorRif('Rif inválido')
+        if (rif && !regExpRif.test(rif)) setErrorRif('Rif inválido')
         else setErrorRif('')
     }, [rif])
 

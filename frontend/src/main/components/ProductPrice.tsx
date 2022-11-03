@@ -7,7 +7,8 @@ export type ProductPriceProps = {
 
 export const ProductPrice = (props: ProductPriceProps) => (
     <>
-        <Badge color="blue">{props.price}</Badge>
-        <Badge color="green">{props.currency}</Badge>
+        <Badge size="xl" color="blue">
+            {props.price + ' ' + props.currency}
+        </Badge>
     </>
 )

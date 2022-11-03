@@ -5,5 +5,5 @@ export type ProductImageProps = {
 }
 
 export const ProductImage = (props: ProductImageProps) => (
-    <Image src={props.src} height={160} alt="Norway" />
+    <Image src={props.src} height={200} alt="Norway" />
 )
