@@ -11,7 +11,7 @@ export const PetitionRequestCard = (props: PetitionRequestCardProps) => {
     return (
         <>
             <Card
-                className={classes.titleButton}
+                className={classes.hoverEffectHard}
                 onClick={props.onClick}
                 shadow="sm"
                 p="lg"

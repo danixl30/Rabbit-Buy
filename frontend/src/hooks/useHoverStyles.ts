@@ -1,10 +1,17 @@
 import { createStyles } from '@mantine/core'
 
 export const useHoverStyles = createStyles((theme) => ({
-    titleButton: {
+    hoverEffectSoft: {
         '&:hover': {
             borderRadius: '10px',
-            backgroundColor: theme.colors.gray[1],
+            backgroundColor: theme.colors.gray[3],
+        },
+    },
+
+    hoverEffectHard: {
+        '&:hover': {
+            borderRadius: '10px',
+            backgroundColor: theme.colors.gray[6],
         },
     },
 }))

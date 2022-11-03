@@ -14,7 +14,7 @@ export const ProductCard = (props: ProductCardProps) => {
     const { classes } = useHoverStyles()
     return (
         <Card
-            className={classes.titleButton}
+            className={classes.hoverEffectSoft}
             onClick={props.onClick}
             shadow="sm"
             p="lg"

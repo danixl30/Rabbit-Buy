@@ -11,7 +11,7 @@ export const CreateFranchiseCard = (props: CreateFranchiseCardProps) => {
     return (
         <>
             <Card
-                className={classes.titleButton}
+                className={classes.hoverEffectHard}
                 onClick={props.onClick}
                 shadow="sm"
                 p="lg"

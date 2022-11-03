@@ -47,7 +47,7 @@ const IconApp = (props: IconAppProps) => {
             <UnstyledButton
                 onClick={() => props.navigation.goTo(MAIN_PAGE)}
                 type="button"
-                className={classes.titleButton}
+                className={classes.hoverEffectSoft}
             >
                 <Title order={1}>Rabbit Buy</Title>
             </UnstyledButton>
