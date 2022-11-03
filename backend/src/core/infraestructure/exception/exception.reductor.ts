@@ -34,7 +34,7 @@ export class ConcreteExceptionReductor implements ExceptionReductor {
         console.log(error.stack)
         throw (
             exceptions[error.message]?.() ??
-            new InternalServerErrorException(error.message ?? '')
+            new InternalServerErrorException(error.message || '')
         )
     }
 }
