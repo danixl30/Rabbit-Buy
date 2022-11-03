@@ -38,7 +38,7 @@ export const useRegisterProvider = (
 
     const onSubmit = async () => {
         if (!submitable) {
-            toast.warning('Datos no validos')
+            toast.warning('Datos no válidos')
             return
         }
         setLoading(true)
@@ -62,32 +62,32 @@ export const useRegisterProvider = (
     }
 
     useEffect(() => {
-        if (email && !regExpEmail.test(email)) setErrorEmail('Email no valido')
+        if (email && !regExpEmail.test(email)) setErrorEmail('Correo no válido')
         else setErrorEmail('')
     }, [email])
 
     useEffect(() => {
         if (username && username.length < 5)
-            setErrorUsername('Nombre de usuario no valido')
-        else if (username.length > 20) setErrorUsername('Muy largo...')
+            setErrorUsername('Nombre muy corto')
+        else if (username.length > 20) setErrorUsername('Nombre muy largo')
         else setErrorUsername('')
     }, [username])
 
     useEffect(() => {
         if (password && !regExpPassword.test(password))
-            setErrorPassword('Contrasena no valida')
+            setErrorPassword('Contraseña no válida')
         else setErrorPassword('')
     }, [password])
 
     useEffect(() => {
         if (confirmPassword && confirmPassword !== password)
-            setErrorConfirmPassword('Debe ser igual a la contrasena')
+            setErrorConfirmPassword('Debe ser igual a la contraseña')
         else setErrorConfirmPassword('')
     }, [confirmPassword])
 
     useEffect(() => {
         if (groupId && !regExpUUID.test(groupId))
-            setErrorGroupId('Invalid groupId')
+            setErrorGroupId('ID de afiliación no válido')
         else setErrorGroupId('')
     }, [groupId])
 

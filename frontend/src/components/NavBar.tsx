@@ -49,7 +49,7 @@ const IconApp = (props: IconAppProps) => {
                 type="button"
                 className={classes.hoverEffectSoft}
             >
-                <Title order={1}>Rabbit Buy</Title>
+                <Title order={1} pl={10} pr={10} pb={4} >Rabbit Buy</Title>
             </UnstyledButton>
         </>
     )

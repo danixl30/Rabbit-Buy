@@ -11,7 +11,7 @@ export const useHoverStyles = createStyles((theme) => ({
     hoverEffectHard: {
         '&:hover': {
             borderRadius: '10px',
-            backgroundColor: theme.colors.gray[6],
+            backgroundColor: theme.colors.gray[4],
         },
     },
 }))
