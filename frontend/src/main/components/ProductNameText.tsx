@@ -5,7 +5,7 @@ export type ProductNameTextProps = {
 }
 
 export const ProductNameText = (props: ProductNameTextProps) => (
-    <Text size="lg" weight={500}>
+    <Text size={30} weight={500}>
         {props.name}
     </Text>
 )

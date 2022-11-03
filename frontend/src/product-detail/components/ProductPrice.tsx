@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from '@mantine/core'
+import { Badge, SimpleGrid, Text } from '@mantine/core'
 
 export type ProductPriceProps = {
     currency: string
@@ -8,7 +8,7 @@ export type ProductPriceProps = {
 export const ProductPrice = (props: ProductPriceProps) => (
     <>
         <SimpleGrid cols={1}>
-            <Text>{'Precio: ' + props.price + ' ' + props.currency}</Text>
+            <Badge size="xl">{props.price + ' ' + props.currency}</Badge>
         </SimpleGrid>
     </>
 )

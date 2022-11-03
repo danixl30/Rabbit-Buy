@@ -1,4 +1,4 @@
-import { Center, Container, Loader, Space, Title } from '@mantine/core'
+import { Container, Space, Title } from '@mantine/core'
 import { Layout } from '../../components/Layout'
 import { useAxiosHttp } from '../../core/implementation/http/axios/useAxiosHttp'
 import { useRouterDomNavigation } from '../../core/implementation/navigation/navigation-router-dom'
@@ -56,7 +56,7 @@ export default function ProductDetailPage() {
                             <Space h="xl" />
                             <ProductDescription text={product!!.description} />
                         </Item>
-                        <Item span={2}>
+                        <Item span={4}>
                             <ProductFranchise name={product!!.franchise.name} />
                             <Space h="md" />
                             <ProductPrice
