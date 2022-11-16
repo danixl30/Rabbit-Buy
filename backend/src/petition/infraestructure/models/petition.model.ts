@@ -2,13 +2,21 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 import { Franchise } from 'src/franchise/infraestructure/models/franchise.model'
 import { Statuses } from 'src/petition/domain/value-objects/statuses'
+import { from, MUUID } from 'uuid-mongodb'
 
 export type PetitionDocument = Petition & Document
 
 @Schema()
 export class Petition {
-    @Prop({ required: true, unique: true })
-    _id: string
+    @Prop({
+        required: true,
+        unique: true,
+        type: 'object',
+        value: {
+            type: 'Buffer',
+        },
+    })
+    _id: MUUID
     @Prop({ required: true })
     productName: string
     @Prop({ required: true })
@@ -30,3 +38,13 @@ export class Petition {
 }
 
 export const PetitionSchema = SchemaFactory.createForClass(Petition)
+
+PetitionSchema.set('id', false)
+
+PetitionSchema.virtual('id')
+    .get(function (): string {
+        return from(this._id).toString()
+    })
+    .set(function (value: string) {
+        this._id = from(value)
+    })

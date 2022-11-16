@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Optional } from '../../utils/types/optional'
+import { Optional } from '../utils/types/optional'
 
 export const useImage = (image: Optional<File>) => {
     const [imageText, setImageText] = useState('')

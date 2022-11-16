@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import { from as mongooseUUID } from 'uuid-mongodb'
 import { PetitionRepository } from 'src/petition/application/repositories/petition.repository'
 import { CriteriaValues } from 'src/petition/application/types/criteria.values'
 import { PaginationDTO } from 'src/petition/application/types/pagination.dto'
@@ -24,7 +25,7 @@ export class PetitionMongoRepository implements PetitionRepository {
         const petition = await this.petitionModel.findById(aggregate.id.value)
         if (!petition) {
             const petitionToSave = new this.petitionModel()
-            petitionToSave._id = aggregate.id.value
+            petitionToSave.id = aggregate.id.value
             petitionToSave.productName = aggregate.productName.value
             petitionToSave.productId = aggregate.product.value.value
             petitionToSave.productPrice = aggregate.price.value
@@ -50,12 +51,16 @@ export class PetitionMongoRepository implements PetitionRepository {
     }
 
     async delete(aggregate: Petition): Promise<Petition> {
-        await this.petitionModel.findByIdAndDelete(aggregate.id.value)
+        await this.petitionModel.findByIdAndDelete(
+            mongooseUUID(aggregate.id.value),
+        )
         return aggregate
     }
 
     async searchById(id: PetitionId): Promise<Petition> {
-        const petition = await this.petitionModel.findById(id.value)
+        const petition = await this.petitionModel.findById(
+            mongooseUUID(id.value),
+        )
         return petition ? petitionDbToDomain(petition) : null
     }
 

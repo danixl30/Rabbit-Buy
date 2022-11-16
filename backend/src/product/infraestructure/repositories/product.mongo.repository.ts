@@ -1,4 +1,6 @@
+import { Injectable } from '@nestjs/common'
 import { Model } from 'mongoose'
+import { from as mongooseUUID } from 'uuid-mongodb'
 import { Product as ProductDb } from '../models/product.model'
 import { ProductRepository } from 'src/product/application/repositories/product.repository'
 import { ProductDocument } from '../models/product.model'
@@ -10,6 +12,7 @@ import { ProductPage } from 'src/product/domain/value-objects/product.page'
 import { CategoryRef } from 'src/product/domain/value-objects/category.ref'
 import { productDbToDomain } from '../mappers/product.db.domain'
 
+@Injectable()
 export class ProductMongoRepository implements ProductRepository {
     constructor(
         @InjectModel(ProductDb.name)
@@ -20,7 +23,7 @@ export class ProductMongoRepository implements ProductRepository {
         const product = await this.productModel.findById(aggregate.id.value)
         if (!product) {
             const productToSave = new this.productModel()
-            productToSave._id = aggregate.id.value
+            productToSave.id = aggregate.id.value
             productToSave.productName = aggregate.name.value
             productToSave.description = aggregate.description.value
             productToSave.price = aggregate.price.value
@@ -47,12 +50,14 @@ export class ProductMongoRepository implements ProductRepository {
     }
 
     async delete(aggregate: Product): Promise<Product> {
-        await this.productModel.findByIdAndDelete(aggregate.id.value)
+        await this.productModel.findByIdAndDelete(
+            mongooseUUID(aggregate.id.value),
+        )
         return aggregate
     }
 
     async searchById(id: ProductId): Promise<Product> {
-        const product = await this.productModel.findById(id.value)
+        const product = await this.productModel.findById(mongooseUUID(id.value))
         return product ? productDbToDomain(product) : null
     }
 

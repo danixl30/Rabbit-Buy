@@ -4,15 +4,29 @@ import { UseFranchise } from '../../abstractions/franchise/franchise-service'
 import { Franchise } from '../../abstractions/franchise/types/franchise'
 import { FranchiseDetail } from '../../abstractions/franchise/types/franchise-detail'
 
+type CreateFranchiseRequest = {
+    name: string
+    rif: string
+}
+
 export const useFranchise = (http: UseHttp): UseFranchise => {
     const create = async (token: string, dto: CreateFranchise) => {
-        const { job } = http.post<CreateFranchise, unknown>({
-            url: 'franchise/create',
-            body: dto,
-            headers: {
-                auth: token,
+        const { job } = http.upload<CreateFranchiseRequest, unknown>(
+            {
+                url: 'franchise/create',
+                body: {
+                    rif: dto.rif,
+                    name: dto.name,
+                },
+                headers: {
+                    auth: token,
+                },
+                files: {
+                    image: dto.image,
+                },
             },
-        })
+            () => {},
+        )
         await job()
         return true
     }

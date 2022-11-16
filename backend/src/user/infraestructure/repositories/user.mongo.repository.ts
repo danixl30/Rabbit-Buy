@@ -9,6 +9,7 @@ import {
     User as UserDb,
     UserDocument,
 } from 'src/user/infraestructure/models/user.model'
+import { from as mongooseUUID } from 'uuid-mongodb'
 import { userDocumentToDomain } from '../mappers/user.document.domain'
 
 @Injectable()
@@ -20,7 +21,7 @@ export class UserMongoRepository implements UserRepository {
         const user = await this.userModel.findById(aggregate.id.value)
         if (!user) {
             const userToSave = new this.userModel()
-            userToSave._id = aggregate.id.value
+            userToSave.id = aggregate.id.value
             userToSave.name = aggregate.username.value
             userToSave.password = aggregate.password.value
             userToSave.email = aggregate.email.value
@@ -37,12 +38,12 @@ export class UserMongoRepository implements UserRepository {
     }
 
     async delete(aggregate: User): Promise<User> {
-        await this.userModel.findByIdAndDelete(aggregate.id.value)
+        await this.userModel.findByIdAndDelete(mongooseUUID(aggregate.id.value))
         return aggregate
     }
 
     async getById(userId: UserId): Promise<User> {
-        const user = await this.userModel.findById(userId.value)
+        const user = await this.userModel.findById(mongooseUUID(userId.value))
         return user ? userDocumentToDomain(user) : null
     }
 

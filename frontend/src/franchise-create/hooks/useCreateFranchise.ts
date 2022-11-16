@@ -5,6 +5,7 @@ import { UseToast } from '../../core/abstractions/toast/toast'
 import { PROFILE_PAGE } from '../../profile/page/route'
 import { UseFranchise } from '../../services/abstractions/franchise/franchise-service'
 import { regExpRif } from '../../utils/reg-exps/rif/rif.reg.exp'
+import { Optional } from '../../utils/types/optional'
 
 export const useCreateProduct = (
     service: UseFranchise,
@@ -15,6 +16,7 @@ export const useCreateProduct = (
     const [name, setName] = useState('')
     const [rif, setRif] = useState('')
     const [loading, setLoading] = useState(false)
+    const [image, setImage] = useState<File>()
 
     const [errorName, setErrorName] = useState('')
     const [errorRif, setErrorRif] = useState('')
@@ -32,6 +34,7 @@ export const useCreateProduct = (
         const onResult = toast.pending('Procesando...')
         try {
             await service.create(session.getSession()!!, {
+                image,
                 name,
                 rif,
             })
@@ -41,6 +44,18 @@ export const useCreateProduct = (
             onResult('Error al crear la franquicia', 'error')
         }
         setLoading(false)
+    }
+
+    const onChangeImage = (image: Optional<File>) => {
+        if (!image) {
+            setImage(undefined)
+            return
+        }
+        if (!image.type.toLowerCase().includes('image')) {
+            toast.error('Debe ser una imagen')
+            return
+        }
+        setImage(image)
     }
 
     useEffect(() => {
@@ -54,7 +69,7 @@ export const useCreateProduct = (
         else setErrorRif('')
     }, [rif])
 
-    const submitable = name && rif && !errorRif && !errorName
+    const submitable = name && rif && !errorRif && !errorName && image
 
     return {
         name,
@@ -66,5 +81,7 @@ export const useCreateProduct = (
         onSubmit,
         errorRif,
         errorName,
+        onChangeImage,
+        image,
     }
 }

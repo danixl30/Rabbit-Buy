@@ -84,11 +84,11 @@ export const useCreateProduct = (
         else setErrorName('')
     }, [name])
 
-     useEffect(() => {
+    useEffect(() => {
         if (currency && currency === 'Seleccione...')
             setErrorCurrency('Seleccione una moneda')
         else setErrorCurrency('')
-    }, [currency]) 
+    }, [currency])
 
     const submitable =
         name &&

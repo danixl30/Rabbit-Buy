@@ -15,7 +15,7 @@ export const CurrencyInput = (props: CurrencyInputProps) => (
             value={props.value}
             onChange={props.onChange}
             placeholder="Moneda"
-            data={['Seleccione...','USD', 'Bs.']}
+            data={['Seleccione...', 'USD', 'Bs.']}
             label="Moneda"
             radius="md"
             icon={<Receipt2 size={20} strokeWidth={0.5} color={'#000000'} />}
