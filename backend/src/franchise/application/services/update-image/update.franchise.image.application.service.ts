@@ -1,31 +1,44 @@
 import { EventHandler } from 'src/core/application/event-handler/event.handler'
 import { ApplicationService } from 'src/core/application/service/application.service'
+import { ImageStorage } from 'src/core/application/storage/images/image.storage'
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
-import { FranchiseRif } from 'src/franchise/domain/value-objects/franchise.rif'
+import { FranchiseImage } from 'src/franchise/domain/value-objects/franchise.image'
 import { FranchiseNotFoundException } from '../../exceptions/franchise.not.found'
 import { FranchiseRepository } from '../../repositories/franchise.repository'
-import { UpdateRifDTO } from './types/update.rif.dto'
-import { UpdateRifResponse } from './types/update.rif.response'
+import { UpdateFranchiseImageDTO } from './types/dto'
+import { UpdateFranchiseImageResponse } from './types/response'
 
-export class UpdateRifApplicationService
-    implements ApplicationService<UpdateRifDTO, UpdateRifResponse>
+export class UpdateFranchiseImageApplicationService
+    implements
+        ApplicationService<
+            UpdateFranchiseImageDTO,
+            UpdateFranchiseImageResponse
+        >
 {
     constructor(
         private franchiseRepository: FranchiseRepository,
+        private imageStorage: ImageStorage,
         private eventHandler: EventHandler,
     ) {}
 
-    async execute(data: UpdateRifDTO): Promise<UpdateRifResponse> {
+    async execute(
+        data: UpdateFranchiseImageDTO,
+    ): Promise<UpdateFranchiseImageResponse> {
         const franchise = await this.franchiseRepository.searchById(
             new FranchiseId(data.id),
         )
         if (!franchise) throw new FranchiseNotFoundException()
-        franchise.changeRif(new FranchiseRif(data.rif))
+        await this.imageStorage.delete({
+            url: franchise.image.value,
+        })
+        const newImage = await this.imageStorage.save({
+            path: data.path,
+        })
+        franchise.changeImage(new FranchiseImage(newImage.url))
         await this.franchiseRepository.save(franchise)
         this.eventHandler.publish(franchise.pullEvents())
         return {
             id: franchise.id.value,
-            rif: franchise.rif.value,
         }
     }
 }

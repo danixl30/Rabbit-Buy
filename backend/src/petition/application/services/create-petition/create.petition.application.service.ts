@@ -46,9 +46,9 @@ export class CreatePetitionApplicationService
             new PetitionQuantity(data.quantity),
             new ProductCurrency(product.currency),
             new UserRef(new UserId(data.userId)),
-            new Status(Statuses.OPEN),
             new PetitionDate(new Date()),
             new FranchiseRef(new FranchiseId(product.franchise.id)),
+            new Status(Statuses.OPEN),
         )
         await this.petitionRepository.save(petition)
         this.eventHandler.publish(petition.pullEvents())

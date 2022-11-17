@@ -37,8 +37,8 @@ import { Roles } from 'src/user/infraestructure/guards/roles/metadata/roles.meta
 import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
 import { ListPetitionsClientCriteriaApplicationService } from 'src/petition/application/services/list-petitions-client-by-criteria/list.petitions.client.criteria.application.service'
 import { ListPetitionsProviderCriteriaApplicationService } from 'src/petition/application/services/list-petitions-franchise-by-criteria/list.petition.frnchise.criteria.application.service'
-import { ChangePetitionStatusApplicationService } from 'src/petition/application/services/change-status/change.status.application.service'
 import { Statuses } from 'src/petition/domain/value-objects/statuses'
+import { ConfirmPetitionApplicationService } from 'src/petition/application/services/confirm/confirm.petition.application.service'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -146,14 +146,13 @@ export class PetitionController {
     @UseGuards(RolesGuard)
     async confirm(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
-            new ChangePetitionStatusApplicationService(
+            new ConfirmPetitionApplicationService(
                 this.petitionRepository,
                 this.eventHandler,
             ),
             new ConcreteExceptionReductor(),
         ).execute({
             id,
-            status: Statuses.CONFIRMED,
         })
     }
 

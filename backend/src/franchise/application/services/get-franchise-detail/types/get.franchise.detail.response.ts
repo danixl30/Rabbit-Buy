@@ -3,4 +3,5 @@ export type GetFranchiseDetailResponse = {
     name: string
     rif: string
     groupId: string
+    image: string
 }

@@ -4,4 +4,5 @@ export enum Statuses {
     SUSPEND = 'SUSPEND',
     CANCELLED = 'CANCELLED',
     CONFIRMED = 'CONFIRMED',
+    FINISHED = 'FINISHED',
 }

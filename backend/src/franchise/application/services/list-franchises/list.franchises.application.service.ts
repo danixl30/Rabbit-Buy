@@ -14,6 +14,7 @@ export class ListFranchisesApplicationService
                 name: e.name.value,
                 id: e.id.value,
                 rif: e.rif.value,
+                image: e.image.value,
             })),
         }
     }

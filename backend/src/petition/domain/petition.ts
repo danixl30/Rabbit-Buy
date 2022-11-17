@@ -1,8 +1,12 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { PetitionCancelledEvent } from './events/petition.cancelled'
+import { PetitionConfirmedEvent } from './events/petition.confirmed'
 import { PetitionCreatedEvent } from './events/petition.created'
 import { PetitionDeletedEvent } from './events/petition.deleted'
-import { PetitionStatusChangedEvent } from './events/petition.status.changed'
+import { PetitionFinishedEvent } from './events/petition.finished'
+import { PetitionSuspendedEvent } from './events/petition.suspended'
 import { InvalidPetitionException } from './exceptions/invalid.petition'
+import { OperationInvalidException } from './exceptions/operation.invalid'
 import { FranchiseRef } from './value-objects/franchise.ref'
 import { PetitionDate } from './value-objects/petition.date'
 import { PetitionId } from './value-objects/petition.id'
@@ -12,6 +16,7 @@ import { ProductName } from './value-objects/product.name'
 import { ProductPrice } from './value-objects/product.price'
 import { ProductRef } from './value-objects/product.ref'
 import { Status } from './value-objects/status'
+import { Statuses } from './value-objects/statuses'
 import { UserRef } from './value-objects/user.ref'
 
 export class Petition extends AgreggateRoot<PetitionId> {
@@ -23,9 +28,9 @@ export class Petition extends AgreggateRoot<PetitionId> {
         private _quantity: PetitionQuantity,
         private _currency: ProductCurrency,
         private _client: UserRef,
-        private _status: Status,
         private _date: PetitionDate,
         private _franchise: FranchiseRef,
+        private _status: Status = new Status(Statuses.OPEN),
     ) {
         super(id)
         this.apply(
@@ -80,9 +85,28 @@ export class Petition extends AgreggateRoot<PetitionId> {
         return this._quantity
     }
 
-    changeStatus(status: Status) {
-        this._status = status
-        this.apply(new PetitionStatusChangedEvent(this.id, status))
+    confirm() {
+        if (!this.status.isNotFisished()) throw new OperationInvalidException()
+        this._status = new Status(Statuses.CONFIRMED)
+        this.apply(new PetitionConfirmedEvent(this.id, this.status))
+    }
+
+    cancel() {
+        if (!this.status.isNotFisished()) throw new OperationInvalidException()
+        this._status = new Status(Statuses.CANCELLED)
+        this.apply(new PetitionCancelledEvent(this.id, this.status))
+    }
+
+    suspend() {
+        if (!this.status.isNotFisished()) throw new OperationInvalidException()
+        this._status = new Status(Statuses.SUSPEND)
+        this.apply(new PetitionSuspendedEvent(this.id, this.status))
+    }
+
+    finish() {
+        if (!this.status.isNotFisished()) throw new OperationInvalidException()
+        this._status = new Status(Statuses.FINISHED)
+        this.apply(new PetitionFinishedEvent(this.id, this.status))
     }
 
     delete() {

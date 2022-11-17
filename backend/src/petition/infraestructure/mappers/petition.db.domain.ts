@@ -23,7 +23,7 @@ export const petitionDbToDomain = (petition: PetitionDocument): Petition =>
         new PetitionQuantity(petition.quantiny),
         new ProductCurrency(petition.productCurrency),
         new UserRef(new UserId(petition.client)),
-        new Status(petition.status),
         new PetitionDate(petition.date),
         new FranchiseRef(new FranchiseId(petition.franchise)),
+        new Status(petition.status),
     )

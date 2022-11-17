@@ -11,6 +11,10 @@ export class Status implements ValueObject<Status> {
         return this.status
     }
 
+    isNotFisished() {
+        return this.value !== Statuses.FINISHED
+    }
+
     equals(other: Status): boolean {
         return other.value === this.value
     }

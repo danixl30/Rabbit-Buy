@@ -23,6 +23,7 @@ export class GetFranchiseDetailApplicationService
             name: franchise.name.value,
             rif: franchise.rif.value,
             groupId: franchise.groupId.value,
+            image: franchise.image.value,
         }
     }
 }
