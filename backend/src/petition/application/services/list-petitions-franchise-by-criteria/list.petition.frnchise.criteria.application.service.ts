@@ -4,6 +4,7 @@ import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
 import { FindUserApplicationService } from 'src/user/application/services/find-user/find.user.application.service'
 import { PetitionRepository } from '../../repositories/petition.repository'
+import { FindPetitionsFranchiseTermQueryFactory } from './queries/find.petitions.franchise.term'
 import { ListPetitionsFranchiseDTO } from './types/dto'
 import { ListPetitionsFranchiseResponse } from './types/response'
 
@@ -26,16 +27,13 @@ export class ListPetitionsProviderCriteriaApplicationService
         const provider = await this.getProvider.execute({
             id: data.provider,
         })
-        const petitions =
-            await this.petitionRepository.filterByFranchiseCriteria(
+        const petitions = await this.petitionRepository.searchAll(
+            new FindPetitionsFranchiseTermQueryFactory(
                 new FranchiseRef(new FranchiseId(provider.franchise)),
-                {
-                    term: data.term,
-                },
-                {
-                    page: data.page,
-                },
-            )
+                data.term,
+                data.page,
+            ).create(),
+        )
         return {
             petitions: await petitions.asyncMap(async (e) => {
                 const client = await this.userDetail.execute({

@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import {
+    Category,
+    CategorySchema,
+} from 'src/category/infraestructure/models/category.model'
+import { CategoryMongoRepository } from 'src/category/infraestructure/repositories/category.mongo.repository'
+import {
     Franchise,
     FranchiseSchema,
 } from 'src/franchise/infraestructure/models/franchise.model'
@@ -22,6 +27,7 @@ import {
 import { ProviderMongoRepository } from 'src/provider/infraestructure/repositories/provider.mongo.repository'
 import { User, UserSchema } from 'src/user/infraestructure/models/user.model'
 import { UserMongoRepository } from 'src/user/infraestructure/repositories/user.mongo.repository'
+import { CriteriaMongoTransformer } from '../../criteria-transformer/mongo/crietia.mongo.transformer'
 
 @Module({
     imports: [
@@ -31,14 +37,17 @@ import { UserMongoRepository } from 'src/user/infraestructure/repositories/user.
             { name: Provider.name, schema: ProviderSchema },
             { name: Product.name, schema: ProductSchema },
             { name: Petition.name, schema: PetitionSchema },
+            { name: Category.name, schema: CategorySchema },
         ]),
     ],
     providers: [
+        CriteriaMongoTransformer,
         UserMongoRepository,
         ProviderMongoRepository,
         FranchiseMongoRepository,
         ProductMongoRepository,
         PetitionMongoRepository,
+        CategoryMongoRepository,
     ],
     exports: [
         UserMongoRepository,
@@ -46,6 +55,7 @@ import { UserMongoRepository } from 'src/user/infraestructure/repositories/user.
         FranchiseMongoRepository,
         ProductMongoRepository,
         PetitionMongoRepository,
+        CategoryMongoRepository,
     ],
 })
 export class MongoModelsModule {}

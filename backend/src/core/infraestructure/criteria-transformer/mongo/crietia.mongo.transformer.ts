@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Criteria } from 'src/core/application/repository/query/criteria'
 import { Filter } from 'src/core/application/repository/query/filter'
 import { LogicalOperator } from 'src/core/application/repository/query/logical.operator'
@@ -46,9 +47,8 @@ const OperationReducer = {
     }),
 }
 
+@Injectable()
 export class CriteriaMongoTransformer {
-    constructor(private criteria: Criteria) {}
-
     private getObject(item: LogicalOperator | Filter): MongoFilter {
         if (item instanceof Filter) {
             return OperationReducer[item.operator.value]?.(item) || {}
@@ -69,13 +69,13 @@ export class CriteriaMongoTransformer {
         }
     }
 
-    transform(): MongoQuery {
-        const orders = this.criteria.order.map(this.generateSort)
+    transform(criteria: Criteria): MongoQuery {
+        const orders = criteria.order.map(this.generateSort)
         return {
-            filter: this.getObject(this.criteria.operator),
+            filter: this.getObject(criteria.operator),
             sort: Object.assign({}, ...orders),
-            skip: this.criteria.pagination.page - 1,
-            limit: this.criteria.pagination.offset,
+            skip: criteria.pagination.page - 1,
+            limit: criteria.pagination.offset,
         }
     }
 }

@@ -7,12 +7,14 @@ import { CategorySubCategoryRemovedEvent } from './events/category.sub.category.
 import { InvalidCategoryException } from './exceptions/invalid.category'
 import { CategoryId } from './value-objects/category.id'
 import { CategoryName } from './value-objects/category.name'
+import { CategoryParent } from './value-objects/category.parent'
 
 export class Category extends AgreggateRoot<CategoryId> {
     constructor(
         id: CategoryId,
         private _name: CategoryName,
         private _subCategories: CategoryId[] = [],
+        private _parent?: CategoryParent,
     ) {
         super(id)
         this.apply(new CategoryCreatedEvent(id, this.name))
@@ -24,6 +26,10 @@ export class Category extends AgreggateRoot<CategoryId> {
 
     get subCategories() {
         return this._subCategories
+    }
+
+    get parent() {
+        return this._parent
     }
 
     changeName(name: CategoryName) {

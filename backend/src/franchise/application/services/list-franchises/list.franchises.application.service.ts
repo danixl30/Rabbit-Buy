@@ -1,5 +1,6 @@
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { FranchiseRepository } from '../../repositories/franchise.repository'
+import { FindFranchisesQueryFactory } from './queries/find.franchises.factory'
 import { ListFranchisesResponse } from './types/list.franchises.response'
 
 export class ListFranchisesApplicationService
@@ -8,7 +9,9 @@ export class ListFranchisesApplicationService
     constructor(private franchiseRepository: FranchiseRepository) {}
 
     async execute(_: undefined = undefined): Promise<ListFranchisesResponse> {
-        const franchises = await this.franchiseRepository.list()
+        const franchises = await this.franchiseRepository.searchAll(
+            new FindFranchisesQueryFactory().create(),
+        )
         return {
             franchises: franchises.map((e) => ({
                 name: e.name.value,

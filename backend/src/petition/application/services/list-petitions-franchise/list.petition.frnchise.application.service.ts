@@ -5,6 +5,7 @@ import { GetProviderApplicationService } from 'src/provider/application/services
 import { UserRepository } from 'src/user/application/repositories/user.repository'
 import { FindUserApplicationService } from 'src/user/application/services/find-user/find.user.application.service'
 import { PetitionRepository } from '../../repositories/petition.repository'
+import { FindPetitionsFranchiseQueryFactory } from './queries/find.petition.franchise.factory'
 import { ListPetitionsFranchiseDTO } from './types/dto'
 import { ListPetitionsFranchiseResponse } from './types/response'
 
@@ -27,11 +28,11 @@ export class ListPetitionsProviderApplicationService
         const provider = await this.getProvider.execute({
             id: data.provider,
         })
-        const petitions = await this.petitionRepository.filterByFranchise(
-            new FranchiseRef(new FranchiseId(provider.franchise)),
-            {
-                page: data.page,
-            },
+        const petitions = await this.petitionRepository.searchAll(
+            new FindPetitionsFranchiseQueryFactory(
+                new FranchiseRef(new FranchiseId(provider.franchise)),
+                data.page,
+            ).create(),
         )
         return {
             petitions: await petitions.asyncMap(async (e) => {

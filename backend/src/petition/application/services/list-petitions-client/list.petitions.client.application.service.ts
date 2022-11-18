@@ -2,6 +2,7 @@ import { ApplicationService } from 'src/core/application/service/application.ser
 import { UserRef } from 'src/petition/domain/value-objects/user.ref'
 import { UserId } from 'src/user/domain/value-objects/user.id'
 import { PetitionRepository } from '../../repositories/petition.repository'
+import { FindPetitionsClientQueryFactory } from './queries/find.petition.client.factory'
 import { ListPetitionsClientDTO } from './types/dto'
 import { ListPetitionsClientResponse } from './types/response'
 
@@ -14,11 +15,11 @@ export class ListPetitionsClientApplicationService
     async execute(
         data: ListPetitionsClientDTO,
     ): Promise<ListPetitionsClientResponse> {
-        const petitions = await this.petitionRepository.filterByClient(
-            new UserRef(new UserId(data.client)),
-            {
-                page: data.page,
-            },
+        const petitions = await this.petitionRepository.searchAll(
+            new FindPetitionsClientQueryFactory(
+                new UserRef(new UserId(data.client)),
+                data.page,
+            ).create(),
         )
         return {
             petitions: petitions.map((e) => ({

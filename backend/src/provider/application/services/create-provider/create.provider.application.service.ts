@@ -9,6 +9,7 @@ import { ProviderId } from 'src/provider/domain/value-objects/provider.id'
 import { RegisterUserApplicationService } from 'src/user/application/services/register-user/register.user.application.service'
 import { Roles } from 'src/user/domain/value-objects/roles'
 import { ProviderRepository } from '../../repositories/provider.repository'
+import { FindFranchiseGroupIdQueryFactory } from './queries/find.franchise.groupid.factory'
 import { CreateProviderDTO } from './types/create.provider.dto'
 import { CreateProviderResponse } from './types/create.provider.response'
 
@@ -23,8 +24,10 @@ export class CreateProviderApplicationService
     ) {}
 
     async execute(data: CreateProviderDTO): Promise<CreateProviderResponse> {
-        const franchise = await this.franchiseRepository.searchByGroudId(
-            new FranchiseGroupId(data.groupId),
+        const franchise = await this.franchiseRepository.searchOne(
+            new FindFranchiseGroupIdQueryFactory(
+                new FranchiseGroupId(data.groupId),
+            ).create(),
         )
         if (!franchise) throw new FranchiseNotFoundException()
         data.role = Roles.PROVIDER

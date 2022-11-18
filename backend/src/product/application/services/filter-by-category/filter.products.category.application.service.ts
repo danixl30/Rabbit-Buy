@@ -1,8 +1,8 @@
 import { CategoryId } from 'src/category/domain/value-objects/category.id'
 import { ApplicationService } from 'src/core/application/service/application.service'
 import { CategoryRef } from 'src/product/domain/value-objects/category.ref'
-import { ProductPage } from 'src/product/domain/value-objects/product.page'
 import { ProductRepository } from '../../repositories/product.repository'
+import { FindProductsCategoryQueryFactory } from './queries/find.product.category.factory'
 import { FilterProductsCategoryDTO } from './types/filter.categary.dto'
 import { FilterProductsCategoryResponse } from './types/filter.category.response'
 
@@ -18,9 +18,11 @@ export class FilterProductsCategoryApplicationService
     async execute(
         data: FilterProductsCategoryDTO,
     ): Promise<FilterProductsCategoryResponse> {
-        const products = await this.productRepository.listByCategory(
-            new CategoryRef(new CategoryId(data.category)),
-            new ProductPage(data.page),
+        const products = await this.productRepository.searchAll(
+            new FindProductsCategoryQueryFactory(
+                new CategoryRef(new CategoryId(data.category)),
+                data.page,
+            ).create(),
         )
         return {
             products: products.map((e) => ({

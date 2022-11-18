@@ -3,22 +3,20 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { from as mongooseUUID } from 'uuid-mongodb'
 import { PetitionRepository } from 'src/petition/application/repositories/petition.repository'
-import { CriteriaValues } from 'src/petition/application/types/criteria.values'
-import { PaginationDTO } from 'src/petition/application/types/pagination.dto'
 import { Petition } from 'src/petition/domain/petition'
-import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
-import { PetitionDate } from 'src/petition/domain/value-objects/petition.date'
 import { PetitionId } from 'src/petition/domain/value-objects/petition.id'
-import { UserRef } from 'src/petition/domain/value-objects/user.ref'
 import { petitionDbToDomain } from '../mappers/petition.db.domain'
 import { PetitionDocument } from '../models/petition.model'
 import { Petition as PetitionDb } from '../models/petition.model'
+import { Criteria } from 'src/core/application/repository/query/criteria'
+import { CriteriaMongoTransformer } from 'src/core/infraestructure/criteria-transformer/mongo/crietia.mongo.transformer'
 
 @Injectable()
 export class PetitionMongoRepository implements PetitionRepository {
     constructor(
         @InjectModel(PetitionDb.name)
         private petitionModel: Model<PetitionDocument>,
+        private criteriaTransformer: CriteriaMongoTransformer,
     ) {}
 
     async save(aggregate: Petition): Promise<Petition> {
@@ -64,81 +62,19 @@ export class PetitionMongoRepository implements PetitionRepository {
         return petition ? petitionDbToDomain(petition) : null
     }
 
-    async list(): Promise<Petition[]> {
-        const petitions = await this.petitionModel.find()
-        return petitions.map(petitionDbToDomain)
-    }
-
-    async filter(
-        initialDate: PetitionDate,
-        endDate: PetitionDate,
-    ): Promise<Petition[]> {
-        const petitions = await this.petitionModel.find({
-            date: {
-                $gte: initialDate.value,
-                $lt: endDate.value,
-            },
-        })
-        return petitions.map(petitionDbToDomain)
-    }
-
-    async filterByClient(
-        client: UserRef,
-        page?: PaginationDTO,
-    ): Promise<Petition[]> {
+    async searchAll(criteria: Criteria): Promise<Petition[]> {
+        const criteriaMongo = this.criteriaTransformer.transform(criteria)
         const petitions = await this.petitionModel
-            .find({
-                client: client.value.value,
-            })
-            .sort({ date: -1 })
-            .skip((page.page - 1) * 10)
-            .limit(10)
+            .find(criteriaMongo.filter)
+            .sort(criteriaMongo.sort)
+            .skip(criteriaMongo.skip)
+            .limit(criteriaMongo.limit)
         return petitions.map(petitionDbToDomain)
     }
 
-    async filterByFranchise(
-        franchise: FranchiseRef,
-        page?: PaginationDTO,
-    ): Promise<Petition[]> {
-        const petitions = await this.petitionModel
-            .find({
-                franchise: franchise.value.value,
-            })
-            .sort({ date: -1 })
-            .skip((page.page - 1) * 10)
-            .limit(10)
-        return petitions.map(petitionDbToDomain)
-    }
-
-    async filterByClientCriteria(
-        client: UserRef,
-        criterias: CriteriaValues,
-        page?: PaginationDTO,
-    ): Promise<Petition[]> {
-        const petitions = await this.petitionModel
-            .find({
-                client: client.value.value,
-                productName: new RegExp(criterias.term),
-            })
-            .sort({ date: -1 })
-            .skip((page.page - 1) * 10)
-            .limit(10)
-        return petitions.map(petitionDbToDomain)
-    }
-
-    async filterByFranchiseCriteria(
-        franchise: FranchiseRef,
-        criterias: CriteriaValues,
-        page?: PaginationDTO,
-    ): Promise<Petition[]> {
-        const petitions = await this.petitionModel
-            .find({
-                franchise: franchise.value.value,
-                productName: new RegExp(criterias.term),
-            })
-            .sort({ date: -1 })
-            .skip((page.page - 1) * 10)
-            .limit(10)
-        return petitions.map(petitionDbToDomain)
+    async searchOne(criteria: Criteria): Promise<Petition> {
+        const criteriaMongo = this.criteriaTransformer.transform(criteria)
+        const petition = await this.petitionModel.findOne(criteriaMongo.filter)
+        return petition ? petitionDbToDomain(petition) : null
     }
 }

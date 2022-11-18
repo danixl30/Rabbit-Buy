@@ -5,7 +5,11 @@ export class FieldValue implements ValueObject<FieldValue> {
         private data: string | number | boolean,
         verifiers: ((data: string | number | boolean) => boolean)[] = [],
     ) {
-        if (!data || verifiers.find((e) => !e(data)))
+        if (
+            data === undefined ||
+            data === null ||
+            verifiers.find((e) => !e(data))
+        )
             throw new Error('Invalid data')
     }
 
