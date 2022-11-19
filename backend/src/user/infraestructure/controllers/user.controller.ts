@@ -7,7 +7,7 @@ import { RegisterUserApplicationService } from 'src/user/application/services/re
 import { UserMongoRepository } from '../repositories/user.mongo.repository'
 import { RegisterUserRequestDTO } from './dto/register.user.request'
 import { Roles as RolesData } from 'src/user/domain/value-objects/roles'
-import { ApiHeader, ApiTags } from '@nestjs/swagger'
+import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { JwtProviderService } from 'src/core/infraestructure/token/jwt/service/jwt.provider.service'
 import { UserLoginRequestDTO } from './dto/login.user.request'
 import { LoginApplicationService } from 'src/user/application/services/login/login.application.service'
@@ -18,6 +18,7 @@ import { DeleteUserApplicationService } from 'src/user/application/services/dele
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
 import { RegisterAdminApplicationService } from 'src/user/application/services/register-admin/register.admin.application.service'
 import { RegisterAdminRequestDTO } from './dto/register.admin.request'
+import {SetStatus, Status} from 'src/core/infraestructure/decorators/http.status.decorator'
 
 @Controller('user')
 @ApiTags('user')
@@ -57,8 +58,11 @@ export class UserController {
     }
 
     @Post('auth/login')
-    async login(@Body() loginDto: UserLoginRequestDTO) {
-        return await new ExceptionDecorator(
+    @ApiResponse({
+        status: 200
+    })
+    async login(@Body() loginDto: UserLoginRequestDTO, @Status() setStaus: SetStatus) {
+        const data = await new ExceptionDecorator(
             new LoginApplicationService(
                 this.userRepository,
                 this.crypto,
@@ -66,6 +70,8 @@ export class UserController {
             ),
             new ConcreteExceptionReductor(),
         ).execute(loginDto)
+        setStaus(200)
+        return data
     }
 
     @Get()
