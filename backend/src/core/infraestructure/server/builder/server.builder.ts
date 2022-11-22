@@ -41,7 +41,7 @@ export class ServerBuilder implements Builder<INestApplication> {
         return this.app
     }
 
-    static async create(appModule: any) {
+    static async create<T>(appModule: T) {
         const app = await createServer(appModule)
         return new ServerBuilder(app)
     }

@@ -6,6 +6,7 @@ import { LogicalOperators } from 'src/core/application/repository/query/logical.
 import { Operator } from 'src/core/application/repository/query/operator'
 import { Order } from 'src/core/application/repository/query/order'
 import { OrderTypes } from 'src/core/application/repository/query/order.types'
+import { objectAppend } from 'src/utils/object-methods/object.methods'
 
 type MongoFilterOperator = '$eq' | '$ne' | '$gt' | '$lt' | '$regex'
 type MongoFilterValue = boolean | string | number
@@ -58,7 +59,7 @@ export class CriteriaMongoTransformer {
         }
         if (item.operator === LogicalOperators.AND) {
             const result = item.elements.map(this.getObject)
-            return Object.assign({}, ...result)
+            return objectAppend({}, ...result)
         }
         return {}
     }
@@ -73,7 +74,7 @@ export class CriteriaMongoTransformer {
         const orders = criteria.order.map(this.generateSort)
         return {
             filter: this.getObject(criteria.operator),
-            sort: Object.assign({}, ...orders),
+            sort: objectAppend({}, ...orders),
             skip: criteria.pagination.page - 1,
             limit: criteria.pagination.offset,
         }
