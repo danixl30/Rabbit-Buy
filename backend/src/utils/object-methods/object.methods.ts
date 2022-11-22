@@ -7,3 +7,8 @@ export const objectAppend = <T extends object, U extends object>(
 ): T => Object.assign(obj, ...values)
 
 export const objectValues = <T extends object>(obj: T) => Object.values(obj)
+
+export const jsonParse = <T extends object>(data: string): T => JSON.parse(data)
+
+export const jsonToString = <T extends object>(obj: T): string =>
+    JSON.stringify(obj)
