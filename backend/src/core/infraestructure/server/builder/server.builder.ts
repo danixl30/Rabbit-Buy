@@ -3,6 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { createServer } from '../create-server/create.server'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { DocumentationProps } from './types/documentation.props'
+import { TypeClass } from 'src/utils/type-class/type.class'
 
 export class ServerBuilder implements Builder<INestApplication> {
     private constructor(private app: INestApplication) {}
@@ -41,7 +42,7 @@ export class ServerBuilder implements Builder<INestApplication> {
         return this.app
     }
 
-    static async create<T>(appModule: T) {
+    static async create<T, U extends TypeClass<T>>(appModule: U) {
         const app = await createServer(appModule)
         return new ServerBuilder(app)
     }
