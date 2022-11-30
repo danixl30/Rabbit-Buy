@@ -4,10 +4,14 @@ import {
     UseGuards,
     Body,
     Get,
+    Delete,
+    Put,
     Param,
     ParseUUIDPipe,
     UploadedFile,
     UseInterceptors,
+    HttpStatus,
+    HttpCode,
 } from '@nestjs/common'
 import { Express } from 'express'
 import { ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger'
@@ -28,6 +32,11 @@ import { CloudinaryImageStorage } from 'src/core/infraestructure/storage/image-c
 import { FileFsManager } from 'src/core/infraestructure/files/fs/service/file.fs.manager'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { configImageMulter } from 'src/product/infraestructure/helpers/multer.helper'
+import { DeleteFranchiseApplicationService } from 'src/franchise/application/services/delete-franchise/delete.franchise.application.service'
+import { UpdateGroudIdApplicationService } from 'src/franchise/application/services/update-group-id/update.group.id.application.service'
+import { UpdateNameDTO } from './dto/update.name.dto'
+import { UpdateNameApplicationService } from 'src/franchise/application/services/update-name/update.name.application.service'
+import { UpdateFranchiseImageApplicationService } from 'src/franchise/application/services/update-image/update.franchise.image.application.service'
 
 @Controller('franchise')
 @ApiTags('franchise')
@@ -72,6 +81,34 @@ export class FranchiseController {
         return res
     }
 
+    @Post('update/image/:id')
+    @HttpCode(HttpStatus.OK)
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(FileInterceptor('image', configImageMulter))
+    @Roles(RolesData.ADMIN)
+    @UseGuards(RolesGuard)
+    async updateImage(
+        @UploadedFile() file: Express.Multer.File,
+        @Param('id', new ParseUUIDPipe()) id: string,
+    ) {
+        const dto = {
+            id,
+            path: file.path,
+        }
+        const res = await new ExceptionDecorator(
+            new UpdateFranchiseImageApplicationService(
+                this.franchiseRepository,
+                this.imageStorage,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute(dto)
+        await this.fileManager.delete({
+            path: file.path,
+        })
+        return res
+    }
+
     @Get('list')
     async list() {
         return await new ExceptionDecorator(
@@ -88,5 +125,47 @@ export class FranchiseController {
             new GetFranchiseDetailApplicationService(this.franchiseRepository),
             new ConcreteExceptionReductor(),
         ).execute({ id })
+    }
+
+    @Delete(':id')
+    @Roles(RolesData.ADMIN)
+    @UseGuards(RolesGuard)
+    async deleteFranchise(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new DeleteFranchiseApplicationService(
+                this.franchiseRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+        })
+    }
+
+    @Put('update/group-id/:id')
+    @Roles(RolesData.ADMIN)
+    @UseGuards(RolesGuard)
+    async updateGroupId(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new UpdateGroudIdApplicationService(
+                this.franchiseRepository,
+                this.uuidGenerator,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({ id })
+    }
+
+    @Put('update/name')
+    @Roles(RolesData.ADMIN)
+    @UseGuards(RolesGuard)
+    async updateName(@Body() data: UpdateNameDTO) {
+        return await new ExceptionDecorator(
+            new UpdateNameApplicationService(
+                this.franchiseRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute(data)
     }
 }

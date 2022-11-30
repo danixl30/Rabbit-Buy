@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, UseGuards, Delete } from '@nestjs/common'
+import {
+    Controller,
+    Post,
+    Body,
+    Get,
+    UseGuards,
+    Delete,
+    Put,
+} from '@nestjs/common'
 import { ExceptionDecorator } from 'src/core/application/decorators/exception.decorator'
 import { Sha256Service } from 'src/core/infraestructure/crypto/sha256-crypto/service/sha256.crypto'
 import { ConcreteExceptionReductor } from 'src/core/infraestructure/exception/exception.reductor'
@@ -22,6 +30,10 @@ import {
     SetStatus,
     Status,
 } from 'src/core/infraestructure/decorators/http.status.decorator'
+import { UpdateUsernameDTO } from './dto/update.username.dto'
+import { ChangeUsernameApplicationService } from 'src/user/application/services/change-username/change.username.application.service'
+import { UpdateUserEmailDTO } from './dto/update.email.dto'
+import { ChangeEmailApplicationService } from 'src/user/application/services/change-email/change.email.application.service'
 
 @Controller('user')
 @ApiTags('user')
@@ -107,6 +119,48 @@ export class UserController {
             new ConcreteExceptionReductor(),
         ).execute({
             id: user.id.value,
+        })
+    }
+
+    @Put('update/username')
+    @ApiHeader({
+        name: 'auth',
+    })
+    @UseGuards(UserGuard)
+    async updateUsername(
+        @UserAuth() user: User,
+        @Body() data: UpdateUsernameDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeUsernameApplicationService(
+                this.userRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id: user.id.value,
+            ...data,
+        })
+    }
+
+    @Put('update/email')
+    @ApiHeader({
+        name: 'auth',
+    })
+    @UseGuards(UserGuard)
+    async updateEmail(
+        @UserAuth() user: User,
+        @Body() data: UpdateUserEmailDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeEmailApplicationService(
+                this.userRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id: user.id.value,
+            ...data,
         })
     }
 }

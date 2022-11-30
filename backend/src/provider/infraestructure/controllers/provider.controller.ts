@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common'
+import { Controller, Post, Body, Get, UseGuards, Delete } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { ExceptionDecorator } from 'src/core/application/decorators/exception.decorator'
 import { Sha256Service } from 'src/core/infraestructure/crypto/sha256-crypto/service/sha256.crypto'
@@ -18,6 +18,7 @@ import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
 import { User as UserAuth } from 'src/user/infraestructure/decorators/user/user.decorator'
 import { User } from 'src/user/domain/user'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
+import { DeleteProviderApplicationService } from 'src/provider/application/services/delete-provider/delete.provider.application.service'
 
 @Controller('provider')
 @ApiTags('provider')
@@ -55,6 +56,20 @@ export class ProviderController {
     async get(@UserAuth() user: User) {
         return await new ExceptionDecorator(
             new GetProviderApplicationService(this.providerRepository),
+            new ConcreteExceptionReductor(),
+        ).execute({ id: user.id.value })
+    }
+
+    @Delete()
+    @ApiHeader({ name: 'auth' })
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    async delete(@UserAuth() user: User) {
+        return await new ExceptionDecorator(
+            new DeleteProviderApplicationService(
+                this.providerRepository,
+                this.eventHandler,
+            ),
             new ConcreteExceptionReductor(),
         ).execute({ id: user.id.value })
     }

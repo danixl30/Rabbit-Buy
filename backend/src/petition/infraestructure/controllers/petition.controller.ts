@@ -37,8 +37,9 @@ import { Roles } from 'src/user/infraestructure/guards/roles/metadata/roles.meta
 import { RolesGuard } from 'src/user/infraestructure/guards/roles/roles.guard'
 import { ListPetitionsClientCriteriaApplicationService } from 'src/petition/application/services/list-petitions-client-by-criteria/list.petitions.client.criteria.application.service'
 import { ListPetitionsProviderCriteriaApplicationService } from 'src/petition/application/services/list-petitions-franchise-by-criteria/list.petition.frnchise.criteria.application.service'
-import { Statuses } from 'src/petition/domain/value-objects/statuses'
 import { ConfirmPetitionApplicationService } from 'src/petition/application/services/confirm/confirm.petition.application.service'
+import { FinishPetitionApplicationService } from 'src/petition/application/services/finish/finish.petition.application.service'
+import { CancelPetitionApplicationService } from 'src/petition/application/services/cancel/cancel.petition.application.service'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -147,6 +148,51 @@ export class PetitionController {
     async confirm(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
             new ConfirmPetitionApplicationService(
+                this.petitionRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+        })
+    }
+
+    @Put('finish/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(RolesGuard)
+    async finish(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new FinishPetitionApplicationService(
+                this.petitionRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+        })
+    }
+
+    @Put('cancel/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(RolesGuard)
+    async cancel(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new CancelPetitionApplicationService(
+                this.petitionRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+        })
+    }
+
+    @Put('suspend/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(RolesGuard)
+    async suspend(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new CancelPetitionApplicationService(
                 this.petitionRepository,
                 this.eventHandler,
             ),

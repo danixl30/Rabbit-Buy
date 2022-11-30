@@ -6,10 +6,14 @@ import {
     UseInterceptors,
     UploadedFile,
     Get,
+    Delete,
+    Put,
     Param,
     ParseUUIDPipe,
     ParseIntPipe,
     Query,
+    HttpCode,
+    HttpStatus,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiConsumes, ApiHeader, ApiTags } from '@nestjs/swagger'
@@ -36,6 +40,17 @@ import { ListProductsApplicationService } from 'src/product/application/services
 import { GetProductByCriteriaApplicationService } from 'src/product/application/services/get-by-criteria/get.products.criteria.application.service'
 import { configImageMulter } from '../helpers/multer.helper'
 import { FileFsManager } from 'src/core/infraestructure/files/fs/service/file.fs.manager'
+import { DeleteProductApplicationService } from 'src/product/application/services/delete-product/delete.product.application.service'
+import { UpdateNameDTO } from './dto/update.name.dto'
+import { ChangeProductNameApplicationService } from 'src/product/application/services/change-name/change.name.application.service'
+import { UpdateDescriptionDTO } from './dto/update.description.dto'
+import { ChangeProductDescriptionApplicationService } from 'src/product/application/services/change-description/change.description.application.service'
+import { UpdatePriceDTO } from './dto/update.price.dto'
+import { ChangeProductPriceApplicationService } from 'src/product/application/services/change-price/change.price.application.service'
+import { UpdateExistenceDTO } from './dto/update.existence.dto'
+import { ChangeProductExistenceApplicationService } from 'src/product/application/services/change-existence/change.existence.application.service'
+import { UpdateImageDTO } from './dto/update.image.dto'
+import { ChangeProductImageApplicationService } from 'src/product/application/services/change-image/change.image.application.service'
 
 @Controller('product')
 @ApiTags('product')
@@ -76,6 +91,30 @@ export class ProductController {
         return res
     }
 
+    @Post('update/image/:id')
+    @ApiHeader({ name: 'auth' })
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(FileInterceptor('image', configImageMulter))
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @HttpCode(HttpStatus.OK)
+    async updateImage(
+        @UploadedFile() file: Express.Multer.File,
+        @Body() _: UpdateImageDTO,
+        @Param('id', new ParseUUIDPipe()) id: string,
+    ) {
+        const res = await new ExceptionDecorator(
+            new ChangeProductImageApplicationService(
+                this.productRepository,
+                this.imageStorage,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({ id, path: file.path })
+        await this.fileManager.delete({ path: file.path })
+        return res
+    }
+
     @Get('list/:page')
     async list(@Param('page', new ParseIntPipe()) page: number) {
         return await new ExceptionDecorator(
@@ -105,5 +144,100 @@ export class ProductController {
             ),
             new ConcreteExceptionReductor(),
         ).execute({ id })
+    }
+
+    @Delete(':id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async delete(@Param('id', new ParseUUIDPipe()) id: string) {
+        return await new ExceptionDecorator(
+            new DeleteProductApplicationService(
+                this.productRepository,
+                this.imageStorage,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({ id })
+    }
+
+    @Put('update-name/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async updateName(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() data: UpdateNameDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeProductNameApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+            ...data,
+        })
+    }
+
+    @Put('update-description/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async updateDescription(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() data: UpdateDescriptionDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeProductDescriptionApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+            ...data,
+        })
+    }
+
+    @Put('update-price/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async updatePrice(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() data: UpdatePriceDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeProductPriceApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+            ...data,
+        })
+    }
+
+    @Put('update-existence/:id')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async updateExistence(
+        @Param('id', new ParseUUIDPipe()) id: string,
+        @Body() data: UpdateExistenceDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangeProductExistenceApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id,
+            ...data,
+        })
     }
 }

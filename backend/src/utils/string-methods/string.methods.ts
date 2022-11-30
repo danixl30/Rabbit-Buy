@@ -15,3 +15,9 @@ String.prototype.isNotEmpty = function (): boolean {
 String.prototype.isInRage = function (lower, greater) {
     return this.lenght >= lower && this.lenght <= greater
 }
+
+interface StringConstructor {
+    isString<T>(value: T): boolean
+}
+
+String.isString = <T>(value: T): boolean => typeof value === 'string'

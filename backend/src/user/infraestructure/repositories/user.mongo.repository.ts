@@ -26,7 +26,7 @@ export class UserMongoRepository implements UserRepository {
             userToSave.password = aggregate.password.value
             userToSave.email = aggregate.email.value
             userToSave.role = aggregate.role.value
-            await userToSave.save()
+            await this.userModel.create(userToSave)
             return aggregate
         }
         user.name = aggregate.username.value
