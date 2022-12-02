@@ -40,6 +40,7 @@ import { ListPetitionsProviderCriteriaApplicationService } from 'src/petition/ap
 import { ConfirmPetitionApplicationService } from 'src/petition/application/services/confirm/confirm.petition.application.service'
 import { FinishPetitionApplicationService } from 'src/petition/application/services/finish/finish.petition.application.service'
 import { CancelPetitionApplicationService } from 'src/petition/application/services/cancel/cancel.petition.application.service'
+import { CategoryMongoRepository } from 'src/category/infraestructure/repositories/category.mongo.repository'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -54,6 +55,7 @@ export class PetitionController {
         private franchiseRepository: FranchiseMongoRepository,
         private userRepository: UserMongoRepository,
         private providerRepository: ProviderMongoRepository,
+        private categoryRepository: CategoryMongoRepository,
     ) {}
 
     @Post('create')
@@ -68,7 +70,7 @@ export class PetitionController {
                 this.petitionRepository,
                 new GetProductDetailApplicationService(
                     this.productRepository,
-                    null,
+                    this.categoryRepository,
                     this.franchiseRepository,
                 ),
                 this.uuidGenerator,

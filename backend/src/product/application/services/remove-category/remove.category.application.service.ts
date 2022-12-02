@@ -8,7 +8,7 @@ import { ProductRepository } from '../../repositories/product.repository'
 import { ChangeProductCategoryDTO } from '../add-category/types/change.category.dto'
 import { ChangeProductCategoryResponse } from '../add-category/types/change.category.response'
 
-export class RemoveCategoryApplicationService
+export class RemoveProductCategoryApplicationService
     implements
         ApplicationService<
             ChangeProductCategoryDTO,

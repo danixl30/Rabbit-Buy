@@ -51,6 +51,9 @@ import { UpdateExistenceDTO } from './dto/update.existence.dto'
 import { ChangeProductExistenceApplicationService } from 'src/product/application/services/change-existence/change.existence.application.service'
 import { UpdateImageDTO } from './dto/update.image.dto'
 import { ChangeProductImageApplicationService } from 'src/product/application/services/change-image/change.image.application.service'
+import { AddDeleteCategory } from './dto/add.detete.category.dto'
+import { AddProductCategoryApplicationService } from 'src/product/application/services/add-category/add.category.application.service'
+import { RemoveProductCategoryApplicationService } from 'src/product/application/services/remove-category/remove.category.application.service'
 
 @Controller('product')
 @ApiTags('product')
@@ -239,5 +242,33 @@ export class ProductController {
             id,
             ...data,
         })
+    }
+
+    @Put('add/category')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async addCategory(@Body() data: AddDeleteCategory) {
+        return await new ExceptionDecorator(
+            new AddProductCategoryApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute(data)
+    }
+
+    @Put('remove/category')
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    @ApiHeader({ name: 'auth' })
+    async removeCategory(@Body() data: AddDeleteCategory) {
+        return await new ExceptionDecorator(
+            new RemoveProductCategoryApplicationService(
+                this.productRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute(data)
     }
 }
