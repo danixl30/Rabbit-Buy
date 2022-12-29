@@ -17,4 +17,7 @@ export type UsePetition = {
     ): Promise<Petition[]>
 
     confirmPetition(token: string, id: string): Promise<boolean>
+    suspendPetition(token: string, id: string): Promise<boolean>
+    cancelPetition(token: string, id: string): Promise<boolean>
+    finishPetition(token: string, id: string): Promise<boolean>
 }

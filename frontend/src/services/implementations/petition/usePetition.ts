@@ -77,6 +77,39 @@ export const usePetition = (http: UseHttp): UsePetition => {
         return true
     }
 
+    const suspendPetition = async (token: string, id: string) => {
+        const { job } = http.put<unknown, unknown>({
+            url: 'petition/suspend/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
+    const finishPetition = async (token: string, id: string) => {
+        const { job } = http.put<unknown, unknown>({
+            url: 'petition/finish/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
+    const cancelPetition = async (token: string, id: string) => {
+        const { job } = http.put<unknown, unknown>({
+            url: 'petition/cancel/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
     return {
         make,
         getClient,
@@ -84,5 +117,8 @@ export const usePetition = (http: UseHttp): UsePetition => {
         getFranchise,
         getFranchiseTerm,
         confirmPetition,
+        finishPetition,
+        cancelPetition,
+        suspendPetition,
     }
 }

@@ -40,10 +40,6 @@ import { UpdateFranchiseImageApplicationService } from 'src/franchise/applicatio
 
 @Controller('franchise')
 @ApiTags('franchise')
-@UseGuards(UserGuard)
-@ApiHeader({
-    name: 'auth',
-})
 export class FranchiseController {
     constructor(
         private franchiseRepository: FranchiseMongoRepository,
@@ -56,8 +52,11 @@ export class FranchiseController {
     @Post('create')
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('image', configImageMulter))
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async create(
         @UploadedFile() file: Express.Multer.File,
         @Body() createDTO: CreateFranchiseRequestDTO,
@@ -85,8 +84,11 @@ export class FranchiseController {
     @HttpCode(HttpStatus.OK)
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('image', configImageMulter))
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async updateImage(
         @UploadedFile() file: Express.Multer.File,
         @Param('id', new ParseUUIDPipe()) id: string,
@@ -118,8 +120,11 @@ export class FranchiseController {
     }
 
     @Get(':id')
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async getDetail(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
             new GetFranchiseDetailApplicationService(this.franchiseRepository),
@@ -128,8 +133,11 @@ export class FranchiseController {
     }
 
     @Delete(':id')
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async deleteFranchise(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
             new DeleteFranchiseApplicationService(
@@ -143,8 +151,11 @@ export class FranchiseController {
     }
 
     @Put('update/group-id/:id')
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async updateGroupId(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
             new UpdateGroudIdApplicationService(
@@ -157,8 +168,11 @@ export class FranchiseController {
     }
 
     @Put('update/name')
+    @ApiHeader({
+        name: 'auth',
+    })
     @Roles(RolesData.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(UserGuard, RolesGuard)
     async updateName(@Body() data: UpdateNameDTO) {
         return await new ExceptionDecorator(
             new UpdateNameApplicationService(

@@ -11,6 +11,7 @@ import { useRouterDomNavigation } from '../../core/implementation/navigation/nav
 import { CREATE_FRANCHISE } from '../../franchise-create/page/route'
 import { CREATE_PRODUCT } from '../../create-product/page/route'
 import { ConsultFranchisesCard } from '../components/ConsutFranchisesCard'
+import { ConsultProductsCard } from '../components/ConsultProductsCard'
 
 const UserProfile = lazy(() => import('../subpages/user-profile/UserProfile'))
 const PetitionConsult = lazy(
@@ -19,10 +20,14 @@ const PetitionConsult = lazy(
 const ConsultFranchises = lazy(
     () => import('../subpages/franchises/ConsultFranchises'),
 )
+const ModifyProducts = lazy(
+    () => import('../subpages/modify-products/ModifyProducts'),
+)
 
 const PROFILE_CONFIG = 'PROFILE_CONFIG'
 const PETITION_CONSULT = 'PETITION_CONSULT'
 const CONSULT_FRANCHISES = 'CONSULT_FRANCHISES'
+const MODIFY_PRODUCTS = 'MODIFY_PRODUCTS'
 
 export default function ProfilePage() {
     const navigation = useRouterDomNavigation()
@@ -59,6 +64,11 @@ export default function ProfilePage() {
                                     onClick={onClickLink(CREATE_PRODUCT)}
                                 />
                             )}
+                            {state?.user?.role === 'PROVIDER' && (
+                                <ConsultProductsCard
+                                    onClick={onClickItem(MODIFY_PRODUCTS)}
+                                />
+                            )}
                             <ProfileConfigCard
                                 onClick={onClickItem(PROFILE_CONFIG)}
                             />
@@ -72,6 +82,9 @@ export default function ProfilePage() {
                             </Collapse>
                             <Collapse in={subPage === CONSULT_FRANCHISES}>
                                 <ConsultFranchises />
+                            </Collapse>
+                            <Collapse in={subPage === MODIFY_PRODUCTS}>
+                                <ModifyProducts />
                             </Collapse>
                         </Suspense>
                     </SimpleGrid>

@@ -55,11 +55,11 @@ export class CriteriaMongoTransformer {
             return OperationReducer[item.operator.value]?.(item) || {}
         }
         if (item.operator === LogicalOperators.OR) {
-            return { $or: item.elements.map(this.getObject) }
+            return { $or: item.elements.map(this.getObject.bind(this)) }
         }
         if (item.operator === LogicalOperators.AND) {
-            const result = item.elements.map(this.getObject)
-            return objectAppend({}, ...result)
+            const result = item.elements.map(this.getObject.bind(this))
+            return objectAppend({}, ...(result as MongoFilter[]))
         }
         return {}
     }
@@ -75,7 +75,7 @@ export class CriteriaMongoTransformer {
         return {
             filter: this.getObject(criteria.operator),
             sort: objectAppend({}, ...orders),
-            skip: criteria.pagination.page - 1,
+            skip: (criteria.pagination.page - 1) * criteria.pagination.offset,
             limit: criteria.pagination.offset,
         }
     }

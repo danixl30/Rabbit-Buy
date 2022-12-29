@@ -17,7 +17,7 @@ export class FindProductsTermQueryFactory implements Factory<Criteria> {
             new LogicalOperator(
                 [
                     new Filter(
-                        new FieldName('name'),
+                        new FieldName('productName'),
                         new FieldValue(this.term),
                         new FilterOperator(Operator.CONTAINS),
                     ),

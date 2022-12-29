@@ -54,6 +54,10 @@ import { ChangeProductImageApplicationService } from 'src/product/application/se
 import { AddDeleteCategory } from './dto/add.detete.category.dto'
 import { AddProductCategoryApplicationService } from 'src/product/application/services/add-category/add.category.application.service'
 import { RemoveProductCategoryApplicationService } from 'src/product/application/services/remove-category/remove.category.application.service'
+import { GetProductByFranchiseApplicationService } from 'src/product/application/services/get-products-by-franchise/get.produccts.franchise.application.service'
+import { ListByFranchiseQueryDTO } from './dto/list.by.franchise.query.dto'
+import { GetProductsByProviderApplicationService } from 'src/product/application/services/get-products-by-provider/get.product.provider.application.service'
+import { ListByProviderQueryDTO } from './dto/list.provider.query.dto'
 
 @Controller('product')
 @ApiTags('product')
@@ -118,12 +122,46 @@ export class ProductController {
         return res
     }
 
+    @Get('list/provider')
+    @ApiHeader({ name: 'auth' })
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    async listByProvider(
+        @UserAuth() user: User,
+        @Query() query: ListByProviderQueryDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new GetProductsByProviderApplicationService(
+                new GetProviderApplicationService(this.providerRepository),
+                new GetProductByFranchiseApplicationService(
+                    this.productRepository,
+                ),
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            provider: user.id.value,
+            page: Number(query.page),
+            text: query.text,
+        })
+    }
+
     @Get('list/:page')
     async list(@Param('page', new ParseIntPipe()) page: number) {
         return await new ExceptionDecorator(
             new ListProductsApplicationService(this.productRepository),
             new ConcreteExceptionReductor(),
         ).execute({ page })
+    }
+
+    @Get('list/franchise/:franchise')
+    async listByFranchise(
+        @Param('franchise', new ParseUUIDPipe()) franchise: string,
+        @Query() query: ListByFranchiseQueryDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new GetProductByFranchiseApplicationService(this.productRepository),
+            new ConcreteExceptionReductor(),
+        ).execute({ franchise, page: Number(query.page), text: query.text })
     }
 
     @Get('search')

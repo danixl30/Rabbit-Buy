@@ -1,4 +1,5 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
+import { ChangeFranchiseName } from '../../abstractions/franchise/dto/change-name'
 import { CreateFranchise } from '../../abstractions/franchise/dto/create-franchise'
 import { UseFranchise } from '../../abstractions/franchise/franchise-service'
 import { Franchise } from '../../abstractions/franchise/types/franchise'
@@ -31,12 +32,9 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
         return true
     }
 
-    const getAll = async (token: string) => {
+    const getAll = async () => {
         const { job } = http.get<unknown, { franchises: Franchise[] }>({
             url: '/franchise/list',
-            headers: {
-                auth: token,
-            },
         })
 
         return (await job()).body!!.franchises
@@ -52,9 +50,46 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
         return (await job()).body!!
     }
 
+    const generateGroupId = async (token: string, id: string) => {
+        const { job } = http.put<unknown, unknown>({
+            url: '/franchise/update/group-id/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
+    const changeName = async (token: string, dto: ChangeFranchiseName) => {
+        const { job } = http.put<ChangeFranchiseName, unknown>({
+            url: '/franchise/update/name',
+            headers: {
+                auth: token,
+            },
+            body: dto,
+        })
+        await job()
+        return true
+    }
+
+    const deleteFranchise = async (token: string, id: string) => {
+        const { job } = http.delete<unknown, unknown>({
+            url: '/franchise/update/group-id/' + id,
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
     return {
         create,
         getAll,
         getDetail,
+        generateGroupId,
+        delete: deleteFranchise,
+        changeName,
     }
 }

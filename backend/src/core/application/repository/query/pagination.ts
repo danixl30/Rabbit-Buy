@@ -1,7 +1,7 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
 
 export class Pagination implements ValueObject<Pagination> {
-    constructor(private _offset: number, private _page: number) {
+    constructor(private _page: number, private _offset: number) {
         if (this.page < 0 || this.offset < 0)
             throw new Error('Invalid pagination')
     }

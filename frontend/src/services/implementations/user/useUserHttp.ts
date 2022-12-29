@@ -1,6 +1,9 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
 import { User } from '../../../global-state/user/types/user'
 import { AdminRegister } from '../../abstractions/user/types/admin-register'
+import { ChangeEmail } from '../../abstractions/user/types/change-email'
+import { ChangePassword } from '../../abstractions/user/types/change-password'
+import { ChangeUsername } from '../../abstractions/user/types/change-username'
 import { Login } from '../../abstractions/user/types/login'
 import { LoginResponse } from '../../abstractions/user/types/login-response'
 import { ProviderRegister } from '../../abstractions/user/types/provider-register'
@@ -53,11 +56,62 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         return (await job()).body!!
     }
 
+    const changeEmail = async (token: string, dto: ChangeEmail) => {
+        const { job } = http.put<ChangeEmail, unknown>({
+            url: '/user/update/email',
+            headers: {
+                auth: token,
+            },
+            body: dto,
+        })
+        await job()
+        return true
+    }
+
+    const changePassword = async (token: string, dto: ChangePassword) => {
+        const { job } = http.put<ChangePassword, unknown>({
+            url: '/user/update/email',
+            headers: {
+                auth: token,
+            },
+            body: dto,
+        })
+        await job()
+        return true
+    }
+
+    const changeUsername = async (token: string, dto: ChangeUsername) => {
+        const { job } = http.put<ChangeUsername, unknown>({
+            url: '/user/update/email',
+            headers: {
+                auth: token,
+            },
+            body: dto,
+        })
+        await job()
+        return true
+    }
+
+    const deleteUser = async (token: string) => {
+        const { job } = http.delete({
+            url: '/user',
+            headers: {
+                auth: token,
+            },
+        })
+        await job()
+        return true
+    }
+
     return {
         login,
         register,
         registerAdmin,
         registerProvider,
         getUser,
+        changeEmail,
+        changePassword,
+        changeUsername,
+        delete: deleteUser,
     }
 }
