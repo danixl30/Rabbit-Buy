@@ -5,6 +5,13 @@ import {
     CategorySchema,
 } from 'src/category/infraestructure/models/category.model'
 import { CategoryMongoRepository } from 'src/category/infraestructure/repositories/category.mongo.repository'
+import { Chat, ChatSchema } from 'src/chat/infraestructure/models/chat.model'
+import {
+    Message,
+    MessageSchema,
+} from 'src/chat/infraestructure/models/message.model'
+import { ChatMongoRepository } from 'src/chat/infraestructure/repositories/chat.mongo.repository'
+import { MessageMongoRepository } from 'src/chat/infraestructure/repositories/message.mongo.repository'
 import {
     Franchise,
     FranchiseSchema,
@@ -38,6 +45,8 @@ import { CriteriaMongoTransformer } from '../../criteria-transformer/mongo/criet
             { name: Product.name, schema: ProductSchema },
             { name: Petition.name, schema: PetitionSchema },
             { name: Category.name, schema: CategorySchema },
+            { name: Message.name, schema: MessageSchema },
+            { name: Chat.name, schema: ChatSchema },
         ]),
     ],
     providers: [
@@ -48,6 +57,8 @@ import { CriteriaMongoTransformer } from '../../criteria-transformer/mongo/criet
         ProductMongoRepository,
         PetitionMongoRepository,
         CategoryMongoRepository,
+        MessageMongoRepository,
+        ChatMongoRepository,
     ],
     exports: [
         UserMongoRepository,
@@ -56,6 +67,8 @@ import { CriteriaMongoTransformer } from '../../criteria-transformer/mongo/criet
         ProductMongoRepository,
         PetitionMongoRepository,
         CategoryMongoRepository,
+        MessageMongoRepository,
+        ChatMongoRepository,
     ],
 })
 export class MongoModelsModule {}

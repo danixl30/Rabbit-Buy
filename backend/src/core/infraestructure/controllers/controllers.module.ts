@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { CategoryControllersModule } from 'src/category/infraestructure/modules/category.controllers.module'
+import { ChatControllerModule } from 'src/chat/infraestructure/modules/chat.controller.module'
 import { FranchiseModule } from 'src/franchise/infraestructure/modules/franchise.module'
 import { PetitionModule } from 'src/petition/infraestructure/modules/petition.module'
 import { ProductModule } from 'src/product/infraestructure/modules/product.module'
@@ -14,6 +15,7 @@ import { UserModule } from 'src/user/infraestructure/module/user.module'
         ProductModule,
         PetitionModule,
         CategoryControllersModule,
+        ChatControllerModule,
     ],
 })
 export class ControllersModule {}

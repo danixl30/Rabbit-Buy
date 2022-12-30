@@ -8,7 +8,7 @@ export class MessageFrom implements ValueObject<MessageFrom> {
         return this.id
     }
 
-    equals(other: MessageChat): boolean {
+    equals(other: MessageFrom): boolean {
         return other.value.equals(this.value)
     }
 }
