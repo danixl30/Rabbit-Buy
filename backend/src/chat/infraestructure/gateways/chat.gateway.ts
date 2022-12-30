@@ -7,8 +7,10 @@ import { CreateMessageApplicationService } from 'src/chat/application/services/c
 import { GetMessagesResponse } from 'src/chat/application/services/get-messages/types/response'
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
 import { ConcreteUUIDGenerator } from 'src/core/infraestructure/UUID/service/concrete.UUID.generator'
+import { Disconnect } from 'src/core/infraestructure/web-sockets/decorators/disconnect.decorator'
 import { EmitEvent } from 'src/core/infraestructure/web-sockets/decorators/emit.event.decorator'
 import { SocketId } from 'src/core/infraestructure/web-sockets/decorators/get.id.decorator'
+import { DisconnectHandler } from 'src/core/infraestructure/web-sockets/decorators/types/disconnect.type'
 import { EmitEventHandler } from 'src/core/infraestructure/web-sockets/decorators/types/EmitEventHadler'
 import { objectValues } from 'src/utils/object-methods/object.methods'
 import { ChatMongoRepository } from '../repositories/chat.mongo.repository'
@@ -39,8 +41,12 @@ export class ChatGateway {
     }
 
     @SubscribeMessage('unsubscribe')
-    unsubscribe(@MessageBody() data: SubscribeUnsubscribeChatDTO) {
+    unsubscribe(
+        @Disconnect() discconect: DisconnectHandler,
+        @MessageBody() data: SubscribeUnsubscribeChatDTO,
+    ) {
         delete this.subscriptors[data.chat]?.[data.userId]
+        discconect()
     }
 
     @SubscribeMessage('typing')
