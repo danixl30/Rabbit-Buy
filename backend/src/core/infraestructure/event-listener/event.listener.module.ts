@@ -1,7 +1,17 @@
 import { Module } from '@nestjs/common'
-import { ProductEventListener } from 'src/product/infraestructure/modules/product.event.listener.module'
+import {glob} from 'glob'
+import {join} from 'node:path'
+import {objectValues} from 'src/utils/object-methods/object.methods'
+
+const initializeModules = () => {
+    const data = glob.sync(join(__dirname, '../../../**/**/modules/*.event.listener.module.js').replace(/\\/g, '/'))
+    return data.map(e => {
+        const module = require(e)
+        return objectValues(module)[0]
+    })
+}
 
 @Module({
-    imports: [ProductEventListener],
+    imports: initializeModules(),
 })
 export class EventListenerModule {}

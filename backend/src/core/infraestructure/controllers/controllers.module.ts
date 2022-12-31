@@ -1,21 +1,17 @@
 import { Module } from '@nestjs/common'
-import { CategoryControllersModule } from 'src/category/infraestructure/modules/category.controllers.module'
-import { ChatControllerModule } from 'src/chat/infraestructure/modules/chat.controller.module'
-import { FranchiseModule } from 'src/franchise/infraestructure/modules/franchise.module'
-import { PetitionModule } from 'src/petition/infraestructure/modules/petition.module'
-import { ProductModule } from 'src/product/infraestructure/modules/product.module'
-import { ProviderModule } from 'src/provider/infraestructure/modules/provider.module'
-import { UserModule } from 'src/user/infraestructure/module/user.module'
+import {glob} from 'glob'
+import {join} from 'node:path'
+import {objectValues} from 'src/utils/object-methods/object.methods'
+
+const initializeModules = () => {
+    const data = glob.sync(join(__dirname, '../../../**/**/modules/*.controllers.module.js').replace(/\\/g, '/'))
+    return data.map(e => {
+        const module = require(e)
+        return objectValues(module)[0]
+    })
+}
 
 @Module({
-    imports: [
-        UserModule,
-        FranchiseModule,
-        ProviderModule,
-        ProductModule,
-        PetitionModule,
-        CategoryControllersModule,
-        ChatControllerModule,
-    ],
+    imports: initializeModules(),
 })
 export class ControllersModule {}

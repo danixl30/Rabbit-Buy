@@ -1,7 +1,17 @@
 import { Module } from '@nestjs/common'
-import { ChatGatewayModule } from 'src/chat/infraestructure/modules/chat.gateway.module'
+import {glob} from 'glob'
+import {join} from 'node:path'
+import {objectValues} from 'src/utils/object-methods/object.methods'
+
+const initializeModules = () => {
+    const data = glob.sync(join(__dirname, '../../../**/**/modules/*.gateways.module.js').replace(/\\/g, '/'))
+    return data.map(e => {
+        const module = require(e)
+        return objectValues(module)[0]
+    })
+}
 
 @Module({
-    imports: [ChatGatewayModule],
+    imports: initializeModules(),
 })
 export class GatewayModule {}
