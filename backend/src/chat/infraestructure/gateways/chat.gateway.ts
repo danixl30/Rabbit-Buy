@@ -4,7 +4,7 @@ import {
     WebSocketGateway,
 } from '@nestjs/websockets'
 import { CreateMessageApplicationService } from 'src/chat/application/services/create-message/create.message.application.service'
-import { GetMessagesResponse } from 'src/chat/application/services/get-messages/types/response'
+import { CreateMessageResponse } from 'src/chat/application/services/create-message/types/response'
 import { EventHandlerNative } from 'src/core/infraestructure/event-handler/native/service/event.hadler.native.service'
 import { ConcreteUUIDGenerator } from 'src/core/infraestructure/UUID/service/concrete.UUID.generator'
 import { Disconnect } from 'src/core/infraestructure/web-sockets/decorators/disconnect.decorator'
@@ -42,11 +42,11 @@ export class ChatGateway {
 
     @SubscribeMessage('unsubscribe')
     unsubscribe(
-        @Disconnect() discconect: DisconnectHandler,
+        @Disconnect() disconnect: DisconnectHandler,
         @MessageBody() data: SubscribeUnsubscribeChatDTO,
     ) {
         delete this.subscriptors[data.chat]?.[data.userId]
-        discconect()
+        disconnect()
     }
 
     @SubscribeMessage('typing')
@@ -65,26 +65,17 @@ export class ChatGateway {
     }
 
     @SubscribeMessage('message')
-    sendMessage(
-        @EmitEvent() emiter: EmitEventHandler<GetMessagesResponse>,
+    async sendMessage(
+        @EmitEvent() emiter: EmitEventHandler<CreateMessageResponse>,
         @MessageBody() data: MessageDTO,
     ) {
         const ids = objectValues(this.subscriptors[data.chat])
-        emiter(
-            {
-                id: this.uuidGenerator.generate(),
-                from: data.from,
-                body: data.body,
-                timestamp: new Date(),
-            },
-            'message',
-            ...ids,
-        )
-        new CreateMessageApplicationService(
+        const message = await new CreateMessageApplicationService(
             this.chatRepository,
             this.messageRepository,
             this.uuidGenerator,
             this.eventHandler,
         ).execute(data)
+        emiter(message, 'message', ...ids)
     }
 }

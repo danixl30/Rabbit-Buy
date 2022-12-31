@@ -42,6 +42,9 @@ export class CreateMessageApplicationService
         ])
         return {
             id: message.id.value,
+            from: message.from.value.value,
+            body: message.body.value,
+            timestamp: message.timestamp.value,
         }
     }
 }
