@@ -4,4 +4,6 @@ export abstract class DomainEvent {
     get time() {
         return this._time
     }
+
+    eventName = this.constructor.name
 }
