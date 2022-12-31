@@ -1,8 +1,9 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
+import { InvalidMessageBodyException } from '../exceptions/invalid.message.body'
 
 export class MessageText implements ValueObject<MessageText> {
     constructor(private text: string) {
-        if (!text) throw new Error('body invalid')
+        if (!text) throw new InvalidMessageBodyException()
     }
 
     get value() {

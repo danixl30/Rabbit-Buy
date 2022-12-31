@@ -1,5 +1,6 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { ChatCreatedEvent } from './events/chat.created'
+import { ChatDeletedEvent } from './events/chat.deleted'
 import { MessageAddedEvent } from './events/message.added'
 import { InvalidChatException } from './exceptions/invalid.chat'
 import { MessageExistException } from './exceptions/message.exist'
@@ -51,6 +52,10 @@ export class Chat extends AgreggateRoot<ChatId> {
         this._messages.push(message)
         this._timestamp = this._timestamp.update()
         this.apply(new MessageAddedEvent(this.id, this.messages))
+    }
+
+    delete() {
+        this.apply(new ChatDeletedEvent(this.id))
     }
 
     validateState(): void {

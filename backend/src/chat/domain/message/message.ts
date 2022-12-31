@@ -1,4 +1,7 @@
 import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { MessageCreatedEvent } from './events/message.created'
+import { MessageDeletedEvent } from './events/message.deleted'
+import { InvalidMessageException } from './exceptions/invalid.message'
 import { MessageChat } from './value-objects/message.chat'
 import { MessageFrom } from './value-objects/message.from'
 import { MessageId } from './value-objects/message.id'
@@ -14,6 +17,15 @@ export class Message extends AgreggateRoot<MessageId> {
         private _timestamp = new MessageTimestamp(),
     ) {
         super(id)
+        this.apply(
+            new MessageCreatedEvent(
+                id,
+                this.from,
+                this.chat,
+                this.body,
+                this.timestamp,
+            ),
+        )
     }
 
     get chat() {
@@ -32,8 +44,12 @@ export class Message extends AgreggateRoot<MessageId> {
         return this._from
     }
 
+    delete() {
+        this.apply(new MessageDeletedEvent(this.id))
+    }
+
     validateState(): void {
         if (!this.body || !this.timestamp || !this.chat || !this.from)
-            throw new Error('Invalid message')
+            throw new InvalidMessageException()
     }
 }
