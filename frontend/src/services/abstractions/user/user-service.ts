@@ -18,4 +18,5 @@ export type UseUserService = {
     changePassword(token: string, dto: ChangePassword): Promise<boolean>
     changeUsername(token: string, dto: ChangeUsername): Promise<boolean>
     changeEmail(token: string, dto: ChangeEmail): Promise<boolean>
+    getClients(taken: string): Promise<User[]>
 }

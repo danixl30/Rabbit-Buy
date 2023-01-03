@@ -56,6 +56,16 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         return (await job()).body!!
     }
 
+    const getClients = async (token: string) => {
+        const { job } = http.get<unknown, User[]>({
+            url: '/user/clients',
+            headers: {
+                auth: token,
+            },
+        })
+        return (await job()).body!!
+    }
+
     const changeEmail = async (token: string, dto: ChangeEmail) => {
         const { job } = http.put<ChangeEmail, unknown>({
             url: '/user/update/email',
@@ -113,5 +123,6 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
         changePassword,
         changeUsername,
         delete: deleteUser,
+        getClients,
     }
 }
