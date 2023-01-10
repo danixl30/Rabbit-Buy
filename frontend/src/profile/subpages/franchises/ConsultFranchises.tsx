@@ -1,5 +1,6 @@
 import { Center, Loader, SimpleGrid, Space, Text } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { DeleteButton } from '../../../components/DeleteButton'
 import { ImageInput } from '../../../components/ImageInput'
 import { ModalLayout } from '../../../components/ModalLayout'
 import { TextInputView } from '../../../components/TextInputView'
@@ -27,6 +28,10 @@ export default function ConsultFranchises() {
         errorName,
         image,
         onChangeImage,
+        onClickChangeName,
+        onClickChangeGroupId,
+        onClickChangeImage,
+        onClickDelete,
     } = useConsultFranchise(
         useFranchise(useAxiosHttp()),
         useCookieSession(),
@@ -55,35 +60,47 @@ export default function ConsultFranchises() {
                 title="Detalle de franquicia"
                 onClose={onCloseDetail}
             >
-                <NameInput
-                    value={name}
-                    onChange={onChangeNameInput}
-                    error={errorName}
-                />
-                <Center>
-                    <Space h="md" />
-                    <ChangeButton disabled={!name || Boolean(errorName)} />
-                </Center>
-                <TextInputView label="RIF:" value={franchise?.rif || ''} />
-                <TextInputView
-                    label="ID de afiliación:"
-                    value={franchise?.groupId || ''}
-                />
-                <Center>
-                    <Space h="md" />
-                    <ChangeButton disabled={false} />
-                </Center>
-                <ImageInput onChange={onChangeImage} />
-                {imageText && (
-                    <>
-                        <Space h="xl" />
-                        <FranchiseImage src={imageText} />
-                    </>
-                )}
-                <Center>
-                    <Space h="md" />
-                    <ChangeButton disabled={!image} />
-                </Center>
+                <SimpleGrid cols={1}>
+                    <NameInput
+                        value={name}
+                        onChange={onChangeNameInput}
+                        error={errorName}
+                    />
+                    <Center>
+                        <Space h="md" />
+                        <ChangeButton
+                            onClick={onClickChangeName}
+                            disabled={!name || Boolean(errorName)}
+                        />
+                    </Center>
+                    <TextInputView label="RIF:" value={franchise?.rif || ''} />
+                    <TextInputView
+                        label="ID de afiliación:"
+                        value={franchise?.groupId || ''}
+                    />
+                    <Center>
+                        <Space h="md" />
+                        <ChangeButton
+                            onClick={onClickChangeGroupId}
+                            disabled={false}
+                        />
+                    </Center>
+                    <ImageInput onChange={onChangeImage} />
+                    {imageText && (
+                        <>
+                            <FranchiseImage src={imageText} />
+                        </>
+                    )}
+                    <Center>
+                        <ChangeButton
+                            onClick={onClickChangeImage}
+                            disabled={!image}
+                        />
+                    </Center>
+                    <Center>
+                        <DeleteButton onClick={onClickDelete} />
+                    </Center>
+                </SimpleGrid>
             </ModalLayout>
             <Text size={50}>Consultar franquicias</Text>
             <SimpleGrid cols={2}>

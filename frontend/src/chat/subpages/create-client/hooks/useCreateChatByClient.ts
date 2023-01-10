@@ -28,6 +28,8 @@ export const useCreateChatByClient = (
         setLoading(false)
     }
 
+    const onChangeInput = (value: string) => setText(value)
+
     const filterFranchises = () => {
         setFranchisesFiltered(
             franchises.filter(
@@ -55,4 +57,12 @@ export const useCreateChatByClient = (
         if (franchises.length === 0) getFranchises()
         filterFranchises()
     }, [text, franchises])
+
+    return {
+        loading,
+        franchiseFiltered,
+        selectFranchise,
+        onChangeInput,
+        text,
+    }
 }

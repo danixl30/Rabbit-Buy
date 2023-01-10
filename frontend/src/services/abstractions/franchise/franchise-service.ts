@@ -1,3 +1,4 @@
+import { ChangeFranchiseImageDTO } from './dto/change-image'
 import { ChangeFranchiseName } from './dto/change-name'
 import { CreateFranchise } from './dto/create-franchise'
 import { Franchise } from './types/franchise'
@@ -10,4 +11,5 @@ export type UseFranchise = {
     generateGroupId(token: string, franchise: string): Promise<boolean>
     delete(token: string, franchise: string): Promise<boolean>
     changeName(token: string, dto: ChangeFranchiseName): Promise<boolean>
+    changeImage(taken: string, dto: ChangeFranchiseImageDTO): Promise<void>
 }

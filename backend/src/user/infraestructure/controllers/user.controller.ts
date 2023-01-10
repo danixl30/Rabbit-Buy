@@ -34,6 +34,9 @@ import { UpdateUsernameDTO } from './dto/update.username.dto'
 import { ChangeUsernameApplicationService } from 'src/user/application/services/change-username/change.username.application.service'
 import { UpdateUserEmailDTO } from './dto/update.email.dto'
 import { ChangeEmailApplicationService } from 'src/user/application/services/change-email/change.email.application.service'
+import { RolesGuard } from '../guards/roles/roles.guard'
+import { Roles } from '../guards/roles/metadata/roles.metadata'
+import { GetClientsApplicationService } from 'src/user/application/services/get-clients/get.clients.application.service'
 
 @Controller('user')
 @ApiTags('user')
@@ -99,10 +102,24 @@ export class UserController {
     @UseGuards(UserGuard)
     async getData(@UserAuth() user: User) {
         return {
+            id: user.id.value,
             email: user.email.value,
             username: user.username.value,
             role: user.role.value,
         }
+    }
+
+    @Get('clients')
+    @ApiHeader({
+        name: 'auth',
+    })
+    @Roles(RolesData.PROVIDER)
+    @UseGuards(UserGuard, RolesGuard)
+    async getClients() {
+        return await new ExceptionDecorator(
+            new GetClientsApplicationService(this.userRepository),
+            new ConcreteExceptionReductor(),
+        ).execute(null)
     }
 
     @Delete()

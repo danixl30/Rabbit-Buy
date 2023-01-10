@@ -15,8 +15,11 @@ export const useSocket = (url: string = ''): UseSocket => {
         socket.on(name, callback)
     }
 
+    const off = () => socket.off()
+
     return {
         emit,
         subscribeEvent,
+        off,
     }
 }

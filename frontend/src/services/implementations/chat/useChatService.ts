@@ -1,6 +1,7 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
 import { UseSocket } from '../../../core/abstractions/sockets/socket'
 import { User } from '../../../global-state/user/types/user'
+import { UseChat } from '../../abstractions/chat/chat-service'
 import { ChatClient } from '../../abstractions/chat/types/chat-client'
 import { ChatProvider } from '../../abstractions/chat/types/chat-provider'
 import { CreateChatByClientDTO } from '../../abstractions/chat/types/create-chat-client'
@@ -8,7 +9,7 @@ import { CreateChatByProviderDTO } from '../../abstractions/chat/types/create-ch
 import { Message } from '../../abstractions/chat/types/message'
 import { SendMessageDTO } from '../../abstractions/chat/types/send-message'
 
-export const useChatService = (http: UseHttp, socket: UseSocket) => {
+export const useChatService = (http: UseHttp, socket: UseSocket): UseChat => {
     const getChatsByClient = async (token: string): Promise<ChatClient[]> => {
         const { job } = http.get<unknown, ChatClient[]>({
             url: '/chat/list/client',
@@ -82,9 +83,10 @@ export const useChatService = (http: UseHttp, socket: UseSocket) => {
             callback(e.name),
         )
     }
-    const sendTyping = async (name: string): Promise<void> => {
+    const sendTyping = async (name: string, chat: string): Promise<void> => {
         socket.emit('typing', {
             name,
+            chat,
         })
     }
     const subscribe = async (
@@ -100,6 +102,8 @@ export const useChatService = (http: UseHttp, socket: UseSocket) => {
         socket.emit<{}>('unsubscribe', {})
     }
 
+    const off = () => socket.off()
+
     return {
         getChatsByClient,
         getChatsByProvider,
@@ -112,5 +116,6 @@ export const useChatService = (http: UseHttp, socket: UseSocket) => {
         sendTyping,
         subscribe,
         unsubscribe,
+        off,
     }
 }

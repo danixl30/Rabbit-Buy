@@ -3,7 +3,8 @@ import { InvalidProductExistenceException } from '../exceptions/invalid.product.
 
 export class ProductExistence implements ValueObject<ProductExistence> {
     constructor(private existence: number) {
-        if (existence < 0) throw new InvalidProductExistenceException()
+        if (existence === undefined || existence < 0)
+            throw new InvalidProductExistenceException()
     }
 
     get value(): number {

@@ -25,12 +25,74 @@ export const useConsultFranchise = (
     const getFranchises = async () => {
         setLoading(true)
         try {
-            const data = await service.getAll(session.getSession()!!)
+            const data = await service.getAll()
             setFranchises(data)
         } catch (e) {
             toast.error('Error al listar las franquicias')
         }
         setLoading(false)
+    }
+
+    const onClickChangeName = async () => {
+        if (!name || errorName) {
+            toast.error('Nombre invalido')
+            return
+        }
+        const onFinish = toast.pending('Procesando...')
+        try {
+            await service.changeName(session.getSession()!!, {
+                id: franchise?.id || '',
+                name,
+            })
+            onFinish('Los cambios se realizaron con exito', 'success')
+            getFranchises()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangeImage = async () => {
+        if (!image) {
+            toast.error('Imagen invalida')
+            return
+        }
+        const onFinish = toast.pending('Procesando...')
+        try {
+            await service.changeImage(session.getSession()!!, {
+                id: franchise?.id || '',
+                image,
+            })
+            onFinish('Los cambios se realizaron con exito', 'success')
+            getFranchises()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangeGroupId = async () => {
+        const onFinish = toast.pending('Procesando...')
+        try {
+            await service.generateGroupId(
+                session.getSession()!!,
+                franchise!!.id,
+            )
+            onFinish('Los cambios se realizaron con exito', 'success')
+            getFranchise()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickDelete = async () => {
+        const onFinish = toast.pending('Pending...')
+        try {
+            await service.delete(session.getSession()!!, franchise!!.id)
+            onFinish('Franquicia borrado satisfactoriamente', 'success')
+            onCloseDetail()
+            getFranchises()
+        } catch (e) {
+            onFinish('Error al borrar la franquicia', 'error')
+        }
     }
 
     const getFranchise = async () => {
@@ -95,5 +157,9 @@ export const useConsultFranchise = (
         errorName,
         onChangeImage,
         image,
+        onClickChangeName,
+        onClickChangeGroupId,
+        onClickChangeImage,
+        onClickDelete,
     }
 }

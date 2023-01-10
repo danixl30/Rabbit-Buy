@@ -22,7 +22,8 @@ export type UseChat = {
     onMessage(callback: (message: Message) => void): void
     sendMessage(dto: SendMessageDTO): Promise<void>
     onTyping(callback: (name: string) => void): void
-    sendTyping(name: string): Promise<void>
+    sendTyping(name: string, chat: string): Promise<void>
     subscribe(chat: ChatProvider | ChatClient, user: User): Promise<void>
     unsubscribe(): Promise<void>
+    off(): void
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import { Criteria } from 'src/core/application/repository/query/criteria'
+import { CriteriaMongoTransformer } from 'src/core/infraestructure/criteria-transformer/mongo/crietia.mongo.transformer'
 import { UserRepository } from 'src/user/application/repositories/user.repository'
 import { User } from 'src/user/domain/user'
 import { Email } from 'src/user/domain/value-objects/email'
@@ -16,6 +18,7 @@ import { userDocumentToDomain } from '../mappers/user.document.domain'
 export class UserMongoRepository implements UserRepository {
     constructor(
         @InjectModel(UserDb.name) private userModel: Model<UserDocument>,
+        private criteriaTransformer: CriteriaMongoTransformer,
     ) {}
     async save(aggregate: User): Promise<User> {
         const user = await this.userModel.findById(aggregate.id.value)
@@ -50,5 +53,15 @@ export class UserMongoRepository implements UserRepository {
     async getByEmail(email: Email): Promise<User> {
         const user = await this.userModel.findOne({ email: email.value })
         return user ? userDocumentToDomain(user) : null
+    }
+
+    async getAll(criteria: Criteria): Promise<User[]> {
+        const criteriaMongo = this.criteriaTransformer.transform(criteria)
+        const users = await this.userModel
+            .find(criteriaMongo.filter)
+            .sort(criteriaMongo.sort)
+            .skip(criteriaMongo.skip)
+            .limit(criteriaMongo.limit)
+        return users.map(userDocumentToDomain)
     }
 }

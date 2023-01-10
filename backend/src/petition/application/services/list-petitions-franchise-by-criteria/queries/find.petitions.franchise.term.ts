@@ -42,7 +42,7 @@ export class FindPetitionsFranchiseTermQueryFactory
                 LogicalOperators.AND,
             ),
             [new Order(new OrderField('date'), new OrderType(OrderTypes.DESC))],
-            new Pagination(this.offset, this.page),
+            new Pagination(this.page, this.offset),
         )
     }
 }

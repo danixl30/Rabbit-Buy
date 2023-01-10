@@ -30,6 +30,7 @@ export class MessageMongoRepository implements MessageRepository {
             newMessage.timestamp = aggregate.timestamp.value
             newMessage.body = aggregate.body.value
             await newMessage.save()
+            return aggregate
         }
         message.from = aggregate.from.value.value
         message.chat = aggregate.chat.value.value

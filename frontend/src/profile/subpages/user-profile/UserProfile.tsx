@@ -3,10 +3,12 @@ import { ChangeEvent } from 'react'
 import { EmailInput } from '../../../components/EmailInput'
 import { PasswordInput } from '../../../components/PasswordInput'
 import { UsernameInput } from '../../../components/UsernameInput'
+import { useAxiosHttp } from '../../../core/implementation/http/axios/useAxiosHttp'
+import { useCookieSession } from '../../../core/implementation/session/cookies/useCookieSession'
 import { useToastToastify } from '../../../core/implementation/toast/toastify/useToastToastify'
+import { useUserHttp } from '../../../services/implementations/user/useUserHttp'
 import { ChangeButton } from './components/ChangeButton'
 import { ChangeProfileTitle } from './components/ChangeProfileTitle'
-import { DeleteUserButton } from './components/DeleteUserButton'
 import { useChangeProfile } from './hooks/useChangeProfile'
 
 export default function UserProfile() {
@@ -14,7 +16,6 @@ export default function UserProfile() {
         email,
         password,
         username,
-        onDeleteUser,
         onChangeEmail,
         onChangePassword,
         onChangeUsername,
@@ -24,7 +25,11 @@ export default function UserProfile() {
         onSubminUsername,
         onSubmitEmail,
         onSubmitPassword,
-    } = useChangeProfile(useToastToastify())
+    } = useChangeProfile(
+        useUserHttp(useAxiosHttp()),
+        useCookieSession(),
+        useToastToastify(),
+    )
     const onChangeEmailInput = (e: ChangeEvent<HTMLInputElement>) =>
         onChangeEmail(e.target.value)
     const onChangeUsernameInput = (e: ChangeEvent<HTMLInputElement>) =>
@@ -75,10 +80,6 @@ export default function UserProfile() {
                             />
                         </SimpleGrid>
                     </Center>
-                    <DeleteUserButton
-                        disabled={false}
-                        onClick={() => onDeleteUser()}
-                    />
                 </SimpleGrid>
             </Center>
         </>

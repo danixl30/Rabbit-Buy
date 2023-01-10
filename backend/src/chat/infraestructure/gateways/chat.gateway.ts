@@ -20,7 +20,7 @@ import { SubscribeUnsubscribeChatDTO } from './dto/subscribe.unsubscribe.dto'
 import { TypingDTO } from './dto/typing.dto'
 import { SubscriptorsRecord } from './types/subscriptors.record'
 
-@WebSocketGateway(80)
+@WebSocketGateway(80, { cors: true })
 export class ChatGateway {
     private subscriptors: SubscriptorsRecord = {}
 
@@ -51,6 +51,7 @@ export class ChatGateway {
 
     @SubscribeMessage('typing')
     typing(
+        @SocketId() id: string,
         @EmitEvent() emiter: EmitEventHandler<{ name: string }>,
         @MessageBody() data: TypingDTO,
     ) {
@@ -60,7 +61,7 @@ export class ChatGateway {
                 name: data.name,
             },
             'typing',
-            ...ids,
+            ...ids.filter((e) => e !== id),
         )
     }
 
@@ -75,7 +76,10 @@ export class ChatGateway {
             this.messageRepository,
             this.uuidGenerator,
             this.eventHandler,
-        ).execute(data)
+        ).execute({
+            ...data,
+            from: data.userFrom,
+        })
         emiter(message, 'message', ...ids)
     }
 }

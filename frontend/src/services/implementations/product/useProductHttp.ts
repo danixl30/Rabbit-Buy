@@ -7,6 +7,7 @@ import { ChangeProductName } from '../../abstractions/product/types/change-name'
 import { ChangeProductPrice } from '../../abstractions/product/types/change-price'
 import { CreateProduct } from '../../abstractions/product/types/CreateProduct'
 import { GetProductsByFranchiseDTO } from '../../abstractions/product/types/get-products-franchise-dto'
+import { GetProductsByProviderDTO } from '../../abstractions/product/types/get-products-provider-dto'
 import { Product } from '../../abstractions/product/types/product'
 import { ProductDetail } from '../../abstractions/product/types/product-detail'
 
@@ -71,14 +72,17 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
 
     const getByProvider = async (
         token: string,
-        data: GetProductsByFranchiseDTO,
+        data: GetProductsByProviderDTO,
     ) => {
         const { job } = http.get<unknown, { products: Product[] }>({
             url: '/product/list/provider',
             headers: {
                 auth: token,
             },
-            queries: data,
+            queries: {
+                page: String(data.page),
+                term: data.term || '',
+            },
         })
         return (await job()).body!!.products
     }
@@ -96,7 +100,7 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
 
     const changeName = async (token: string, data: ChangeProductName) => {
         const { job } = http.put<ChangeProductName, unknown>({
-            url: '/product/update-name',
+            url: '/product/update-name/' + data.id,
             headers: {
                 auth: token,
             },
@@ -111,7 +115,7 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
         data: ChangeProductDescription,
     ) => {
         const { job } = http.put<ChangeProductDescription, unknown>({
-            url: '/product/update-description',
+            url: '/product/update-description/' + data.id,
             headers: {
                 auth: token,
             },
@@ -123,7 +127,7 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
 
     const changePrice = async (token: string, data: ChangeProductPrice) => {
         const { job } = http.put<ChangeProductPrice, unknown>({
-            url: '/product/update-price',
+            url: '/product/update-price/' + data.id,
             headers: {
                 auth: token,
             },
@@ -138,7 +142,7 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
         data: ChangeProductExistence,
     ) => {
         const { job } = http.put<ChangeProductExistence, unknown>({
-            url: '/product/update-price',
+            url: '/product/update-existence/' + data.id,
             headers: {
                 auth: token,
             },
@@ -152,7 +156,7 @@ export const useProductServiceHttp = (http: UseHttp): UseProductService => {
         const { image, ...body } = dto
         const { job } = http.upload(
             {
-                url: '/product/update-image',
+                url: '/product/update-image/' + dto.id,
                 headers: {
                     auth: token,
                 },

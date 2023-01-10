@@ -38,6 +38,8 @@ export const useCreateChatByProvider = (
         )
     }
 
+    const onChangeInput = (value: string) => setText(value)
+
     const selectUser = async (user: User) => {
         const onFinish = toast.pending('Procesando')
         try {
@@ -55,4 +57,12 @@ export const useCreateChatByProvider = (
         if (users.length === 0) getUsers()
         filterUsers()
     }, [text, users])
+
+    return {
+        selectUser,
+        onChangeInput,
+        loading,
+        usersFiltered,
+        text,
+    }
 }

@@ -3,7 +3,8 @@ import { InvalidProductPriceException } from '../exceptions/invalid.product.pric
 
 export class ProductPrice implements ValueObject<ProductPrice> {
     constructor(private price: number) {
-        if (price < 0) throw new InvalidProductPriceException()
+        if (price === undefined || price < 0)
+            throw new InvalidProductPriceException()
     }
 
     get value(): number {

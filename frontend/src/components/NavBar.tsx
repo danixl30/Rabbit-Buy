@@ -20,15 +20,10 @@ import { LOGIN_PAGE } from '../login/page/route'
 import { MAIN_PAGE } from '../main/page/route'
 import { PROFILE_PAGE } from '../profile/page/route'
 import { REGISTER_PAGE } from '../register/page/route'
-import {
-    Login,
-    Logout,
-    Registered,
-    Settings,
-    UserPlus,
-} from 'tabler-icons-react'
+import { Login, Logout, Message, Settings, UserPlus } from 'tabler-icons-react'
 import { ToolTip } from './ToolTip'
 import { useHoverStyles } from '../hooks/useHoverStyles'
+import { CHAT_PAGE } from '../chat/page/page'
 
 export type NavBarProps = {
     children: ReactNode | ReactNode[]
@@ -102,6 +97,15 @@ const ClientBar = (props: NavBarProps) => {
                 <Grid.Col span={3}></Grid.Col>
                 <Grid.Col span={3}>
                     <Center style={{ padding: 0 }}>
+                        {userState.user?.role !== 'ADMIN' && (
+                            <ToolTip text="Chat">
+                                <ActionIcon
+                                    onClick={() => navigation.goTo(CHAT_PAGE)}
+                                >
+                                    <Message size={40} />
+                                </ActionIcon>
+                            </ToolTip>
+                        )}
                         <ToolTip text="Configuración">
                             <ActionIcon
                                 onClick={() => navigation.goTo(PROFILE_PAGE)}

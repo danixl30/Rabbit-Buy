@@ -12,7 +12,8 @@ export const useChat = (
     session: UseSession,
     toast: UseToast,
 ) => {
-    const [chats, setChats] = useState<(ChatClient | ChatProvider)[]>([])
+    const [chatsClient, setChatsClient] = useState<ChatClient[]>([])
+    const [chatsProvider, setChatsProvider] = useState<ChatProvider[]>([])
     const [loading, setLoading] = useState(false)
     const [chatSelected, setChatSelected] = useState<
         ChatClient | ChatProvider
@@ -22,13 +23,18 @@ export const useChat = (
     const getChats = async () => {
         setLoading(true)
         try {
-            const chats =
-                user.role === 'Provider'
-                    ? await chatService.getChatsByProvider(
-                          session.getSession()!!,
-                      )
-                    : await chatService.getChatsByClient(session.getSession()!!)
-            setChats(chats)
+            if (user.role === 'USER') {
+                const chats = await chatService.getChatsByClient(
+                    session.getSession()!!,
+                )
+                setChatsClient(chats)
+            }
+            if (user.role === 'PROVIDER') {
+                const chats = await chatService.getChatsByProvider(
+                    session.getSession()!!,
+                )
+                setChatsProvider(chats)
+            }
         } catch (e) {
             toast.error('Error al obtener los chats')
         }
@@ -36,6 +42,7 @@ export const useChat = (
     }
 
     const selectChat = (chat: ChatClient | ChatProvider) => {
+        setChatSelected(undefined)
         setChatSelected(chat)
     }
 
@@ -53,7 +60,8 @@ export const useChat = (
     }, [])
 
     return {
-        chats,
+        chatsClient,
+        chatsProvider,
         loading,
         openAddChat,
         onCloseAddChat,

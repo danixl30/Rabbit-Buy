@@ -92,6 +92,98 @@ export const useModifyProducts = (
         setLoading(false)
     }
 
+    const onClickChangeName = async () => {
+        if (!name || errorName) {
+            toast.error('Nombre invalido')
+            return
+        }
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.changeName(session.getSession()!!, {
+                id: selected!!.id,
+                name,
+            })
+            onFinish('Cambio realizado satisfactoriamente', 'success')
+            setPage(1)
+            getDetail()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangeDescription = async () => {
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.changeDescription(session.getSession()!!, {
+                id: selected!!.id,
+                description,
+            })
+            onFinish('Cambio realizado satisfactoriamente', 'success')
+            getDetail()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangePrice = async () => {
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.changePrice(session.getSession()!!, {
+                id: selected!!.id,
+                price,
+            })
+            onFinish('Cambio realizado satisfactoriamente', 'success')
+            setPage(1)
+            getDetail()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangeExistence = async () => {
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.changeExistence(session.getSession()!!, {
+                id: selected!!.id,
+                existence,
+            })
+            onFinish('Cambio realizado satisfactoriamente', 'success')
+            getDetail()
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickChangeImage = async () => {
+        if (!image) {
+            toast.error('No hay imagen')
+            return
+        }
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.changeImage(session.getSession()!!, {
+                id: selected!!.id,
+                image,
+            })
+            onFinish('Cambio realizado satisfactoriamente', 'success')
+            setPage(1)
+        } catch (e) {
+            onFinish('Error al realizar los cambios', 'error')
+        }
+    }
+
+    const onClickDelete = async () => {
+        const onFinish = toast.pending('Pending...')
+        try {
+            await productService.delete(session.getSession()!!, selected!!.id)
+            onFinish('Producto borrado satisfactoriamente', 'success')
+            setPage(1)
+            closeModal()
+        } catch (e) {
+            onFinish('Error al borrar el producto', 'error')
+        }
+    }
+
     useEffect(() => {
         if (selected) getDetail()
     }, [selected])
@@ -139,5 +231,11 @@ export const useModifyProducts = (
         price,
         image,
         existence,
+        onClickDelete,
+        onClickChangeName,
+        onClickChangeImage,
+        onClickChangePrice,
+        onClickChangeExistence,
+        onClickChangeDescription,
     }
 }

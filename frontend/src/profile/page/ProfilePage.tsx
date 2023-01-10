@@ -75,16 +75,22 @@ export default function ProfilePage() {
                         </SimpleGrid>
                         <Suspense fallback={null}>
                             <Collapse in={subPage === PROFILE_CONFIG}>
-                                <UserProfile />
+                                {subPage === PROFILE_CONFIG && <UserProfile />}
                             </Collapse>
                             <Collapse in={subPage === PETITION_CONSULT}>
-                                <PetitionConsult />
+                                {subPage === PETITION_CONSULT && (
+                                    <PetitionConsult />
+                                )}
                             </Collapse>
                             <Collapse in={subPage === CONSULT_FRANCHISES}>
-                                <ConsultFranchises />
+                                {subPage === CONSULT_FRANCHISES && (
+                                    <ConsultFranchises />
+                                )}
                             </Collapse>
                             <Collapse in={subPage === MODIFY_PRODUCTS}>
-                                <ModifyProducts />
+                                {subPage === MODIFY_PRODUCTS && (
+                                    <ModifyProducts />
+                                )}
                             </Collapse>
                         </Suspense>
                     </SimpleGrid>

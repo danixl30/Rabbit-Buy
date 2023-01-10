@@ -94,6 +94,66 @@ export const usePetitionsSubPage = (
         }
     }
 
+    const suspendPetition = async (id: string) => {
+        try {
+            await service.suspendPetition(session.getSession()!!, id)
+            toast.success('Pedido confirmado')
+            setPetions(
+                petitions.map((e) => {
+                    if (e.id === id) {
+                        return {
+                            ...e,
+                            status: 'PAUSED',
+                        }
+                    }
+                    return { ...e }
+                }),
+            )
+        } catch (e) {
+            toast.error('Error al confirmar el pedido')
+        }
+    }
+
+    const cancelPetition = async (id: string) => {
+        try {
+            await service.cancelPetition(session.getSession()!!, id)
+            toast.success('Pedido confirmado')
+            setPetions(
+                petitions.map((e) => {
+                    if (e.id === id) {
+                        return {
+                            ...e,
+                            status: 'CANCELED',
+                        }
+                    }
+                    return { ...e }
+                }),
+            )
+        } catch (e) {
+            toast.error('Error al confirmar el pedido')
+        }
+    }
+
+    const finishPetition = async (id: string) => {
+        try {
+            await service.finishPetition(session.getSession()!!, id)
+            toast.success('Pedido confirmado')
+            setPetions(
+                petitions.map((e) => {
+                    if (e.id === id) {
+                        return {
+                            ...e,
+                            status: 'FINISHED',
+                        }
+                    }
+                    return { ...e }
+                }),
+            )
+        } catch (e) {
+            toast.error('Error al confirmar el pedido')
+        }
+    }
+
     useEffect(() => {
         if (page < 2) return
         if (!term) getPetition()
@@ -116,5 +176,8 @@ export const usePetitionsSubPage = (
         isTop,
         petitions,
         confirmPetition,
+        finishPetition,
+        cancelPetition,
+        suspendPetition,
     }
 }

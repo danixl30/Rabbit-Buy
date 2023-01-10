@@ -20,7 +20,9 @@ export class ProductMongoRepository implements ProductRepository {
     ) {}
 
     async save(aggregate: Product): Promise<Product> {
-        const product = await this.productModel.findById(aggregate.id.value)
+        const product = await this.productModel.findById(
+            mongooseUUID(aggregate.id.value),
+        )
         if (!product) {
             const productToSave = new this.productModel()
             productToSave.id = aggregate.id.value

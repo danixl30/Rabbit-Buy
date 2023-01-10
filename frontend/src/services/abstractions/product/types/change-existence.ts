@@ -1,4 +1,4 @@
 export type ChangeProductExistence = {
     id: string
-    existence: string
+    existence: number
 }

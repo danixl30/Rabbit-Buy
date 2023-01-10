@@ -21,7 +21,9 @@ export class FranchiseMongoRepository implements FranchiseRepository {
         private criteriaTransformer: CriteriaMongoTransformer,
     ) {}
     async save(aggregate: Franchise): Promise<Franchise> {
-        const franchise = await this.franchiseModel.findById(aggregate.id.value)
+        const franchise = await this.franchiseModel.findById(
+            mongooseUUID(aggregate.id.value),
+        )
         if (!franchise) {
             const franchiseToSave = new this.franchiseModel()
             franchiseToSave.id = aggregate.id.value

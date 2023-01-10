@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { CHAT_PAGE } from '../../../../chat/page/page'
 import { CREATE_PRODUCT } from '../../../../create-product/page/route'
 import { CREATE_FRANCHISE } from '../../../../franchise-create/page/route'
 import { LogedGuard } from '../../../../guards/LogedGuard'
@@ -31,6 +32,7 @@ const CreateProduct = lazy(
     () => import('../../../../create-product/page/CreateProduct'),
 )
 const ProfilePage = lazy(() => import('../../../../profile/page/ProfilePage'))
+const ChatPage = lazy(() => import('../../../../chat/page/Chat'))
 
 export default function Router() {
     return (
@@ -69,6 +71,16 @@ export default function Router() {
                                 <Route
                                     path={CREATE_PRODUCT}
                                     element={<CreateProduct />}
+                                />
+                            </Route>
+                            <Route
+                                element={
+                                    <RolesGuard role={['PROVIDER', 'USER']} />
+                                }
+                            >
+                                <Route
+                                    path={CHAT_PAGE}
+                                    element={<ChatPage />}
                                 />
                             </Route>
                             <Route

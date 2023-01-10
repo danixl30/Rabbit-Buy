@@ -4,7 +4,7 @@ export class MessageDTO {
     @IsUUID()
     chat: string
     @IsUUID()
-    from: string
+    userFrom: string
     @IsString()
     body: string
 }

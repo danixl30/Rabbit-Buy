@@ -28,7 +28,8 @@ export class ChatMongoRepository implements ChatRepository {
             newChat.franchise = aggregate.franchise.value.value
             newChat.timestamp = aggregate.timestamp.value
             newChat.messages = aggregate.messages.map((e) => e.value.value)
-            await this.chatModel.create(possibleChat)
+            await newChat.save()
+            return aggregate
         }
         possibleChat.client = aggregate.client.value.value
         possibleChat.franchise = aggregate.franchise.value.value

@@ -1,5 +1,6 @@
 import { Button, Center, Loader, SimpleGrid, Space } from '@mantine/core'
 import { ChangeEvent } from 'react'
+import { DeleteButton } from '../../../components/DeleteButton'
 import { ImageInput } from '../../../components/ImageInput'
 import { ModalLayout } from '../../../components/ModalLayout'
 import { useAxiosHttp } from '../../../core/implementation/http/axios/useAxiosHttp'
@@ -38,6 +39,12 @@ export default function ModifyProducts() {
         onChangeDescription,
         openModal,
         closeModal,
+        onClickDelete,
+        onClickChangeName,
+        onClickChangeImage,
+        onClickChangePrice,
+        onClickChangeExistence,
+        onClickChangeDescription,
     } = useModifyProducts(
         useCookieSession(),
         useProductServiceHttp(useAxiosHttp()),
@@ -66,18 +73,33 @@ export default function ModifyProducts() {
                         onChange={onChangeNameInput}
                         error={errorName}
                     />
-                    <ChangeButton disabled={!name || Boolean(errorName)} />
+                    <ChangeButton
+                        onClick={onClickChangeName}
+                        disabled={!name || Boolean(errorName)}
+                    />
                     <DescriptionInput
                         value={description}
                         onChange={onChangeDescriptionInput}
                     />
+                    <Center>
+                        <ChangeButton
+                            disabled={false}
+                            onClick={onClickChangeDescription}
+                        />
+                    </Center>
                     <PriceInput value={price} onChange={onChangePrice} />
-                    <ChangeButton disabled={price < 0} />
+                    <ChangeButton
+                        onClick={onClickChangePrice}
+                        disabled={price < 0}
+                    />
                     <ExistenceInput
                         value={existence}
                         onChange={onChangeExistence}
                     />
-                    <ChangeButton disabled={existence < 0} />
+                    <ChangeButton
+                        onClick={onClickChangeExistence}
+                        disabled={existence < 0}
+                    />
                     <ImageInput onChange={onChangeImage} />
                     {imageText && (
                         <>
@@ -85,7 +107,15 @@ export default function ModifyProducts() {
                             <ProductImage src={imageText} />
                         </>
                     )}
-                    <ChangeButton disabled={!image} />
+                    <Center>
+                        <ChangeButton
+                            onClick={onClickChangeImage}
+                            disabled={!image}
+                        />
+                    </Center>
+                    <Center>
+                        <DeleteButton onClick={onClickDelete} />
+                    </Center>
                 </SimpleGrid>
             </ModalLayout>
             <Center>

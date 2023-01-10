@@ -1,5 +1,5 @@
 export type SendMessageDTO = {
     chat: string
-    from: string
+    userFrom: string
     body: string
 }

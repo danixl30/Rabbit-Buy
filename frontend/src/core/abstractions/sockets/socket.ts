@@ -4,4 +4,5 @@ export type UseSocket = {
         name: string,
         callback: (value: T) => void,
     ): void
+    off(): void
 }
