@@ -21,7 +21,9 @@ export class FinishPetitionApplicationService
         if (!petition) throw new PetitionNotFoundException()
         petition.finish()
         await this.petitionRepository.save(petition)
-        this.eventHandler.publish(petition.pullEvents())
+        this.eventHandler.publish(
+            petition.pullEvents().filter((_, index) => index > 0),
+        )
         return {
             id: data.id,
         }

@@ -45,7 +45,7 @@ export default function PetitionConsult() {
     }
 
     const getPossibleStuses = (status: string, id: string) => {
-        if (status === 'CANCELED' || status === 'FINISHED') return []
+        if (status === 'CANCELLED' || status === 'FINISHED') return []
         if (status === 'OPEN')
             return [
                 {
@@ -121,11 +121,17 @@ export default function PetitionConsult() {
                             ) : (
                                 <PetitionCard
                                     extraData={
-                                        <Button
-                                            onClick={() => cancelPetition(e.id)}
-                                        >
-                                            Cancelar
-                                        </Button>
+                                        <>
+                                            {e.status !== 'CANCELLED' && (
+                                                <Button
+                                                    onClick={() =>
+                                                        cancelPetition(e.id)
+                                                    }
+                                                >
+                                                    Cancelar
+                                                </Button>
+                                            )}
+                                        </>
                                     }
                                     {...e}
                                 />
