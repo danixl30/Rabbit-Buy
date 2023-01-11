@@ -1,4 +1,4 @@
-import { Card, Text } from '@mantine/core'
+import { Avatar, Card, Flex, SimpleGrid, Text } from '@mantine/core'
 import { useHoverStyles } from '../../../../hooks/useHoverStyles'
 import { Franchise } from '../../../../services/abstractions/franchise/types/franchise'
 
@@ -19,8 +19,13 @@ export const FranchiseCard = (props: FranchiseCardProps) => {
                 radius="md"
                 withBorder
             >
-                <Text>{`Nombre: ${props.name}`}</Text>
-                <Text>{`RIF: ${props.rif}`}</Text>
+                <Flex gap={20}>
+                    <Avatar src={props.image} />
+                    <SimpleGrid cols={1} spacing={1}>
+                        <Text>{`Nombre: ${props.name}`}</Text>
+                        <Text>{`RIF: ${props.rif}`}</Text>
+                    </SimpleGrid>
+                </Flex>
             </Card>
         </>
     )
