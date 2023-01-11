@@ -1,5 +1,5 @@
 import { UseHttp } from '../../../core/abstractions/http/http'
-import {ChangeFranchiseImageDTO} from '../../abstractions/franchise/dto/change-image'
+import { ChangeFranchiseImageDTO } from '../../abstractions/franchise/dto/change-image'
 import { ChangeFranchiseName } from '../../abstractions/franchise/dto/change-name'
 import { CreateFranchise } from '../../abstractions/franchise/dto/create-franchise'
 import { UseFranchise } from '../../abstractions/franchise/franchise-service'
@@ -75,15 +75,18 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
     }
 
     const changeImage = async (token: string, dto: ChangeFranchiseImageDTO) => {
-        const { job } = http.upload<{}, unknown>({
-            url: '/franchise/update/image/' + dto.id,
-            headers: {
-                auth: token
+        const { job } = http.upload<{}, unknown>(
+            {
+                url: '/franchise/update/image/' + dto.id,
+                headers: {
+                    auth: token,
+                },
+                files: {
+                    image: dto.image,
+                },
             },
-            files: {
-                image: dto.image
-            }
-        }, () => {})
+            () => {},
+        )
         await job()
     }
 
@@ -105,6 +108,6 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
         generateGroupId,
         delete: deleteFranchise,
         changeName,
-        changeImage
+        changeImage,
     }
 }

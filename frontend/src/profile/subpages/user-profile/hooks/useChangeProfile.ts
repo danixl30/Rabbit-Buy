@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { UseSession } from '../../../../core/abstractions/session/session'
 import { UseToast } from '../../../../core/abstractions/toast/toast'
-import {UserState} from '../../../../global-state/user/UserContext'
+import { UserState } from '../../../../global-state/user/UserContext'
 import { UseUserService } from '../../../../services/abstractions/user/user-service'
 import { regExpEmail } from '../../../../utils/reg-exps/email/email.reg.exp'
 import { regExpPassword } from '../../../../utils/reg-exps/password/password.reg.exp'

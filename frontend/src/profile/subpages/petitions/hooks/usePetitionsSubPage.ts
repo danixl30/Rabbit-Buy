@@ -55,7 +55,8 @@ export const usePetitionsSubPage = (
                     term,
                 )
                 if (data.length < 1) setIsTop(true)
-                setPetions([...petitions, ...data])
+                if (page > 1) setPetions([...petitions, ...data])
+                else setPetions(data)
             } catch (e) {
                 console.log(e)
             }

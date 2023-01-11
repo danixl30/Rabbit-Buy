@@ -5,6 +5,10 @@ import { PetitionCreatedEventListener } from '../event-listeners/petition.create
 
 @Module({
     imports: [MongoModelsModule],
-    providers: [PetitionCreatedEventListener, FranchiseDeletedEventListener],
+    providers: [
+        PetitionCreatedEventListener,
+        FranchiseDeletedEventListener,
+        PetitionCreatedEventListener,
+    ],
 })
 export class ProductEventListener {}

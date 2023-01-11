@@ -71,7 +71,11 @@ export const useModifyProducts = (
                 },
             )
             if (data.length === 0) setIsTop(true)
-            setProducts([...products, ...data])
+            if (page === 1) {
+                setProducts(data)
+            } else {
+                setProducts([...products, ...data])
+            }
         } catch (e) {
             toast.error('Error al obtener productos')
         }
@@ -105,13 +109,15 @@ export const useModifyProducts = (
             })
             onFinish('Cambio realizado satisfactoriamente', 'success')
             getDetail()
-            setProducts(products.map(product => {
-                if (product.id !== selected?.id) return product
+            setProducts(
+                products.map((product) => {
+                    if (product.id !== selected?.id) return product
                     return {
                         ...product,
-                        name
+                        name,
                     }
-            }))
+                }),
+            )
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -140,13 +146,15 @@ export const useModifyProducts = (
             })
             onFinish('Cambio realizado satisfactoriamente', 'success')
             await getDetail()
-            setProducts(products.map(product => {
-                if (product.id !== selected?.id) return product
+            setProducts(
+                products.map((product) => {
+                    if (product.id !== selected?.id) return product
                     return {
                         ...product,
-                        price
+                        price,
                     }
-            }))
+                }),
+            )
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -180,13 +188,15 @@ export const useModifyProducts = (
             onFinish('Cambio realizado satisfactoriamente', 'success')
             await getDetail()
             setImage(undefined)
-            setProducts(products.map(product => {
-                if (product.id !== selected?.id) return product
+            setProducts(
+                products.map((product) => {
+                    if (product.id !== selected?.id) return product
                     return {
                         ...product,
-                        image: selected.image
+                        image: selected.image,
                     }
-            }))
+                }),
+            )
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -196,8 +206,9 @@ export const useModifyProducts = (
         const onFinish = toast.pending('Pending...')
         try {
             await productService.delete(session.getSession()!!, selected!!.id)
+            if (page === 1) getProducts()
+            else setPage(1)
             onFinish('Producto borrado satisfactoriamente', 'success')
-            setProducts([])
             closeModal()
         } catch (e) {
             onFinish('Error al borrar el producto', 'error')
@@ -225,7 +236,6 @@ export const useModifyProducts = (
         setSelected(null)
         setImage(undefined)
         setOpenModal(false)
-        setPage(1)
     }
 
     useEffect(() => {

@@ -19,6 +19,10 @@ export class ProductExistence implements ValueObject<ProductExistence> {
         return new ProductExistence(this.existence - value.value)
     }
 
+    plus(value: ProductExistence): ProductExistence {
+        return new ProductExistence(this.existence + value.value)
+    }
+
     equals(other: ProductExistence): boolean {
         return other.value === this.value
     }
