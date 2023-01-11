@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { UseSession } from '../../../../core/abstractions/session/session'
 import { UseToast } from '../../../../core/abstractions/toast/toast'
+import {UserState} from '../../../../global-state/user/UserContext'
 import { UseUserService } from '../../../../services/abstractions/user/user-service'
 import { regExpEmail } from '../../../../utils/reg-exps/email/email.reg.exp'
 import { regExpPassword } from '../../../../utils/reg-exps/password/password.reg.exp'
 
 export const useChangeProfile = (
     userService: UseUserService,
+    userState: UserState,
     session: UseSession,
     toast: UseToast,
 ) => {
@@ -30,14 +32,19 @@ export const useChangeProfile = (
     }
 
     const onSubmitPassword = async () => {
-        onChangePassword
+        onClickChangePassword()
     }
 
     const onSubminUsername = async () => {
-        onClickChangeUsername
+        onClickChangeUsername()
     }
 
     const onDeleteUser = async () => {}
+
+    const updateUserState = async () => {
+        const user = await userService.getUser(session.getSession()!!)
+        userState.putUser(user)
+    }
 
     const onClickChangeUsername = async () => {
         if (!username || errorUsername) {
@@ -50,6 +57,7 @@ export const useChangeProfile = (
                 username,
             })
             onFinish('Cambio realizado con exito', 'success')
+            await updateUserState()
         } catch (e) {
             onFinish('Error al realizar el cambio', 'error')
         }
@@ -82,6 +90,7 @@ export const useChangeProfile = (
                 email,
             })
             onFinish('Cambio realizado con exito', 'success')
+            await updateUserState()
         } catch (e) {
             onFinish('Error al realizar el cambio', 'error')
         }

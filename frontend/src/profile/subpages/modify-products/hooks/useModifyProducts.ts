@@ -104,8 +104,14 @@ export const useModifyProducts = (
                 name,
             })
             onFinish('Cambio realizado satisfactoriamente', 'success')
-            setPage(1)
             getDetail()
+            setProducts(products.map(product => {
+                if (product.id !== selected?.id) return product
+                    return {
+                        ...product,
+                        name
+                    }
+            }))
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -133,8 +139,14 @@ export const useModifyProducts = (
                 price,
             })
             onFinish('Cambio realizado satisfactoriamente', 'success')
-            setPage(1)
-            getDetail()
+            await getDetail()
+            setProducts(products.map(product => {
+                if (product.id !== selected?.id) return product
+                    return {
+                        ...product,
+                        price
+                    }
+            }))
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -166,7 +178,15 @@ export const useModifyProducts = (
                 image,
             })
             onFinish('Cambio realizado satisfactoriamente', 'success')
-            setPage(1)
+            await getDetail()
+            setImage(undefined)
+            setProducts(products.map(product => {
+                if (product.id !== selected?.id) return product
+                    return {
+                        ...product,
+                        image: selected.image
+                    }
+            }))
         } catch (e) {
             onFinish('Error al realizar los cambios', 'error')
         }
@@ -177,7 +197,7 @@ export const useModifyProducts = (
         try {
             await productService.delete(session.getSession()!!, selected!!.id)
             onFinish('Producto borrado satisfactoriamente', 'success')
-            setPage(1)
+            setProducts([])
             closeModal()
         } catch (e) {
             onFinish('Error al borrar el producto', 'error')
@@ -205,6 +225,7 @@ export const useModifyProducts = (
         setSelected(null)
         setImage(undefined)
         setOpenModal(false)
+        setPage(1)
     }
 
     useEffect(() => {

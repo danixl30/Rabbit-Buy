@@ -21,7 +21,9 @@ export class UserMongoRepository implements UserRepository {
         private criteriaTransformer: CriteriaMongoTransformer,
     ) {}
     async save(aggregate: User): Promise<User> {
-        const user = await this.userModel.findById(aggregate.id.value)
+        const user = await this.userModel.findById(
+            mongooseUUID(aggregate.id.value),
+        )
         if (!user) {
             const userToSave = new this.userModel()
             userToSave.id = aggregate.id.value

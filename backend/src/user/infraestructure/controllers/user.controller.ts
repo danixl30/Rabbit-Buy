@@ -37,6 +37,8 @@ import { ChangeEmailApplicationService } from 'src/user/application/services/cha
 import { RolesGuard } from '../guards/roles/roles.guard'
 import { Roles } from '../guards/roles/metadata/roles.metadata'
 import { GetClientsApplicationService } from 'src/user/application/services/get-clients/get.clients.application.service'
+import { UpdatePasswordDTO } from './dto/update.password.dto'
+import { ChangePasswordApplicationService } from 'src/user/application/services/change-password/change.password.application.service'
 
 @Controller('user')
 @ApiTags('user')
@@ -172,6 +174,28 @@ export class UserController {
         return await new ExceptionDecorator(
             new ChangeEmailApplicationService(
                 this.userRepository,
+                this.eventHandler,
+            ),
+            new ConcreteExceptionReductor(),
+        ).execute({
+            id: user.id.value,
+            ...data,
+        })
+    }
+
+    @Put('update/password')
+    @ApiHeader({
+        name: 'auth',
+    })
+    @UseGuards(UserGuard)
+    async updatePassword(
+        @UserAuth() user: User,
+        @Body() data: UpdatePasswordDTO,
+    ) {
+        return await new ExceptionDecorator(
+            new ChangePasswordApplicationService(
+                this.userRepository,
+                this.crypto,
                 this.eventHandler,
             ),
             new ConcreteExceptionReductor(),

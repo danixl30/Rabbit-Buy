@@ -80,7 +80,7 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
 
     const changePassword = async (token: string, dto: ChangePassword) => {
         const { job } = http.put<ChangePassword, unknown>({
-            url: '/user/update/email',
+            url: '/user/update/password',
             headers: {
                 auth: token,
             },
@@ -92,7 +92,7 @@ export const useUserHttp = (http: UseHttp): UseUserService => {
 
     const changeUsername = async (token: string, dto: ChangeUsername) => {
         const { job } = http.put<ChangeUsername, unknown>({
-            url: '/user/update/email',
+            url: '/user/update/username',
             headers: {
                 auth: token,
             },

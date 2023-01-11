@@ -65,6 +65,7 @@ export const useConsultFranchise = (
             onFinish('Los cambios se realizaron con exito', 'success')
             getFranchises()
         } catch (e) {
+            console.log(e)
             onFinish('Error al realizar los cambios', 'error')
         }
     }

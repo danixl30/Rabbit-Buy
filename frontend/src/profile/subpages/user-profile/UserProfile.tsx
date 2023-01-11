@@ -6,6 +6,7 @@ import { UsernameInput } from '../../../components/UsernameInput'
 import { useAxiosHttp } from '../../../core/implementation/http/axios/useAxiosHttp'
 import { useCookieSession } from '../../../core/implementation/session/cookies/useCookieSession'
 import { useToastToastify } from '../../../core/implementation/toast/toastify/useToastToastify'
+import {getUserContext} from '../../../global-state/user/get-user-context'
 import { useUserHttp } from '../../../services/implementations/user/useUserHttp'
 import { ChangeButton } from './components/ChangeButton'
 import { ChangeProfileTitle } from './components/ChangeProfileTitle'
@@ -27,6 +28,7 @@ export default function UserProfile() {
         onSubmitPassword,
     } = useChangeProfile(
         useUserHttp(useAxiosHttp()),
+        getUserContext()!!,
         useCookieSession(),
         useToastToastify(),
     )
