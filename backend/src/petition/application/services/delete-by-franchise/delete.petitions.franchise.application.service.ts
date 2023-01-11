@@ -25,7 +25,11 @@ export class DeletePetitionsByFranchiseApplicationService
             await this.petitionRepository.delete(petition)
         })
         this.eventHandler.publish(
-            petitions.map((petition) => petition.pullEvents()).flat(),
+            petitions
+                .map((petition) =>
+                    petition.pullEvents().filter((_, index) => index > 0),
+                )
+                .flat(),
         )
     }
 }

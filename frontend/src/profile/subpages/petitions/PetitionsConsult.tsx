@@ -107,7 +107,7 @@ export default function PetitionConsult() {
                                 <PetitionCard
                                     extraData={
                                         <Select
-                                            placeholder={e.status}
+                                            placeholder="Selecciona una accion..."
                                             itemComponent={SliderItem}
                                             data={getPossibleStuses(
                                                 e.status,
