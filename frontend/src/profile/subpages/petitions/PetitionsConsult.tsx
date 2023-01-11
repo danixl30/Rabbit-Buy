@@ -119,7 +119,16 @@ export default function PetitionConsult() {
                                     {...e}
                                 />
                             ) : (
-                                <PetitionCard {...e} />
+                                <PetitionCard
+                                    extraData={
+                                        <Button
+                                            onClick={() => cancelPetition(e.id)}
+                                        >
+                                            Cancelar
+                                        </Button>
+                                    }
+                                    {...e}
+                                />
                             )}
                         </div>
                     ))}

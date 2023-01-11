@@ -175,7 +175,7 @@ export class PetitionController {
     }
 
     @Put('cancel/:id')
-    @Roles(RolesData.PROVIDER)
+    @Roles(RolesData.PROVIDER, RolesData.USER)
     @UseGuards(RolesGuard)
     async cancel(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
