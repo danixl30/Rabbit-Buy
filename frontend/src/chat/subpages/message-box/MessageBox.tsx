@@ -1,5 +1,6 @@
 import {
     ActionIcon,
+    Button,
     Card,
     Center,
     Flex,
@@ -37,9 +38,10 @@ export default function MessageBox(props: MessageBoxProps) {
         loading,
         body,
         sendMessage,
+        isTop,
     } = useMessageBox(
         props.chat,
-        useChatService(useAxiosHttp(), useSocket('localhost:80')),
+        useChatService(useAxiosHttp(), useSocket('//localhost:80')),
         user,
         useCookieSession(),
         useToastToastify(),
@@ -70,6 +72,16 @@ export default function MessageBox(props: MessageBoxProps) {
                 </Center>
                 <ScrollArea style={{ height: 350 }}>
                     <SimpleGrid cols={1}>
+                        {!isTop && (
+                            <Center>
+                                <Button
+                                    onClick={incrementPage}
+                                    disabled={loading}
+                                >
+                                    Obtener mas
+                                </Button>
+                            </Center>
+                        )}
                         {messages.map((message) => (
                             <MessageItem {...message} />
                         ))}

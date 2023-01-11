@@ -43,7 +43,9 @@ export const useChat = (
 
     const selectChat = (chat: ChatClient | ChatProvider) => {
         setChatSelected(undefined)
-        setChatSelected(chat)
+        setTimeout(() => {
+            setChatSelected(chat)
+        }, 100)
     }
 
     const openAddChatHandler = () => {

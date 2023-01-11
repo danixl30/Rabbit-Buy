@@ -20,6 +20,7 @@ export const useMessageBox = (
     const [page, setPage] = useState(1)
     const [typing, setTyping] = useState('')
     const [body, setBody] = useState('')
+    const [isTop, setIsTop] = useState(false)
 
     const isMessageOwn = (message: Message): MessagePresent => {
         if (user.role === 'USER' && message.from === user.id) {
@@ -51,6 +52,9 @@ export const useMessageBox = (
                 chat,
                 page,
             )
+            if (data.length < 20) {
+                setIsTop(true)
+            }
             const messagesMapped = data.map(isMessageOwn).reverse()
             setMessages([...messages, ...messagesMapped])
         } catch (e) {
@@ -75,6 +79,7 @@ export const useMessageBox = (
     }
 
     const incrementPage = () => {
+        if (isTop) return
         if (!loading) setPage(page + 1)
     }
 
@@ -85,8 +90,11 @@ export const useMessageBox = (
     useEffect(() => {
         chatService.subscribe(chat, user)
         chatService.onMessage((message) => {
-            if (messages.length === 0) getMessages()
-            else setMessages([...messages, isMessageOwn(message)])
+            if (messages.length === 0) {
+                setMessages([])
+                setPage(1)
+                getMessages()
+            } else setMessages([...messages, isMessageOwn(message)])
         })
         chatService.onTyping((name) => setTyping(name))
         return () => {
@@ -102,5 +110,6 @@ export const useMessageBox = (
         loading,
         body,
         sendMessage,
+        isTop,
     }
 }
