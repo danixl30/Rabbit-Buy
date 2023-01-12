@@ -48,7 +48,7 @@ export const useChangeProfile = (
 
     const onClickChangeUsername = async () => {
         if (!username || errorUsername) {
-            toast.error('Usuario invalido')
+            toast.error('Usuario inválido')
             return
         }
         const onFinish = toast.pending('Procesando...')
@@ -56,7 +56,7 @@ export const useChangeProfile = (
             await userService.changeUsername(session.getSession()!!, {
                 username,
             })
-            onFinish('Cambio realizado con exito', 'success')
+            onFinish('Cambio realizado con éxito', 'success')
             await updateUserState()
         } catch (e) {
             onFinish('Error al realizar el cambio', 'error')
@@ -65,7 +65,7 @@ export const useChangeProfile = (
 
     const onClickChangePassword = async () => {
         if (!password || errorPassword) {
-            toast.error('Contraseña invalida')
+            toast.error('Contraseña inválida')
             return
         }
         const onFinish = toast.pending('Procesando...')
@@ -73,7 +73,7 @@ export const useChangeProfile = (
             await userService.changePassword(session.getSession()!!, {
                 password,
             })
-            onFinish('Cambio realizado con exito', 'success')
+            onFinish('Cambio realizado con éxito', 'success')
         } catch (e) {
             onFinish('Error al realizar el cambio', 'error')
         }
@@ -81,7 +81,7 @@ export const useChangeProfile = (
 
     const onClickChangeEmail = async () => {
         if (!email || errorEmail) {
-            toast.error('Correo invalido')
+            toast.error('Correo inválido')
             return
         }
         const onFinish = toast.pending('Procesando...')
@@ -89,7 +89,7 @@ export const useChangeProfile = (
             await userService.changeEmail(session.getSession()!!, {
                 email,
             })
-            onFinish('Cambio realizado con exito', 'success')
+            onFinish('Cambio realizado con éxito', 'success')
             await updateUserState()
         } catch (e) {
             onFinish('Error al realizar el cambio', 'error')

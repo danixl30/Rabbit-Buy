@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import { UserPlus } from 'tabler-icons-react'
+import { ArrowsExchange2 } from 'tabler-icons-react'
 
 export type ChangeButtonProps = {
     onClick?: () => void
@@ -11,7 +11,7 @@ export const ChangeButton = (props: ChangeButtonProps) => (
         <Button
             disabled={props.disabled}
             onClick={props.onClick}
-            leftIcon={<UserPlus size={20} />}
+            leftIcon={<ArrowsExchange2 size={20} />}
         >
             Cambiar
         </Button>

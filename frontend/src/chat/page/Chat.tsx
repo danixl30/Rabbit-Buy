@@ -66,7 +66,7 @@ export default function ChatPage() {
         <>
             <Suspense fallback={null}>
                 <ModalLayout
-                    title="Aniadir chat"
+                    title="Añadir chat"
                     opened={openAddChat}
                     onClose={onCloseAddChat}
                 >
@@ -84,7 +84,7 @@ export default function ChatPage() {
                                 <Stack justify="flex-start">
                                     <Flex justify="flex-end" gap="xl">
                                         <Title order={1}>Chat</Title>
-                                        <Tooltip label="Aniadir chat">
+                                        <Tooltip label="Añadir chat">
                                             <ActionIcon
                                                 onClick={openAddChatHandler}
                                                 size={40}

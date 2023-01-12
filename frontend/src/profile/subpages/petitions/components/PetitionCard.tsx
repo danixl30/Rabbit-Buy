@@ -11,6 +11,12 @@ const getStatusString = (status: string) => {
         ? 'Confirmado'
         : status === 'OPEN'
         ? 'Pendiente'
+        : status === 'CANCELLED'
+        ? 'Cancelado'
+        : status === 'PAUSED'
+        ? 'Suspendido'
+        : status === 'FINISHED'
+        ? 'Finalizado'
         : 'No disponible'
 }
 
