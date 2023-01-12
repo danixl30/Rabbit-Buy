@@ -27,6 +27,15 @@ export const useChangeProfile = (
 
     const onChangeUsername = (value: string) => setUsername(value)
 
+    const setData = () => {
+        setUsername(userState.user?.username || '')
+        setEmail(userState.user?.email || '')
+    }
+
+    useEffect(() => {
+        setData()
+    }, [userState.user])
+
     const onSubmitEmail = async () => {
         onClickChangeEmail()
     }
