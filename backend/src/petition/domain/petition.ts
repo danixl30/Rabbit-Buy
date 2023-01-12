@@ -92,7 +92,11 @@ export class Petition extends AgreggateRoot<PetitionId> {
     }
 
     cancel() {
-        if (!this.status.isNotFisished()) throw new OperationInvalidException()
+        if (
+            !this.status.isNotFisished() ||
+            this.status.equals(new Status(Statuses.CANCELLED))
+        )
+            throw new OperationInvalidException()
         this._status = new Status(Statuses.CANCELLED)
         this.apply(new PetitionCancelledEvent(this.id, this.status))
     }

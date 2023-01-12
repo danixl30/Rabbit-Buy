@@ -6,7 +6,6 @@ import { useCookieSession } from '../../../core/implementation/session/cookies/u
 import { getUserContext } from '../../../global-state/user/get-user-context'
 import { usePetition } from '../../../services/implementations/petition/usePetition'
 import { Dicctionary } from '../../../utils/types/dicctionary'
-import { ConfirmPetitionButton } from './components/ConfirmPetitionButton'
 import { PetitionCard } from './components/PetitionCard'
 import { SliderItem } from './components/StatusSlider'
 import { usePetitionsSubPage } from './hooks/usePetitionsSubPage'
@@ -122,15 +121,16 @@ export default function PetitionConsult() {
                                 <PetitionCard
                                     extraData={
                                         <>
-                                            {e.status !== 'CANCELLED' && (
-                                                <Button
-                                                    onClick={() =>
-                                                        cancelPetition(e.id)
-                                                    }
-                                                >
-                                                    Cancelar
-                                                </Button>
-                                            )}
+                                            {e.status !== 'CANCELLED' &&
+                                                e.status !== 'FINISHED' && (
+                                                    <Button
+                                                        onClick={() =>
+                                                            cancelPetition(e.id)
+                                                        }
+                                                    >
+                                                        Cancelar
+                                                    </Button>
+                                                )}
                                         </>
                                     }
                                     {...e}
