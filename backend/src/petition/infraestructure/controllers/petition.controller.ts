@@ -41,6 +41,7 @@ import { ConfirmPetitionApplicationService } from 'src/petition/application/serv
 import { FinishPetitionApplicationService } from 'src/petition/application/services/finish/finish.petition.application.service'
 import { CancelPetitionApplicationService } from 'src/petition/application/services/cancel/cancel.petition.application.service'
 import { CategoryMongoRepository } from 'src/category/infraestructure/repositories/category.mongo.repository'
+import { SuspendPetitionApplicationService } from 'src/petition/application/services/suspend/suspend.petition.application.service'
 
 @Controller('petition')
 @ApiHeader({ name: 'auth' })
@@ -194,7 +195,7 @@ export class PetitionController {
     @UseGuards(RolesGuard)
     async suspend(@Param('id', new ParseUUIDPipe()) id: string) {
         return await new ExceptionDecorator(
-            new CancelPetitionApplicationService(
+            new SuspendPetitionApplicationService(
                 this.petitionRepository,
                 this.eventHandler,
             ),
