@@ -92,7 +92,7 @@ export const useFranchise = (http: UseHttp): UseFranchise => {
 
     const deleteFranchise = async (token: string, id: string) => {
         const { job } = http.delete<unknown, unknown>({
-            url: '/franchise/update/group-id/' + id,
+            url: '/franchise/' + id,
             headers: {
                 auth: token,
             },

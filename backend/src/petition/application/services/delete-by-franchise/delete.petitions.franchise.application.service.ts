@@ -18,6 +18,8 @@ export class DeletePetitionsByFranchiseApplicationService
         const petitions = await this.petitionRepository.searchAll(
             new FindPetitionsFranchiseQueryFactory(
                 new FranchiseRef(new FranchiseId(data.franchise)),
+                0,
+                0,
             ).create(),
         )
         petitions.forEach((petition) => petition.delete())
