@@ -98,7 +98,7 @@ export const usePetitionsSubPage = (
     const suspendPetition = async (id: string) => {
         try {
             await service.suspendPetition(session.getSession()!!, id)
-            toast.success('Pedido confirmado')
+            toast.success('Pedido suspendido')
             setPetions(
                 petitions.map((e) => {
                     if (e.id === id) {
@@ -118,13 +118,13 @@ export const usePetitionsSubPage = (
     const cancelPetition = async (id: string) => {
         try {
             await service.cancelPetition(session.getSession()!!, id)
-            toast.success('Pedido confirmado')
+            toast.success('Pedido cancelado')
             setPetions(
                 petitions.map((e) => {
                     if (e.id === id) {
                         return {
                             ...e,
-                            status: 'CANCELED',
+                            status: 'CANCELLED',
                         }
                     }
                     return { ...e }
@@ -138,7 +138,7 @@ export const usePetitionsSubPage = (
     const finishPetition = async (id: string) => {
         try {
             await service.finishPetition(session.getSession()!!, id)
-            toast.success('Pedido confirmado')
+            toast.success('Pedido finalizado')
             setPetions(
                 petitions.map((e) => {
                     if (e.id === id) {
