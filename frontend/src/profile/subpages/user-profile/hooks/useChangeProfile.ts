@@ -47,6 +47,10 @@ export const useChangeProfile = (
     }
 
     const onClickChangeUsername = async () => {
+        if (userState.user?.username === username) {
+            toast.error('El nombre de usuario es igual...')
+            return
+        }
         if (!username || errorUsername) {
             toast.error('Usuario inválido')
             return
@@ -80,6 +84,10 @@ export const useChangeProfile = (
     }
 
     const onClickChangeEmail = async () => {
+        if (userState.user?.email === email) {
+            toast.error('El email es igual...')
+            return
+        }
         if (!email || errorEmail) {
             toast.error('Correo inválido')
             return

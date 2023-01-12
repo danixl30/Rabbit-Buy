@@ -34,6 +34,10 @@ export const useConsultFranchise = (
     }
 
     const onClickChangeName = async () => {
+        if (franchise?.name === name) {
+            toast.error('El nombre es igual...')
+            return
+        }
         if (!name || errorName) {
             toast.error('Nombre invalido')
             return

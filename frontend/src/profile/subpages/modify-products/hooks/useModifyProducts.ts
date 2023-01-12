@@ -3,6 +3,7 @@ import { UseSession } from '../../../../core/abstractions/session/session'
 import { UseToast } from '../../../../core/abstractions/toast/toast'
 import { UseProductService } from '../../../../services/abstractions/product/product-service'
 import { Product } from '../../../../services/abstractions/product/types/product'
+import { ProductDetail } from '../../../../services/abstractions/product/types/product-detail'
 import { Optional } from '../../../../utils/types/optional'
 
 export const useModifyProducts = (
@@ -14,6 +15,8 @@ export const useModifyProducts = (
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState<Optional<Product>>(null)
+    const [selectedDetail, setSelectedDetail] =
+        useState<Optional<ProductDetail>>(null)
     const [isTop, setIsTop] = useState(false)
     const [openModal, setOpenModal] = useState(false)
 
@@ -90,6 +93,7 @@ export const useModifyProducts = (
             setDescription(data.description)
             setExistence(data.existence)
             setPrice(data.price)
+            setSelectedDetail(data)
         } catch (e) {
             toast.error('Error al obtener productos')
         }
@@ -97,6 +101,10 @@ export const useModifyProducts = (
     }
 
     const onClickChangeName = async () => {
+        if (selectedDetail?.name === name) {
+            toast.error('El nombre es igual...')
+            return
+        }
         if (!name || errorName) {
             toast.error('Nombre invalido')
             return
@@ -124,6 +132,10 @@ export const useModifyProducts = (
     }
 
     const onClickChangeDescription = async () => {
+        if (selectedDetail?.description === description) {
+            toast.error('La descripcion es igual...')
+            return
+        }
         const onFinish = toast.pending('Pending...')
         try {
             await productService.changeDescription(session.getSession()!!, {
@@ -138,6 +150,10 @@ export const useModifyProducts = (
     }
 
     const onClickChangePrice = async () => {
+        if (selected?.price === price) {
+            toast.error('El precio es igual...')
+            return
+        }
         const onFinish = toast.pending('Pending...')
         try {
             await productService.changePrice(session.getSession()!!, {
@@ -161,6 +177,10 @@ export const useModifyProducts = (
     }
 
     const onClickChangeExistence = async () => {
+        if (selectedDetail?.existence === existence) {
+            toast.error('La existencia es igual...')
+            return
+        }
         const onFinish = toast.pending('Pending...')
         try {
             await productService.changeExistence(session.getSession()!!, {
@@ -236,6 +256,7 @@ export const useModifyProducts = (
         setSelected(null)
         setImage(undefined)
         setOpenModal(false)
+        setSelectedDetail(null)
     }
 
     useEffect(() => {
