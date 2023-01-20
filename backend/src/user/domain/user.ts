@@ -12,7 +12,7 @@ import { UserId } from './value-objects/user.id'
 import { Username } from './value-objects/username'
 
 export class User extends AgreggateRoot<UserId> {
-    constructor(
+    private constructor(
         _id: UserId,
         private _username: Username,
         private _password: Password,
@@ -76,5 +76,15 @@ export class User extends AgreggateRoot<UserId> {
         ) {
             throw new InvalidUserException()
         }
+    }
+
+    static create(
+        id: UserId,
+        username: Username,
+        password: Password,
+        email: Email,
+        role: Role,
+    ) {
+        return new User(id, username, password, email, role)
     }
 }

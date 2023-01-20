@@ -25,16 +25,18 @@ export class CreateMessageApplicationService
     ) {}
 
     async execute(data: CreateMessageDTO): Promise<CreateMessageResponse> {
-        const chat = await this.chatRepository.searchById(new ChatId(data.chat))
+        const chat = await this.chatRepository.searchById(
+            ChatId.create(data.chat),
+        )
         if (!chat) throw new Error('Chat not exist')
-        const message = new Message(
-            new MessageId(this.uuidGenerator.generate()),
-            new MessageFrom(new UserId(data.from)),
-            new MessageChat(new ChatId(data.chat)),
-            new MessageText(data.body),
+        const message = Message.create(
+            MessageId.create(this.uuidGenerator.generate()),
+            MessageFrom.create(UserId.create(data.from)),
+            MessageChat.create(ChatId.create(data.chat)),
+            MessageText.create(data.body),
         )
         await this.messageRepository.save(message)
-        chat.addMessage(new ChatMessage(message.id))
+        chat.addMessage(ChatMessage.create(message.id))
         await this.chatRepository.save(chat)
         this.eventHandler.publish([
             ...message.pullEvents(),

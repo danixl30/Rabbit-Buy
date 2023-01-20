@@ -16,7 +16,7 @@ export class DeleteProviderApplicationService
 
     async execute(data: DeleteProviderDTO): Promise<DeleteProviderResponse> {
         const provider = await this.providerRepository.searchById(
-            new ProviderId(data.id),
+            ProviderId.create(data.id),
         )
         if (!provider) throw new ProviderNotFoundException()
         provider.delete()

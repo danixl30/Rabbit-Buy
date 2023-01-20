@@ -20,7 +20,7 @@ import { Statuses } from './value-objects/statuses'
 import { UserRef } from './value-objects/user.ref'
 
 export class Petition extends AgreggateRoot<PetitionId> {
-    constructor(
+    private constructor(
         id: PetitionId,
         private _productName: ProductName,
         private _productId: ProductRef,
@@ -129,5 +129,31 @@ export class Petition extends AgreggateRoot<PetitionId> {
             !this.product
         )
             throw new InvalidPetitionException()
+    }
+
+    static create(
+        id: PetitionId,
+        productName: ProductName,
+        productId: ProductRef,
+        price: ProductPrice,
+        quantity: PetitionQuantity,
+        currency: ProductCurrency,
+        client: UserRef,
+        date: PetitionDate,
+        franchise: FranchiseRef,
+        status: Status = new Status(Statuses.OPEN),
+    ) {
+        return new Petition(
+            id,
+            productName,
+            productId,
+            price,
+            quantity,
+            currency,
+            client,
+            date,
+            franchise,
+            status,
+        )
     }
 }

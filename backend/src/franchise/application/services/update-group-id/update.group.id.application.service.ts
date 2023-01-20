@@ -19,10 +19,12 @@ export class UpdateGroudIdApplicationService
 
     async execute(data: UpdateGroudIdDTO): Promise<UpdateGroudIdResponse> {
         const resp = await this.franchiseRepository.searchById(
-            new FranchiseId(data.id),
+            FranchiseId.create(data.id),
         )
         if (!resp) throw new FranchiseNotFoundException()
-        resp.changeGroupId(new FranchiseGroupId(this.uuidGenerator.generate()))
+        resp.changeGroupId(
+            FranchiseGroupId.create(this.uuidGenerator.generate()),
+        )
         await this.franchiseRepository.save(resp)
         this.eventHandler.publish(resp.pullEvents())
         return {

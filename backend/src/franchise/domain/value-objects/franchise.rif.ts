@@ -3,7 +3,7 @@ import { regExpRif } from 'src/utils/reg-exps/rif/rif.reg.exp'
 import { InvalidFranchiseRifException } from '../exceptions/invalid.franchise.rif'
 
 export class FranchiseRif implements ValueObject<FranchiseRif> {
-    constructor(private rif: string) {
+    private constructor(private rif: string) {
         if (!regExpRif.test(rif)) throw new InvalidFranchiseRifException()
     }
 
@@ -13,5 +13,9 @@ export class FranchiseRif implements ValueObject<FranchiseRif> {
 
     equals(other: FranchiseRif): boolean {
         return other.value === this.value
+    }
+
+    static create(rif: string) {
+        return new FranchiseRif(rif)
     }
 }

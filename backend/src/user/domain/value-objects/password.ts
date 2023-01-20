@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidPasswordException } from '../exceptions/invalid.password'
 
 export class Password implements ValueObject<Password> {
-    constructor(private password: string) {
+    private constructor(private password: string) {
         if (!password || password.isEmpty())
             throw new InvalidPasswordException()
     }
@@ -13,5 +13,9 @@ export class Password implements ValueObject<Password> {
 
     equals(other: Password): boolean {
         return other.value === this.value
+    }
+
+    static create(password: string) {
+        return new Password(password)
     }
 }

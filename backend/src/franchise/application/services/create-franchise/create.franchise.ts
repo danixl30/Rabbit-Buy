@@ -26,12 +26,12 @@ export class CreateFranchiseApplicationService
         const image = await this.imageStorage.save({
             path: data.image,
         })
-        const franchise = new Franchise(
-            new FranchiseId(this.uuidGenerator.generate()),
-            new FranchiseName(data.name),
-            new FranchiseRif(data.rif),
-            new FranchiseGroupId(this.uuidGenerator.generate()),
-            new FranchiseImage(image.url),
+        const franchise = Franchise.create(
+            FranchiseId.create(this.uuidGenerator.generate()),
+            FranchiseName.create(data.name),
+            FranchiseRif.create(data.rif),
+            FranchiseGroupId.create(this.uuidGenerator.generate()),
+            FranchiseImage.create(image.url),
         )
         await this.franchiseRepository.save(franchise)
         this.eventHandler.publish(franchise.pullEvents())

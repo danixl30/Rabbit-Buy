@@ -15,7 +15,7 @@ export class GetFranchiseDetailApplicationService
         data: GetFranchiseDetailDTO,
     ): Promise<GetFranchiseDetailResponse> {
         const franchise = await this.franchiseRepository.searchById(
-            new FranchiseId(data.id),
+            FranchiseId.create(data.id),
         )
         if (!franchise) throw new FranchiseNotFoundException()
         return {

@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidFranchiseNameException } from '../exceptions/invalid.franchise.name'
 
 export class FranchiseName implements ValueObject<FranchiseName> {
-    constructor(private name: string) {
+    private constructor(private name: string) {
         if (name.isEmpty()) throw new InvalidFranchiseNameException()
     }
 
@@ -12,5 +12,9 @@ export class FranchiseName implements ValueObject<FranchiseName> {
 
     equals(other: FranchiseName): boolean {
         return other.value === this.value
+    }
+
+    static create(name: string) {
+        return new FranchiseName(name)
     }
 }

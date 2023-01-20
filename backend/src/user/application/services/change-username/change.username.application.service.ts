@@ -16,9 +16,9 @@ export class ChangeUsernameApplicationService
     ) {}
 
     async execute(data: ChangeUsernameDTO): Promise<ChangeUsernameResponse> {
-        const user = await this.userRepository.getById(new UserId(data.id))
+        const user = await this.userRepository.getById(UserId.create(data.id))
         if (!user) throw new UserNotFoundException()
-        user.changeUsername(new Username(data.username))
+        user.changeUsername(Username.create(data.username))
         await this.userRepository.save(user)
         this.eventHandler.publish(user.pullEvents())
         return {

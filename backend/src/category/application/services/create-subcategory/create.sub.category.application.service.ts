@@ -23,12 +23,12 @@ export class CreateSubCategoryApplicationService
         data: CreateSubCategoryDTO,
     ): Promise<CreateSubCategoryResponse> {
         const parent = await this.categoryRepository.searchById(
-            new CategoryId(data.parent),
+            CategoryId.create(data.parent),
         )
         if (!parent) throw new CategoryNotFoundException()
-        const category = new Category(
-            new CategoryId(this.uuidGenerator.generate()),
-            new CategoryName(data.name),
+        const category = Category.create(
+            CategoryId.create(this.uuidGenerator.generate()),
+            CategoryName.create(data.name),
         )
         await this.categoryRepository.save(category)
         parent.addSubCategory(category.id)

@@ -9,10 +9,10 @@ import { UserId } from 'src/user/domain/value-objects/user.id'
 import { MessageDocument } from '../models/message.model'
 
 export const messageDbToDomain = (message: MessageDocument) =>
-    new Message(
-        new MessageId(message.id),
-        new MessageFrom(new UserId(message.from)),
-        new MessageChat(new ChatId(message.chat)),
-        new MessageText(message.body),
-        new MessageTimestamp(message.timestamp),
+    Message.create(
+        MessageId.create(message.id),
+        MessageFrom.create(UserId.create(message.from)),
+        MessageChat.create(ChatId.create(message.chat)),
+        MessageText.create(message.body),
+        MessageTimestamp.create(message.timestamp),
     )

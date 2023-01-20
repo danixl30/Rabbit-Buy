@@ -22,7 +22,7 @@ export class UserGuard implements CanActivate {
         if (!token) throw new UnauthorizedException()
         try {
             const id = this.tokenManager.verify<UserLogged>(token)
-            const user = await this.userRepository.getById(new UserId(id.id))
+            const user = await this.userRepository.getById(UserId.create(id.id))
             if (!user) throw new Error('User not found')
             request.user = user
         } catch (e) {

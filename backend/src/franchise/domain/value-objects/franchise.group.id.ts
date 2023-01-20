@@ -3,7 +3,7 @@ import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
 import { InvalidGroupIdException } from '../exceptions/invalid.group.id'
 
 export class FranchiseGroupId implements ValueObject<FranchiseGroupId> {
-    constructor(private groupId: string) {
+    private constructor(private groupId: string) {
         if (!regExpUUID.test(this.groupId)) throw new InvalidGroupIdException()
     }
 
@@ -13,5 +13,9 @@ export class FranchiseGroupId implements ValueObject<FranchiseGroupId> {
 
     equals(other: FranchiseGroupId): boolean {
         return other.value === this.value
+    }
+
+    static create(groupId: string) {
+        return new FranchiseGroupId(groupId)
     }
 }

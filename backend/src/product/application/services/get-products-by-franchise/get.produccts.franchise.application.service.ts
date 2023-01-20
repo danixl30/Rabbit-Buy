@@ -17,7 +17,7 @@ export class GetProductByFranchiseApplicationService
     ): Promise<FilterByCriteriaResponse> {
         const products = await this.productRepository.searchAll(
             new FindProductsFranchiseQueryFactory(
-                new FranchiseRef(new FranchiseId(data.franchise)),
+                new FranchiseRef(FranchiseId.create(data.franchise)),
                 data.text,
                 data.page,
             ).create(),

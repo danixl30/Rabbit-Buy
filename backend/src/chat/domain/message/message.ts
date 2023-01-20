@@ -9,12 +9,12 @@ import { MessageText } from './value-objects/message.text'
 import { MessageTimestamp } from './value-objects/message.timestamp'
 
 export class Message extends AgreggateRoot<MessageId> {
-    constructor(
+    private constructor(
         id: MessageId,
         private _from: MessageFrom,
         private _chat: MessageChat,
         private _body: MessageText,
-        private _timestamp = new MessageTimestamp(),
+        private _timestamp: MessageTimestamp,
     ) {
         super(id)
         this.apply(
@@ -51,5 +51,15 @@ export class Message extends AgreggateRoot<MessageId> {
     validateState(): void {
         if (!this.body || !this.timestamp || !this.chat || !this.from)
             throw new InvalidMessageException()
+    }
+
+    static create(
+        id: MessageId,
+        from: MessageFrom,
+        chat: MessageChat,
+        body: MessageText,
+        timestamp = MessageTimestamp.create(),
+    ) {
+        return new Message(id, from, chat, body, timestamp)
     }
 }

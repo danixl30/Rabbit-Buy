@@ -18,7 +18,9 @@ export class LoginApplicationService
         private tokenManager: TokenProvider,
     ) {}
     async execute(data: LoginServiceDTO): Promise<LoginResponse> {
-        const user = await this.userRepository.getByEmail(new Email(data.email))
+        const user = await this.userRepository.getByEmail(
+            Email.create(data.email),
+        )
         if (!user) throw new UserNotFoundException()
         if (!this.crypto.compare(data.password, user.password.value))
             throw new InvalidPasswordException()

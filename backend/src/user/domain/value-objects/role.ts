@@ -3,7 +3,7 @@ import { InvalidRoleException } from '../exceptions/invalid.role'
 import { Roles } from './roles'
 
 export class Role implements ValueObject<Role> {
-    constructor(private role: Roles) {
+    private constructor(private role: Roles) {
         if (!Roles[role]) throw new InvalidRoleException()
     }
 
@@ -17,5 +17,9 @@ export class Role implements ValueObject<Role> {
 
     equals(other: Role): boolean {
         return other.value === this.role
+    }
+
+    static create(role: Roles) {
+        return new Role(role)
     }
 }

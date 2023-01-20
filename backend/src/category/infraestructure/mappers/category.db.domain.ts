@@ -5,11 +5,11 @@ import { CategoryParent } from 'src/category/domain/value-objects/category.paren
 import { CategoryDocument } from '../models/category.model'
 
 export const categoryDbToDomain = (category: CategoryDocument) =>
-    new Category(
-        new CategoryId(category.id),
-        new CategoryName(category.name),
-        category.childs.map((e) => new CategoryId(e)),
+    Category.create(
+        CategoryId.create(category.id),
+        CategoryName.create(category.name),
+        category.childs.map((e) => CategoryId.create(e)),
         category.parent
-            ? new CategoryParent(new CategoryId(category.id))
+            ? CategoryParent.create(CategoryId.create(category.id))
             : undefined,
     )

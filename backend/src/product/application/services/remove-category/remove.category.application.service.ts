@@ -27,7 +27,9 @@ export class RemoveProductCategoryApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.removeCategory(new CategoryRef(new CategoryId(data.category)))
+        product.removeCategory(
+            new CategoryRef(CategoryId.create(data.category)),
+        )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

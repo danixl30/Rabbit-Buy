@@ -17,7 +17,7 @@ export class DeleteChatsByFranchiseApplicationService
     async execute(data: DeleteChatsByFranchiseDTO): Promise<void> {
         const chats = await this.chatRepository.searchAll(
             new FindChatByFranchiseQueryFactory(
-                new ChatFranchise(new FranchiseId(data.franchise)),
+                ChatFranchise.create(FranchiseId.create(data.franchise)),
             ).create(),
         )
         chats.forEach((chat) => chat.delete())

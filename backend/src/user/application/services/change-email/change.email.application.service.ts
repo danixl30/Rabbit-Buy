@@ -18,12 +18,12 @@ export class ChangeEmailApplicationService
 
     async execute(data: ChangeEmailDTO): Promise<ChangeEmailResponse> {
         const possibleUser = await this.userRepository.getByEmail(
-            new Email(data.email),
+            Email.create(data.email),
         )
         if (possibleUser) throw new EmailNotUnicException()
-        const user = await this.userRepository.getById(new UserId(data.id))
+        const user = await this.userRepository.getById(UserId.create(data.id))
         if (!user) throw new UserNotFoundException()
-        user.changeEmail(new Email(data.email))
+        user.changeEmail(Email.create(data.email))
         await this.userRepository.save(user)
         this.eventHandler.publish(user.pullEvents())
         return {

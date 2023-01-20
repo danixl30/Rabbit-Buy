@@ -13,4 +13,8 @@ export class MessageText implements ValueObject<MessageText> {
     equals(other: MessageText): boolean {
         return other.value === this.value
     }
+
+    static create(text: string) {
+        return new MessageText(text)
+    }
 }

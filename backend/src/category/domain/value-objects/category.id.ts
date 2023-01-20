@@ -3,7 +3,7 @@ import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
 import { InvalidCategoryIdException } from '../exceptions/invalid.category.id'
 
 export class CategoryId implements ValueObject<CategoryId> {
-    constructor(private id: string) {
+    private constructor(private id: string) {
         if (!regExpUUID.test(id)) throw new InvalidCategoryIdException()
     }
 
@@ -13,5 +13,9 @@ export class CategoryId implements ValueObject<CategoryId> {
 
     equals(other: CategoryId): boolean {
         return other.value === this.value
+    }
+
+    static create(id: string) {
+        return new CategoryId(id)
     }
 }

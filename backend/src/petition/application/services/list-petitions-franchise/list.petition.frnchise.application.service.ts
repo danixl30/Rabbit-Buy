@@ -2,7 +2,6 @@ import { ApplicationService } from 'src/core/application/service/application.ser
 import { FranchiseId } from 'src/franchise/domain/value-objects/franchise.id'
 import { FranchiseRef } from 'src/petition/domain/value-objects/franchise.ref'
 import { GetProviderApplicationService } from 'src/provider/application/services/get-provider/get.provider.application.service'
-import { UserRepository } from 'src/user/application/repositories/user.repository'
 import { FindUserApplicationService } from 'src/user/application/services/find-user/find.user.application.service'
 import { PetitionRepository } from '../../repositories/petition.repository'
 import { FindPetitionsFranchiseQueryFactory } from './queries/find.petition.franchise.factory'
@@ -30,7 +29,7 @@ export class ListPetitionsProviderApplicationService
         })
         const petitions = await this.petitionRepository.searchAll(
             new FindPetitionsFranchiseQueryFactory(
-                new FranchiseRef(new FranchiseId(provider.franchise)),
+                new FranchiseRef(FranchiseId.create(provider.franchise)),
                 data.page,
             ).create(),
         )

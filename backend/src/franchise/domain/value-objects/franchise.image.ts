@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidFranchiseImageException } from '../exceptions/invalid.franchise.image'
 
 export class FranchiseImage implements ValueObject<FranchiseImage> {
-    constructor(private image: string) {
+    private constructor(private image: string) {
         if (!image) throw new InvalidFranchiseImageException()
     }
 
@@ -12,5 +12,9 @@ export class FranchiseImage implements ValueObject<FranchiseImage> {
 
     equals(other: FranchiseImage): boolean {
         return other.value === this.value
+    }
+
+    static create(image: string) {
+        return new FranchiseImage(image)
     }
 }

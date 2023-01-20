@@ -15,7 +15,7 @@ export class DeleteUserApplicationService
     ) {}
 
     async execute(data: DeleteUserDTO): Promise<DeleteUserDTO> {
-        const user = await this.userRepository.getById(new UserId(data.id))
+        const user = await this.userRepository.getById(UserId.create(data.id))
         if (!user) throw new UserNotFoundException()
         user.delete()
         await this.userRepository.delete(user)

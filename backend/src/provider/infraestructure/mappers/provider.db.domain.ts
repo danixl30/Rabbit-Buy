@@ -5,7 +5,7 @@ import { ProviderId } from 'src/provider/domain/value-objects/provider.id'
 import { ProviderDocument } from '../models/provider.model'
 
 export const providerDbToDomain = (provider: ProviderDocument): Provider =>
-    new Provider(
-        new ProviderId(provider.id),
-        new FranchiseRef(new FranchiseId(provider.franchise)),
+    Provider.create(
+        ProviderId.create(provider.id),
+        FranchiseRef.create(FranchiseId.create(provider.franchise)),
     )

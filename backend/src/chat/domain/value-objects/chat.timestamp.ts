@@ -1,7 +1,7 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
 
 export class ChatTimestamp implements ValueObject<ChatTimestamp> {
-    constructor(private date: Date = new Date()) {}
+    private constructor(private date: Date = new Date()) {}
 
     get value() {
         return this.date
@@ -13,5 +13,9 @@ export class ChatTimestamp implements ValueObject<ChatTimestamp> {
 
     equals(other: ChatTimestamp): boolean {
         return other.value === this.date
+    }
+
+    static create(date: Date = new Date()) {
+        return new ChatTimestamp(date)
     }
 }

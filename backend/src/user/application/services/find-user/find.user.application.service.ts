@@ -11,7 +11,7 @@ export class FindUserApplicationService
     constructor(private userRepository: UserRepository) {}
 
     async execute(data: FindUserDTO): Promise<FindUserResponse> {
-        const user = await this.userRepository.getById(new UserId(data.id))
+        const user = await this.userRepository.getById(UserId.create(data.id))
         if (!user) throw new UserNotFoundException()
         return {
             id: user.id.value,

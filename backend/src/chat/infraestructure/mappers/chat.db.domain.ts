@@ -10,10 +10,10 @@ import { UserId } from 'src/user/domain/value-objects/user.id'
 import { ChatDocument } from '../models/chat.model'
 
 export const chatDbToDomain = (chat: ChatDocument) =>
-    new Chat(
-        new ChatId(chat.id),
-        new ChatClient(new UserId(chat.client)),
-        new ChatFranchise(new FranchiseId(chat.franchise)),
-        chat.messages.map((e) => new ChatMessage(new MessageId(e))),
-        new ChatTimestamp(chat.timestamp),
+    Chat.create(
+        ChatId.create(chat.id),
+        ChatClient.create(UserId.create(chat.client)),
+        ChatFranchise.create(FranchiseId.create(chat.franchise)),
+        chat.messages.map((e) => ChatMessage.create(MessageId.create(e))),
+        ChatTimestamp.create(chat.timestamp),
     )

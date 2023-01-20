@@ -3,7 +3,7 @@ import { regExpEmail } from 'src/utils/reg-exps/email/email.reg.exp'
 import { InvalidEmailException } from '../exceptions/invalid.email'
 
 export class Email implements ValueObject<Email> {
-    constructor(private email: string) {
+    private constructor(private email: string) {
         if (!regExpEmail.test(this.email)) throw new InvalidEmailException()
     }
 
@@ -12,5 +12,9 @@ export class Email implements ValueObject<Email> {
     }
     equals(other: Email): boolean {
         return other.value === this.value
+    }
+
+    static create(email: string) {
+        return new Email(email)
     }
 }

@@ -38,16 +38,16 @@ export class CreatePetitionApplicationService
         })
         if (data.quantity > product.existence)
             throw new ExistenceInsuficentException()
-        const petition = new Petition(
+        const petition = Petition.create(
             new PetitionId(this.uuid.generate()),
             new ProductName(product.name),
             new ProductRef(new ProductId(data.product)),
             new ProductPrice(product.price * data.quantity),
             new PetitionQuantity(data.quantity),
             new ProductCurrency(product.currency),
-            new UserRef(new UserId(data.userId)),
+            new UserRef(UserId.create(data.userId)),
             new PetitionDate(new Date()),
-            new FranchiseRef(new FranchiseId(product.franchise.id)),
+            new FranchiseRef(FranchiseId.create(product.franchise.id)),
             new Status(Statuses.OPEN),
         )
         await this.petitionRepository.save(petition)

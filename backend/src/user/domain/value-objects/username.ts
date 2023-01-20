@@ -1,7 +1,7 @@
 import { ValueObject } from 'src/core/domain/value-objects/value.object'
 
 export class Username implements ValueObject<Username> {
-    constructor(private username: string) {}
+    private constructor(private username: string) {}
 
     get value(): string {
         return this.username
@@ -9,5 +9,9 @@ export class Username implements ValueObject<Username> {
 
     equals(other: Username): boolean {
         return other.value === this.username
+    }
+
+    static create(username: string) {
+        return new Username(username)
     }
 }

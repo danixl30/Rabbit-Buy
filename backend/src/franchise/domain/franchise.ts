@@ -11,7 +11,7 @@ import { FranchiseName } from './value-objects/franchise.name'
 import { FranchiseRif } from './value-objects/franchise.rif'
 
 export class Franchise extends AgreggateRoot<FranchiseId> {
-    constructor(
+    private constructor(
         id: FranchiseId,
         private _name: FranchiseName,
         private _rif: FranchiseRif,
@@ -77,5 +77,15 @@ export class Franchise extends AgreggateRoot<FranchiseId> {
             !this.image
         )
             throw new InvalidFranchiseException()
+    }
+
+    static create(
+        id: FranchiseId,
+        name: FranchiseName,
+        rif: FranchiseRif,
+        groupId: FranchiseGroupId,
+        image: FranchiseImage,
+    ) {
+        return new Franchise(id, name, rif, groupId, image)
     }
 }

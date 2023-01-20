@@ -29,15 +29,15 @@ export class RegisterUserApplicationService
         if (data.password !== data.confirmPassword)
             throw new PasswordsNotEqualsException()
         const userPossible = await this.userRepository.getByEmail(
-            new Email(data.email),
+            Email.create(data.email),
         )
         if (userPossible) throw new EmailNotUnicException()
-        const user = new User(
-            new UserId(this.uuidGenerator.generate()),
-            new Username(data.username),
-            new Password(this.crypto.encrypt(data.password)),
-            new Email(data.email),
-            new Role(data.role),
+        const user = User.create(
+            UserId.create(this.uuidGenerator.generate()),
+            Username.create(data.username),
+            Password.create(this.crypto.encrypt(data.password)),
+            Email.create(data.email),
+            Role.create(data.role),
         )
         await this.userRepository.save(user)
         return {

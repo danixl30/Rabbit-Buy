@@ -11,12 +11,12 @@ import { ChatMessage } from './value-objects/chat.message'
 import { ChatTimestamp } from './value-objects/chat.timestamp'
 
 export class Chat extends AgreggateRoot<ChatId> {
-    constructor(
+    private constructor(
         id: ChatId,
         private _client: ChatClient,
         private _franchise: ChatFranchise,
-        private _messages: ChatMessage[] = [],
-        private _timestamp = new ChatTimestamp(),
+        private _messages: ChatMessage[],
+        private _timestamp: ChatTimestamp,
     ) {
         super(id)
         this.apply(
@@ -61,5 +61,15 @@ export class Chat extends AgreggateRoot<ChatId> {
     validateState(): void {
         if (!this.client || !this.franchise || !this.timestamp)
             throw new InvalidChatException()
+    }
+
+    static create(
+        id: ChatId,
+        client: ChatClient,
+        franchise: ChatFranchise,
+        messages: ChatMessage[] = [],
+        timestamp = ChatTimestamp.create(),
+    ) {
+        return new Chat(id, client, franchise, messages, timestamp)
     }
 }

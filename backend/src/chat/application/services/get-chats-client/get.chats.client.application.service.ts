@@ -21,7 +21,7 @@ export class GetChatsByClientApplicationService
     ): Promise<GetChatsByClientResponse[]> {
         const chats = await this.chatRepository.searchAll(
             new FindChatByClientQueryFactory(
-                new ChatClient(new UserId(data.id)),
+                ChatClient.create(UserId.create(data.id)),
             ).create(),
         )
         return chats.asyncMap(async (chat) => {

@@ -6,7 +6,7 @@ import { FranchiseRef } from './value-objects/franchise.ref'
 import { ProviderId } from './value-objects/provider.id'
 
 export class Provider extends AgreggateRoot<ProviderId> {
-    constructor(id: ProviderId, private _franchise: FranchiseRef) {
+    private constructor(id: ProviderId, private _franchise: FranchiseRef) {
         super(id)
         this.apply(new ProviderCreatedEvent(id, this.franchise))
     }
@@ -21,5 +21,9 @@ export class Provider extends AgreggateRoot<ProviderId> {
 
     validateState(): void {
         if (!this.id || !this.franchise) throw new InvalidProviderException()
+    }
+
+    static create(id: ProviderId, franchise: FranchiseRef) {
+        return new Provider(id, franchise)
     }
 }

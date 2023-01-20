@@ -17,10 +17,10 @@ export class ModifyCategoryApplicationService
 
     async execute(data: ModifyCategoryDTO): Promise<ModifyCategoryResponse> {
         const category = await this.categoryRepository.searchById(
-            new CategoryId(data.id),
+            CategoryId.create(data.id),
         )
         if (!category) throw new CategoryNotFoundException()
-        category.changeName(new CategoryName(data.name))
+        category.changeName(CategoryName.create(data.name))
         await this.categoryRepository.save(category)
         this.eventHandler.publish(category.pullEvents())
         return {

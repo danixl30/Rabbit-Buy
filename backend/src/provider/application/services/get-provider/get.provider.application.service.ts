@@ -12,7 +12,7 @@ export class GetProviderApplicationService
 
     async execute(data: GetProviderDTO): Promise<GetProviderResponse> {
         const provider = await this.providerRepository.searchById(
-            new ProviderId(data.id),
+            ProviderId.create(data.id),
         )
         if (!provider) throw new ProviderNotFoundException()
         return {

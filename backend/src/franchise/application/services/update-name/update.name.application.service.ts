@@ -17,10 +17,10 @@ export class UpdateNameApplicationService
 
     async execute(data: UpdateNameDTO): Promise<UpdateNameResponse> {
         const franchise = await this.franchiseRepository.searchById(
-            new FranchiseId(data.id),
+            FranchiseId.create(data.id),
         )
         if (!franchise) throw new FranchiseNotFoundException()
-        franchise.changeName(new FranchiseName(data.name))
+        franchise.changeName(FranchiseName.create(data.name))
         await this.franchiseRepository.save(franchise)
         this.eventHandler.publish(franchise.pullEvents())
         return {

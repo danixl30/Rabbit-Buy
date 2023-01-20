@@ -17,7 +17,7 @@ export class DeleteProvidersByFranchiseApplicationService
     async execute(data: DeleteProvidersByFranchiseDTO): Promise<void> {
         const providers = await this.providerRepository.searchAll(
             new FindProvidersByFranchiseQueryFactory(
-                new FranchiseRef(new FranchiseId(data.franchise)),
+                FranchiseRef.create(FranchiseId.create(data.franchise)),
             ).create(),
         )
         providers.forEach((provider) => provider.delete())

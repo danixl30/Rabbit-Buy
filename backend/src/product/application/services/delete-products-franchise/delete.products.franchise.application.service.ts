@@ -17,11 +17,11 @@ export class DeleteProductsByFranchiseApplicationService
     async execute(data: DeleteProductsByFranchiseDTO): Promise<void> {
         const products = await this.productRepository.searchAll(
             new FindProductsFranchiseQueryFactory(
-                new FranchiseRef(new FranchiseId(data.franchise)),
+                new FranchiseRef(FranchiseId.create(data.franchise)),
             ).create(),
         )
         products.forEach((product) => product.delete())
-        await products.asyncMap(async (product) => {
+        await products.asyncForEach(async (product) => {
             await this.productRepository.delete(product)
         })
         this.eventHandler.publish(

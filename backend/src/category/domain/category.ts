@@ -10,7 +10,7 @@ import { CategoryName } from './value-objects/category.name'
 import { CategoryParent } from './value-objects/category.parent'
 
 export class Category extends AgreggateRoot<CategoryId> {
-    constructor(
+    private constructor(
         id: CategoryId,
         private _name: CategoryName,
         private _subCategories: CategoryId[] = [],
@@ -55,5 +55,14 @@ export class Category extends AgreggateRoot<CategoryId> {
 
     validateState(): void {
         if (!this.id || !this.name) throw new InvalidCategoryException()
+    }
+
+    static create(
+        id: CategoryId,
+        name: CategoryName,
+        subCategories: CategoryId[] = [],
+        parent?: CategoryParent,
+    ) {
+        return new Category(id, name, subCategories, parent)
     }
 }

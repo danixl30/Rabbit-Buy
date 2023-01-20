@@ -18,9 +18,9 @@ export class ChangePasswordApplicationService
     ) {}
 
     async execute(data: ChangePasswordDTO): Promise<ChangePasswordResponse> {
-        const user = await this.userRepository.getById(new UserId(data.id))
+        const user = await this.userRepository.getById(UserId.create(data.id))
         if (!user) throw new UserNotFoundException()
-        user.changePassword(new Password(this.crypto.encrypt(data.password)))
+        user.changePassword(Password.create(this.crypto.encrypt(data.password)))
         await this.userRepository.save(user)
         this.eventHandler.publish(user.pullEvents())
         return {

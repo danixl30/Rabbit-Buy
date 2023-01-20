@@ -22,6 +22,6 @@ export class RolesGuard implements CanActivate {
         const request = context.switchToHttp().getRequest()
         if (!request.user) throw new UnauthorizedException()
         const user = request.user as User
-        return Boolean(roles.find((e) => user.role.match(new Role(e))))
+        return Boolean(roles.find((e) => user.role.match(Role.create(e))))
     }
 }

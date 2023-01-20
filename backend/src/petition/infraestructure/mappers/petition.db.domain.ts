@@ -15,15 +15,15 @@ import { UserId } from 'src/user/domain/value-objects/user.id'
 import { PetitionDocument } from '../models/petition.model'
 
 export const petitionDbToDomain = (petition: PetitionDocument): Petition =>
-    new Petition(
+    Petition.create(
         new PetitionId(petition.id),
         new ProductName(petition.productName),
         new ProductRef(new ProductId(petition.productId)),
         new ProductPrice(petition.productPrice),
         new PetitionQuantity(petition.quantiny),
         new ProductCurrency(petition.productCurrency),
-        new UserRef(new UserId(petition.client)),
+        new UserRef(UserId.create(petition.client)),
         new PetitionDate(petition.date),
-        new FranchiseRef(new FranchiseId(petition.franchise)),
+        new FranchiseRef(FranchiseId.create(petition.franchise)),
         new Status(petition.status),
     )

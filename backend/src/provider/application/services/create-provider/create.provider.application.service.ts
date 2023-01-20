@@ -26,15 +26,15 @@ export class CreateProviderApplicationService
     async execute(data: CreateProviderDTO): Promise<CreateProviderResponse> {
         const franchise = await this.franchiseRepository.searchOne(
             new FindFranchiseGroupIdQueryFactory(
-                new FranchiseGroupId(data.groupId),
+                FranchiseGroupId.create(data.groupId),
             ).create(),
         )
         if (!franchise) throw new FranchiseNotFoundException()
         data.role = Roles.PROVIDER
         const res = await this.createUserService.execute(data)
-        const provider = new Provider(
-            new ProviderId(res.id),
-            new FranchiseRef(franchise.id),
+        const provider = Provider.create(
+            ProviderId.create(res.id),
+            FranchiseRef.create(franchise.id),
         )
         await this.providerRepository.save(provider)
         this.eventHandler.publish(franchise.pullEvents())

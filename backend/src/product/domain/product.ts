@@ -23,7 +23,7 @@ import { ProductName } from './value-objects/product.name'
 import { ProductPrice } from './value-objects/product.price'
 
 export class Product extends AgreggateRoot<ProductId> {
-    constructor(
+    private constructor(
         id: ProductId,
         private _name: ProductName,
         private _description: ProductDescription,
@@ -145,5 +145,29 @@ export class Product extends AgreggateRoot<ProductId> {
             !this.image
         )
             throw new InvalidProductException()
+    }
+
+    static create(
+        id: ProductId,
+        name: ProductName,
+        description: ProductDescription,
+        existence: ProductExistence,
+        price: ProductPrice,
+        currency: ProductCurrency,
+        franchise: FranchiseRef,
+        image: ProductImage,
+        categories: CategoryRef[] = [],
+    ) {
+        return new Product(
+            id,
+            name,
+            description,
+            existence,
+            price,
+            currency,
+            franchise,
+            image,
+            categories,
+        )
     }
 }

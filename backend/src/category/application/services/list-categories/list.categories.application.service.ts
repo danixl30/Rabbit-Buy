@@ -15,7 +15,7 @@ export class ListCategoryApplicationService
     async execute(data: ListCategoryDTO): Promise<ListCategoryResponse> {
         if (data.id) {
             const category = await this.categoryRepository.searchById(
-                new CategoryId(data.id),
+                CategoryId.create(data.id),
             )
             if (!category) throw new CategoryNotFoundException()
             return {

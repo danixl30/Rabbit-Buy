@@ -24,7 +24,7 @@ export class GetChatsByProviderApplicationService
         const provider = await this.getProviderService.execute({ id: data.id })
         const chats = await this.chatRepository.searchAll(
             new FindChatByFranchiseQueryFactory(
-                new ChatFranchise(new FranchiseId(provider.franchise)),
+                ChatFranchise.create(FranchiseId.create(provider.franchise)),
             ).create(),
         )
         return chats.asyncMap(async (chat) => {

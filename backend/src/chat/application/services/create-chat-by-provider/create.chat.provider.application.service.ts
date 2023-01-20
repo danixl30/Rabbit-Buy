@@ -35,10 +35,10 @@ export class CreateChatByProviderApplicationService
         const provider = await this.getProviderService.execute({
             id: data.provider,
         })
-        const chat = new Chat(
-            new ChatId(this.uuidGenerator.generate()),
-            new ChatClient(new UserId(data.client)),
-            new ChatFranchise(new FranchiseId(provider.franchise)),
+        const chat = Chat.create(
+            ChatId.create(this.uuidGenerator.generate()),
+            ChatClient.create(UserId.create(data.client)),
+            ChatFranchise.create(FranchiseId.create(provider.franchise)),
         )
         await this.chatRepository.save(chat)
         this.eventHandler.publish(chat.pullEvents())

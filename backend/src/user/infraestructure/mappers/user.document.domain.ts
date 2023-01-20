@@ -7,10 +7,10 @@ import { Username } from 'src/user/domain/value-objects/username'
 import { UserDocument } from '../models/user.model'
 
 export const userDocumentToDomain = (user: UserDocument): User =>
-    new User(
-        new UserId(user.id),
-        new Username(user.name),
-        new Password(user.password),
-        new Email(user.email),
-        new Role(user.role),
+    User.create(
+        UserId.create(user.id),
+        Username.create(user.name),
+        Password.create(user.password),
+        Email.create(user.email),
+        Role.create(user.role),
     )

@@ -21,14 +21,14 @@ export class CreateCategoryApplicationService
     async execute(data: CreateCategoryDTO): Promise<CreateCategoryResponse> {
         if (data.parent) {
             const parent = await this.categoryRepository.searchById(
-                new CategoryId(data.parent),
+                CategoryId.create(data.parent),
             )
             if (!parent) throw new CategoryNotFoundException()
-            const category = new Category(
-                new CategoryId(this.uuidGenerator.generate()),
-                new CategoryName(data.name),
+            const category = Category.create(
+                CategoryId.create(this.uuidGenerator.generate()),
+                CategoryName.create(data.name),
                 [],
-                new CategoryParent(new CategoryId(data.parent!!)),
+                CategoryParent.create(CategoryId.create(data.parent!!)),
             )
             parent.addSubCategory(category.id)
             await this.categoryRepository.save(category)
@@ -41,9 +41,9 @@ export class CreateCategoryApplicationService
                 parent: data.parent,
             }
         }
-        const category = new Category(
-            new CategoryId(this.uuidGenerator.generate()),
-            new CategoryName(data.name),
+        const category = Category.create(
+            CategoryId.create(this.uuidGenerator.generate()),
+            CategoryName.create(data.name),
         )
         await this.categoryRepository.save(category)
         this.eventHandler.publish(category.pullEvents())

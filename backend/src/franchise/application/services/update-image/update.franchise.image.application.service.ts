@@ -25,7 +25,7 @@ export class UpdateFranchiseImageApplicationService
         data: UpdateFranchiseImageDTO,
     ): Promise<UpdateFranchiseImageResponse> {
         const franchise = await this.franchiseRepository.searchById(
-            new FranchiseId(data.id),
+            FranchiseId.create(data.id),
         )
         if (!franchise) throw new FranchiseNotFoundException()
         await this.imageStorage.delete({
@@ -34,7 +34,7 @@ export class UpdateFranchiseImageApplicationService
         const newImage = await this.imageStorage.save({
             path: data.path,
         })
-        franchise.changeImage(new FranchiseImage(newImage.url))
+        franchise.changeImage(FranchiseImage.create(newImage.url))
         await this.franchiseRepository.save(franchise)
         this.eventHandler.publish(franchise.pullEvents())
         return {

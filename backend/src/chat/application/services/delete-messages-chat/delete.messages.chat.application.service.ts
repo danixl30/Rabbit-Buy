@@ -17,7 +17,7 @@ export class DeleteMessagesByChatApplicationService
     async execute(data: DeleteMessagesByChatDTO): Promise<void> {
         const messages = await this.messageRepository.searchAll(
             new FindChatMessagesQueryFactory(
-                new MessageChat(new ChatId(data.chat)),
+                MessageChat.create(ChatId.create(data.chat)),
                 0,
                 0,
             ).create(),

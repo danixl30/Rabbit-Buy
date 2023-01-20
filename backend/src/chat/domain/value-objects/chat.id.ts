@@ -3,7 +3,7 @@ import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
 import { InvalidChatIdException } from '../exceptions/invalid.chat.id'
 
 export class ChatId implements ValueObject<ChatId> {
-    constructor(private id: string) {
+    private constructor(private id: string) {
         if (!regExpUUID.test(id)) throw new InvalidChatIdException()
     }
 
@@ -13,5 +13,9 @@ export class ChatId implements ValueObject<ChatId> {
 
     equals(other: ChatId): boolean {
         return other.value === this.value
+    }
+
+    static create(id: string) {
+        return new ChatId(id)
     }
 }

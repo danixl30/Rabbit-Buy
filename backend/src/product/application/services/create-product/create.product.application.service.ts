@@ -37,16 +37,16 @@ export class CreateProductApplicationService
         const image = await this.imageStorage.save({
             path: data.image,
         })
-        const product = new Product(
+        const product = Product.create(
             new ProductId(this.uuid.generate()),
             new ProductName(data.name),
             new ProductDescription(data.description),
             new ProductExistence(data.existence),
             new ProductPrice(data.price),
             new ProductCurrency(data.currency),
-            new FranchiseRef(new FranchiseId(provider.franchise)),
+            new FranchiseRef(FranchiseId.create(provider.franchise)),
             new ProductImage(image.url),
-            data.categories.map((e) => new CategoryRef(new CategoryId(e))),
+            data.categories.map((e) => new CategoryRef(CategoryId.create(e))),
         )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())

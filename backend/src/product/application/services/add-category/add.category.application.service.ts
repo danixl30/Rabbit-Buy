@@ -27,7 +27,7 @@ export class AddProductCategoryApplicationService
             new ProductId(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.addCategory(new CategoryRef(new CategoryId(data.category)))
+        product.addCategory(new CategoryRef(CategoryId.create(data.category)))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {
