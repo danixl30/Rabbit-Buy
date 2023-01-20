@@ -38,15 +38,17 @@ export class CreateProductApplicationService
             path: data.image,
         })
         const product = Product.create(
-            new ProductId(this.uuid.generate()),
-            new ProductName(data.name),
-            new ProductDescription(data.description),
-            new ProductExistence(data.existence),
-            new ProductPrice(data.price),
-            new ProductCurrency(data.currency),
-            new FranchiseRef(FranchiseId.create(provider.franchise)),
-            new ProductImage(image.url),
-            data.categories.map((e) => new CategoryRef(CategoryId.create(e))),
+            ProductId.create(this.uuid.generate()),
+            ProductName.create(data.name),
+            ProductDescription.create(data.description),
+            ProductExistence.create(data.existence),
+            ProductPrice.create(data.price),
+            ProductCurrency.create(data.currency),
+            FranchiseRef.create(FranchiseId.create(provider.franchise)),
+            ProductImage.create(image.url),
+            data.categories.map((e) =>
+                CategoryRef.create(CategoryId.create(e)),
+            ),
         )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())

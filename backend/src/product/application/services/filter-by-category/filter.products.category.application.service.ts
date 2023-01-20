@@ -20,7 +20,7 @@ export class FilterProductsCategoryApplicationService
     ): Promise<FilterProductsCategoryResponse> {
         const products = await this.productRepository.searchAll(
             new FindProductsCategoryQueryFactory(
-                new CategoryRef(CategoryId.create(data.category)),
+                CategoryRef.create(CategoryId.create(data.category)),
                 data.page,
             ).create(),
         )

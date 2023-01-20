@@ -14,13 +14,13 @@ import { ProductPrice } from 'src/product/domain/value-objects/product.price'
 
 export const productDbToDomain = (product: ProductDocument): Product =>
     Product.create(
-        new ProductId(product.id),
-        new ProductName(product.productName),
-        new ProductDescription(product.description),
-        new ProductExistence(product.existence),
-        new ProductPrice(product.price),
-        new ProductCurrency(product.currency),
-        new FranchiseRef(FranchiseId.create(product.franchise)),
-        new ProductImage(product.image),
-        product.categories.map((e) => new CategoryRef(CategoryId.create(e))),
+        ProductId.create(product.id),
+        ProductName.create(product.productName),
+        ProductDescription.create(product.description),
+        ProductExistence.create(product.existence),
+        ProductPrice.create(product.price),
+        ProductCurrency.create(product.currency),
+        FranchiseRef.create(FranchiseId.create(product.franchise)),
+        ProductImage.create(product.image),
+        product.categories.map((e) => CategoryRef.create(CategoryId.create(e))),
     )

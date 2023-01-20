@@ -3,7 +3,7 @@ import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
 import { InvalidPetitionIdException } from '../exceptions/invalid.petition.id'
 
 export class PetitionId implements ValueObject<PetitionId> {
-    constructor(private id: string) {
+    private constructor(private id: string) {
         if (!regExpUUID.test(id)) throw new InvalidPetitionIdException()
     }
 
@@ -13,5 +13,9 @@ export class PetitionId implements ValueObject<PetitionId> {
 
     equals(other: PetitionId): boolean {
         return other.value === this.value
+    }
+
+    static create(id: string) {
+        return new PetitionId(id)
     }
 }

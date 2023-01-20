@@ -17,7 +17,7 @@ export class ListPetitionsClientCriteriaApplicationService
     ): Promise<ListPetitionsClientResponse> {
         const petitions = await this.petitionRepository.searchAll(
             new FindPetitionsClientTermQueryFactory(
-                new UserRef(UserId.create(data.client)),
+                UserRef.create(UserId.create(data.client)),
                 data.term,
                 data.page,
             ).create(),

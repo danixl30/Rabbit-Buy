@@ -1,11 +1,11 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { ProviderCreatedEvent } from './events/provider.created'
 import { ProviderDeletedEvent } from './events/provider.deleted'
 import { InvalidProviderException } from './exceptions/invalid.provider'
 import { FranchiseRef } from './value-objects/franchise.ref'
 import { ProviderId } from './value-objects/provider.id'
 
-export class Provider extends AgreggateRoot<ProviderId> {
+export class Provider extends AggregateRoot<ProviderId> {
     private constructor(id: ProviderId, private _franchise: FranchiseRef) {
         super(id)
         this.apply(new ProviderCreatedEvent(id, this.franchise))

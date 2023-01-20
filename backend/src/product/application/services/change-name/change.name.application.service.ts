@@ -20,10 +20,10 @@ export class ChangeProductNameApplicationService
         data: ChangeProductNameDTO,
     ): Promise<ChangeProductNameResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.changeName(new ProductName(data.name))
+        product.changeName(ProductName.create(data.name))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

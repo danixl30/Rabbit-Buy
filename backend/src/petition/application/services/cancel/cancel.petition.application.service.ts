@@ -16,14 +16,12 @@ export class CancelPetitionApplicationService
 
     async execute(data: CancelPetitionDTO): Promise<CancelPetitionDTO> {
         const petition = await this.petitionRepository.searchById(
-            new PetitionId(data.id),
+            PetitionId.create(data.id),
         )
         if (!petition) throw new PetitionNotFoundException()
         petition.cancel()
         await this.petitionRepository.save(petition)
-        this.eventHandler.publish(
-            petition.pullEvents().filter((_, index) => index > 0),
-        )
+        this.eventHandler.publish(petition.pullEvents())
         return {
             id: data.id,
         }

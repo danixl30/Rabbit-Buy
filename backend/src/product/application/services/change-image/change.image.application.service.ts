@@ -22,14 +22,14 @@ export class ChangeProductImageApplicationService
         data: ChangeProductImageDTO,
     ): Promise<ChangeProductImageResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
         const oldImage = product.image
         const newImage = await this.imageStorage.save({
             path: data.path,
         })
-        product.changeImage(new ProductImage(newImage.url))
+        product.changeImage(ProductImage.create(newImage.url))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         await this.imageStorage.delete({

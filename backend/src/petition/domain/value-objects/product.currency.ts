@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidProductCurrencyException } from 'src/product/domain/exceptions/invalid.product.currency'
 
 export class ProductCurrency implements ValueObject<ProductCurrency> {
-    constructor(private currency: string) {
+    private constructor(private currency: string) {
         if (currency.trim().isEmpty())
             throw new InvalidProductCurrencyException()
     }
@@ -13,5 +13,9 @@ export class ProductCurrency implements ValueObject<ProductCurrency> {
 
     equals(other: ProductCurrency): boolean {
         return other.value === this.value
+    }
+
+    static create(currency: string) {
+        return new ProductCurrency(currency)
     }
 }

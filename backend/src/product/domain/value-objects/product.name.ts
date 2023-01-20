@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidProductNameException } from '../exceptions/invalid.product.name'
 
 export class ProductName implements ValueObject<ProductName> {
-    constructor(private name: string) {
+    private constructor(private name: string) {
         if (name.trim().isEmpty()) throw new InvalidProductNameException()
     }
 
@@ -12,5 +12,9 @@ export class ProductName implements ValueObject<ProductName> {
 
     equals(other: ProductName): boolean {
         return other.value === this.value
+    }
+
+    static create(name: string) {
+        return new ProductName(name)
     }
 }

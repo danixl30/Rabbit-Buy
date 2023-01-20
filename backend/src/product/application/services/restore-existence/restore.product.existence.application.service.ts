@@ -17,14 +17,14 @@ export class RestoreProductExistenceApplicationService
 
     async execute(data: RestoreProductExistenceDTO): Promise<void> {
         const petition = await this.petitionRepository.searchById(
-            new PetitionId(data.petition),
+            PetitionId.create(data.petition),
         )
         const product = await this.productRepository.searchById(
             petition.product.value,
         )
         product.changeExistence(
             product.existence.plus(
-                new ProductExistence(petition.quantity.value),
+                ProductExistence.create(petition.quantity.value),
             ),
         )
         await this.productRepository.save(product)

@@ -24,10 +24,12 @@ export class AddProductCategoryApplicationService
         data: ChangeProductCategoryDTO,
     ): Promise<ChangeProductCategoryResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.addCategory(new CategoryRef(CategoryId.create(data.category)))
+        product.addCategory(
+            CategoryRef.create(CategoryId.create(data.category)),
+        )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

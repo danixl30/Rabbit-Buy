@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { ChatCreatedEvent } from './events/chat.created'
 import { ChatDeletedEvent } from './events/chat.deleted'
 import { MessageAddedEvent } from './events/message.added'
@@ -10,7 +10,7 @@ import { ChatId } from './value-objects/chat.id'
 import { ChatMessage } from './value-objects/chat.message'
 import { ChatTimestamp } from './value-objects/chat.timestamp'
 
-export class Chat extends AgreggateRoot<ChatId> {
+export class Chat extends AggregateRoot<ChatId> {
     private constructor(
         id: ChatId,
         private _client: ChatClient,

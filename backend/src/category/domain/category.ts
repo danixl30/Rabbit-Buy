@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { CategoryCreatedEvent } from './events/category.created'
 import { CategoryDeletedEvent } from './events/category.deleted'
 import { CategoryNameChangedEvent } from './events/category.name.changed'
@@ -9,7 +9,7 @@ import { CategoryId } from './value-objects/category.id'
 import { CategoryName } from './value-objects/category.name'
 import { CategoryParent } from './value-objects/category.parent'
 
-export class Category extends AgreggateRoot<CategoryId> {
+export class Category extends AggregateRoot<CategoryId> {
     private constructor(
         id: CategoryId,
         private _name: CategoryName,

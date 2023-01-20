@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidProductExistenceException } from '../exceptions/invalid.product.existence'
 
 export class ProductExistence implements ValueObject<ProductExistence> {
-    constructor(private existence: number) {
+    private constructor(private existence: number) {
         if (existence === undefined || existence < 0)
             throw new InvalidProductExistenceException()
     }
@@ -25,5 +25,9 @@ export class ProductExistence implements ValueObject<ProductExistence> {
 
     equals(other: ProductExistence): boolean {
         return other.value === this.value
+    }
+
+    static create(existence: number) {
+        return new ProductExistence(existence)
     }
 }

@@ -17,7 +17,7 @@ export class DeletePetitionsByFranchiseApplicationService
     async execute(data: DeletePetitionsByFranchiseDTO): Promise<void> {
         const petitions = await this.petitionRepository.searchAll(
             new FindPetitionsFranchiseQueryFactory(
-                new FranchiseRef(FranchiseId.create(data.franchise)),
+                FranchiseRef.create(FranchiseId.create(data.franchise)),
                 0,
                 0,
             ).create(),

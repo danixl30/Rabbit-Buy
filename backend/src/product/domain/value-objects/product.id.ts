@@ -3,7 +3,7 @@ import { InvalidProviderIdException } from 'src/provider/domain/exceptions/inval
 import { regExpUUID } from 'src/utils/reg-exps/UUID/UUID.reg.exp'
 
 export class ProductId implements ValueObject<ProductId> {
-    constructor(private id: string) {
+    private constructor(private id: string) {
         if (!regExpUUID.test(id)) throw new InvalidProviderIdException()
     }
 
@@ -13,5 +13,9 @@ export class ProductId implements ValueObject<ProductId> {
 
     equals(other: ProductId): boolean {
         return other.value === this.value
+    }
+
+    static create(id: string) {
+        return new ProductId(id)
     }
 }

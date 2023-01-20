@@ -2,7 +2,7 @@ import { Entity } from '../entity/entity'
 import { DomainEvent } from '../events/event'
 import { ValueObject } from '../value-objects/value.object'
 
-export abstract class AgreggateRoot<
+export abstract class AggregateRoot<
     T extends ValueObject<T>,
 > extends Entity<T> {
     private events: DomainEvent[] = []

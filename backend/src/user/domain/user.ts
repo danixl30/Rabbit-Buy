@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { UserCreatedEvent } from './events/user.created'
 import { UserDeletedEvent } from './events/user.deleted'
 import { UserEmailChangedEvent } from './events/user.email.changed'
@@ -11,7 +11,7 @@ import { Role } from './value-objects/role'
 import { UserId } from './value-objects/user.id'
 import { Username } from './value-objects/username'
 
-export class User extends AgreggateRoot<UserId> {
+export class User extends AggregateRoot<UserId> {
     private constructor(
         _id: UserId,
         private _username: Username,

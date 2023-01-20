@@ -24,11 +24,11 @@ export class RemoveProductCategoryApplicationService
         data: ChangeProductCategoryDTO,
     ): Promise<ChangeProductCategoryResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
         product.removeCategory(
-            new CategoryRef(CategoryId.create(data.category)),
+            CategoryRef.create(CategoryId.create(data.category)),
         )
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())

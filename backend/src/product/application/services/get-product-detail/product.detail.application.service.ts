@@ -21,7 +21,7 @@ export class GetProductDetailApplicationService
         data: GetProductDetailDTO,
     ): Promise<GetProductDetailResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
         const categories = await product.categories.asyncMap(

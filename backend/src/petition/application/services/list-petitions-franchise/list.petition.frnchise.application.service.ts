@@ -29,7 +29,7 @@ export class ListPetitionsProviderApplicationService
         })
         const petitions = await this.petitionRepository.searchAll(
             new FindPetitionsFranchiseQueryFactory(
-                new FranchiseRef(FranchiseId.create(provider.franchise)),
+                FranchiseRef.create(FranchiseId.create(provider.franchise)),
                 data.page,
             ).create(),
         )

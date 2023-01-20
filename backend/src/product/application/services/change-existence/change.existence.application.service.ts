@@ -23,10 +23,10 @@ export class ChangeProductExistenceApplicationService
         data: ChangeProductExistenceDTO,
     ): Promise<ChangeProductExistenceResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.changeExistence(new ProductExistence(data.existence))
+        product.changeExistence(ProductExistence.create(data.existence))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

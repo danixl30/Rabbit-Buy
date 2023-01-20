@@ -16,7 +16,7 @@ export class DeletePetitionApplicationService
 
     async execute(data: DeletePetitionDTO): Promise<DeletePetitionResponse> {
         const petition = await this.petitionRepository.searchById(
-            new PetitionId(data.id),
+            PetitionId.create(data.id),
         )
         if (!petition) throw new PetitionNotFoundException()
         petition.delete()

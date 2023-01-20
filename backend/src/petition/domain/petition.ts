@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { PetitionCancelledEvent } from './events/petition.cancelled'
 import { PetitionConfirmedEvent } from './events/petition.confirmed'
 import { PetitionCreatedEvent } from './events/petition.created'
@@ -16,10 +16,9 @@ import { ProductName } from './value-objects/product.name'
 import { ProductPrice } from './value-objects/product.price'
 import { ProductRef } from './value-objects/product.ref'
 import { Status } from './value-objects/status'
-import { Statuses } from './value-objects/statuses'
 import { UserRef } from './value-objects/user.ref'
 
-export class Petition extends AgreggateRoot<PetitionId> {
+export class Petition extends AggregateRoot<PetitionId> {
     private constructor(
         id: PetitionId,
         private _productName: ProductName,
@@ -30,7 +29,7 @@ export class Petition extends AgreggateRoot<PetitionId> {
         private _client: UserRef,
         private _date: PetitionDate,
         private _franchise: FranchiseRef,
-        private _status: Status = new Status(Statuses.OPEN),
+        private _status: Status,
     ) {
         super(id)
         this.apply(
@@ -87,29 +86,29 @@ export class Petition extends AgreggateRoot<PetitionId> {
 
     confirm() {
         if (!this.status.isNotFisished()) throw new OperationInvalidException()
-        this._status = new Status(Statuses.CONFIRMED)
+        this._status = Status.createConfirmed()
         this.apply(new PetitionConfirmedEvent(this.id, this.status))
     }
 
     cancel() {
         if (
             !this.status.isNotFisished() ||
-            this.status.equals(new Status(Statuses.CANCELLED))
+            this.status.equals(Status.createCancelled())
         )
             throw new OperationInvalidException()
-        this._status = new Status(Statuses.CANCELLED)
+        this._status = Status.createCancelled()
         this.apply(new PetitionCancelledEvent(this.id, this.status))
     }
 
     suspend() {
         if (!this.status.isNotFisished()) throw new OperationInvalidException()
-        this._status = new Status(Statuses.SUSPEND)
+        this._status = Status.createSuspended()
         this.apply(new PetitionSuspendedEvent(this.id, this.status))
     }
 
     finish() {
         if (!this.status.isNotFisished()) throw new OperationInvalidException()
-        this._status = new Status(Statuses.FINISHED)
+        this._status = Status.createFinished()
         this.apply(new PetitionFinishedEvent(this.id, this.status))
     }
 
@@ -141,7 +140,7 @@ export class Petition extends AgreggateRoot<PetitionId> {
         client: UserRef,
         date: PetitionDate,
         franchise: FranchiseRef,
-        status: Status = new Status(Statuses.OPEN),
+        status: Status = Status.createOpened(),
     ) {
         return new Petition(
             id,

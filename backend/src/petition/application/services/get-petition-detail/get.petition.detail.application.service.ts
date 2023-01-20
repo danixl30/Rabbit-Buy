@@ -21,7 +21,7 @@ export class GetPetitionDetailApplicationService
         data: GetPetitionDetailDTO,
     ): Promise<PetitionPrimitiveDetail> {
         const petition = await this.petitionRepository.searchById(
-            new PetitionId(data.id),
+            PetitionId.create(data.id),
         )
         if (!petition) throw new PetitionNotFoundException()
         const franchise = await this.franchiseDetail.execute({

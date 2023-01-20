@@ -23,10 +23,10 @@ export class ChangeProductDescriptionApplicationService
         data: ChangeProductDescriptionDTO,
     ): Promise<ChangeProductDescriptionResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.changeDescription(new ProductDescription(data.description))
+        product.changeDescription(ProductDescription.create(data.description))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {

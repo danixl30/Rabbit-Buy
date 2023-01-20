@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { MessageCreatedEvent } from './events/message.created'
 import { MessageDeletedEvent } from './events/message.deleted'
 import { InvalidMessageException } from './exceptions/invalid.message'
@@ -8,7 +8,7 @@ import { MessageId } from './value-objects/message.id'
 import { MessageText } from './value-objects/message.text'
 import { MessageTimestamp } from './value-objects/message.timestamp'
 
-export class Message extends AgreggateRoot<MessageId> {
+export class Message extends AggregateRoot<MessageId> {
     private constructor(
         id: MessageId,
         private _from: MessageFrom,

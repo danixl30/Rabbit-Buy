@@ -16,14 +16,14 @@ import { PetitionDocument } from '../models/petition.model'
 
 export const petitionDbToDomain = (petition: PetitionDocument): Petition =>
     Petition.create(
-        new PetitionId(petition.id),
-        new ProductName(petition.productName),
-        new ProductRef(new ProductId(petition.productId)),
-        new ProductPrice(petition.productPrice),
-        new PetitionQuantity(petition.quantiny),
-        new ProductCurrency(petition.productCurrency),
-        new UserRef(UserId.create(petition.client)),
-        new PetitionDate(petition.date),
-        new FranchiseRef(FranchiseId.create(petition.franchise)),
-        new Status(petition.status),
+        PetitionId.create(petition.id),
+        ProductName.create(petition.productName),
+        ProductRef.create(ProductId.create(petition.productId)),
+        ProductPrice.create(petition.productPrice),
+        PetitionQuantity.create(petition.quantiny),
+        ProductCurrency.create(petition.productCurrency),
+        UserRef.create(UserId.create(petition.client)),
+        PetitionDate.create(petition.date),
+        FranchiseRef.create(FranchiseId.create(petition.franchise)),
+        Status.create(petition.status),
     )

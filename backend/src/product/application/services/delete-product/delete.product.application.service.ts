@@ -18,7 +18,7 @@ export class DeleteProductApplicationService
 
     async execute(data: DeleteProductDTO): Promise<DeleteProductResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
         product.delete()

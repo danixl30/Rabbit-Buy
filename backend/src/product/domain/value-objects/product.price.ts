@@ -2,7 +2,7 @@ import { ValueObject } from 'src/core/domain/value-objects/value.object'
 import { InvalidProductPriceException } from '../exceptions/invalid.product.price'
 
 export class ProductPrice implements ValueObject<ProductPrice> {
-    constructor(private price: number) {
+    private constructor(private price: number) {
         if (price === undefined || price < 0)
             throw new InvalidProductPriceException()
     }
@@ -13,5 +13,9 @@ export class ProductPrice implements ValueObject<ProductPrice> {
 
     equals(other: ProductPrice): boolean {
         return other.value === this.value
+    }
+
+    static create(price: number) {
+        return new ProductPrice(price)
     }
 }

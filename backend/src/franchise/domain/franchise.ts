@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { FranchiseCreatedEvent } from './events/franchise.created'
 import { FranchiseDeletedEvent } from './events/franchise.deleted'
 import { FranchiseGroupIdChangedEvent } from './events/franchise.group.id.changed'
@@ -10,7 +10,7 @@ import { FranchiseImage } from './value-objects/franchise.image'
 import { FranchiseName } from './value-objects/franchise.name'
 import { FranchiseRif } from './value-objects/franchise.rif'
 
-export class Franchise extends AgreggateRoot<FranchiseId> {
+export class Franchise extends AggregateRoot<FranchiseId> {
     private constructor(
         id: FranchiseId,
         private _name: FranchiseName,

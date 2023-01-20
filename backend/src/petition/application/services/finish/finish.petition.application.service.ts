@@ -16,14 +16,12 @@ export class FinishPetitionApplicationService
 
     async execute(data: FinishPetitionDTO): Promise<FinishPetitionDTO> {
         const petition = await this.petitionRepository.searchById(
-            new PetitionId(data.id),
+            PetitionId.create(data.id),
         )
         if (!petition) throw new PetitionNotFoundException()
         petition.finish()
         await this.petitionRepository.save(petition)
-        this.eventHandler.publish(
-            petition.pullEvents().filter((_, index) => index > 0),
-        )
+        this.eventHandler.publish(petition.pullEvents())
         return {
             id: data.id,
         }

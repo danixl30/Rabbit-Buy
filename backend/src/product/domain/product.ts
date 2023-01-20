@@ -1,4 +1,4 @@
-import { AgreggateRoot } from 'src/core/domain/aggregates/aggregate.root'
+import { AggregateRoot } from 'src/core/domain/aggregates/aggregate.root'
 import { ProductBoughtEvent } from './events/product.bought'
 import { ProductCategoryAddedEvent } from './events/product.category.added'
 import { ProductCategoryRemovedEvent } from './events/product.category.removed'
@@ -22,7 +22,7 @@ import { ProductId } from './value-objects/product.id'
 import { ProductName } from './value-objects/product.name'
 import { ProductPrice } from './value-objects/product.price'
 
-export class Product extends AgreggateRoot<ProductId> {
+export class Product extends AggregateRoot<ProductId> {
     private constructor(
         id: ProductId,
         private _name: ProductName,
@@ -32,7 +32,7 @@ export class Product extends AgreggateRoot<ProductId> {
         private _currency: ProductCurrency,
         private _franchise: FranchiseRef,
         private _image: ProductImage,
-        private _categories: CategoryRef[] = [],
+        private _categories: CategoryRef[],
     ) {
         super(id)
         this.apply(

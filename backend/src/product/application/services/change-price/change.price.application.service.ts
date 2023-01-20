@@ -20,10 +20,10 @@ export class ChangeProductPriceApplicationService
         data: ChangeProductPriceDTO,
     ): Promise<ChangeProductPriceResponse> {
         const product = await this.productRepository.searchById(
-            new ProductId(data.id),
+            ProductId.create(data.id),
         )
         if (!product) throw new ProductNotFoundException()
-        product.changePrice(new ProductPrice(data.price))
+        product.changePrice(ProductPrice.create(data.price))
         await this.productRepository.save(product)
         this.eventHandler.publish(product.pullEvents())
         return {
