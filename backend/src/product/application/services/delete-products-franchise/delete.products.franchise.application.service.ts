@@ -22,7 +22,7 @@ export class DeleteProductsByFranchiseApplicationService
                 FranchiseRef.create(FranchiseId.create(data.franchise)),
             ).create(),
         )
-        products.asyncForEach(async (product) =>
+        await products.asyncForEach(async (product) =>
             this.imageStorage.delete({
                 url: product.image.value,
             }),
